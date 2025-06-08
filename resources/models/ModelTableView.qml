@@ -85,14 +85,6 @@ Rectangle {
 
         ScrollBar.horizontal: ScrollBar { }
         ScrollBar.vertical: ScrollBar { }
-
-//        Timer {
-//            interval: 100
-//            running: true
-//            repeat: true
-//            onTriggered: {tableModel.update()}
-//        }
-
         delegate: Row {
 
             function getRoleValue(role) {

@@ -28,7 +28,8 @@ public:
 
     bool selected() const { return m_selected; }
     void setSelected(bool row) {
-        if (m_selected == row) return;
+        if (m_selected == row)
+            return;
         m_selected = row;
     }
 

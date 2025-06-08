@@ -1,36 +1,10 @@
 #ifndef QITEMTABLEMODEL_H
 #define QITEMTABLEMODEL_H
 
-#include <QObject>
-#include <QAbstractListModel>
-#include <QtGlobal>
-#include <QString>
-#include <QMap>
-#include <QHash>
-#include <QVector>
-#include <QDebug>
-#include <QVariant>
 #include <QTimerEvent>
 #include <chrono>
 
-
-class QItemListModelBase : public QAbstractListModel {
-    Q_OBJECT
-public:
-    explicit QItemListModelBase(QObject *parent = nullptr) :
-        QAbstractListModel(parent) {}
-
-    virtual Q_INVOKABLE int insertItem(QObject* itemObj, quint32 itemId) = 0;
-
-    virtual Q_INVOKABLE bool removeItem(quint32 itemId) = 0;
-    virtual Q_INVOKABLE bool editItem(int key, QObject* itemObj) = 0;
-
-    virtual Q_INVOKABLE QVariantList getRowData(int row) const = 0;
-    virtual Q_INVOKABLE void selectItem(int index) = 0;
-
-    virtual Q_INVOKABLE QVariantList getHeadersData(bool getParent = true) const = 0;
-
-};
+#include "QItemListModdelBase.h"
 
 template<typename ItemType>
 class QItemListModel:  public QItemListModelBase
@@ -313,7 +287,7 @@ private:
 
     std::chrono::time_point<clock> m_nextDataChangeEmit = clock::now();
 
-    const int REFRESH_INTERVAL = 200; // ms, UI update cycle
+    const int REFRESH_INTERVAL = 100; // ms, UI update cycle
 
 };
 

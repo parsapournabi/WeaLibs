@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QDate>
 
-#include "TargetModel.h"
+#include "models/examples/TargetModel.h"
 
 class SortFilterProxyModel : public QSortFilterProxyModel
 {

@@ -4,16 +4,17 @@
 #include <QObject>
 #include <QDebug>
 #include <QVariant>
+#include <math.h>
 #include "models/QItemBase.h"
 
 class Target : public QItemBase {
     Q_OBJECT
-    Q_PROPERTY(float azimuth READ azimuth WRITE setAzimuth CONSTANT)
-    Q_PROPERTY(float elevation READ elevation WRITE setElevation CONSTANT)
-    Q_PROPERTY(float rangeCell READ rangeCell WRITE setRangeCell CONSTANT)
-    Q_PROPERTY(float power READ power WRITE setPower CONSTANT)
+    Q_PROPERTY(double azimuth READ azimuth WRITE setAzimuth CONSTANT)
+    Q_PROPERTY(double elevation READ elevation WRITE setElevation CONSTANT)
+    Q_PROPERTY(double rangeCell READ rangeCell WRITE setRangeCell CONSTANT)
+    Q_PROPERTY(double power READ power WRITE setPower CONSTANT)
 public:
-    explicit Target(float az = 1.0, float elv = 1.0, float rc = 1.0 , float p = 1.0) :
+    explicit Target(double az = 1.0, double elv = 1.0, double rc = 1.0 , double p = 1.0) :
         m_azimuth(az), m_elevation(elv), m_rangeCell(rc), m_power(p)
     {
     }
@@ -61,23 +62,23 @@ public:
     }
 
     float azimuth() const { return m_azimuth; }
-    void setAzimuth(float az) { m_azimuth = az;}
+    void setAzimuth(double az) { m_azimuth = az;}
 
     float elevation() const{ return m_elevation; }
-    void setElevation(float elv){ m_elevation = elv; }
+    void setElevation(double elv){ m_elevation = elv; }
 
     float rangeCell() const{ return m_rangeCell; }
-    void setRangeCell(float range_cell){ m_rangeCell =  range_cell; }
+    void setRangeCell(double range_cell){ m_rangeCell =  std::isnan(range_cell) ? 100.0: range_cell; }
 
     float power() const { return m_power; }
-    void setPower(float power){ m_power = power; }
+    void setPower(double power){ m_power = power; }
 
 
 private:
-    float m_azimuth = 0.0;
-    float m_elevation = 0.0;
-    float m_rangeCell = 0.0;
-    float m_power = 0.0;
+    double m_azimuth = 0.0;
+    double m_elevation = 0.0;
+    double m_rangeCell = 0.0;
+    double m_power = 0.0;
 
 };
 
