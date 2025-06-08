@@ -56,7 +56,7 @@ private:
         m_currentFPS = (currentCount + m_cacheCount) / 2;
 //        qDebug() << m_currentFPS;
 
-        if (currentCount != m_cacheCount) fpsChanged(m_currentFPS);
+        if (currentCount != m_cacheCount) emit fpsChanged(m_currentFPS);
 
         m_cacheCount = currentCount;
 

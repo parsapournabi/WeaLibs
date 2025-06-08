@@ -7,9 +7,7 @@ Worker::Worker(QObject *parent)
 {
     QThread *thread = new QThread();
     this->moveToThread(thread);
-
     QObject::connect(thread, &QThread::started, this, &Worker::timelaps);
-
     thread->start();
 
 }
