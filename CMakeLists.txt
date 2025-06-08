@@ -63,21 +63,21 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Quick)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick)
 set(HEADERS
-    Target.h
-    worker.h
-    TargetModel.h
-    fps.h
-    QItemListModel.h
-    QAbstractItemType.h
+    common/fps.h
+    common/worker.h
+    models/QItemListModel.h
+    models/QItemBase.h
+    models/examples/SortFilterProxy.h
+    models/examples/TargetModel.h
+    models/examples/Target.h
 )
 set(SOURCES
-        main.cpp
-   TargetModel.cpp
-        worker.cpp
+  main.cpp
+  common/worker.cpp
 
 )
 set(QML_FILES
-        qml.qrc
+        resources/qml.qrc
 )
 set(PROJECT_SOURCES
     ${HEADERS}
@@ -111,6 +111,8 @@ endif()
 
 target_link_libraries(appRadar
   PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick)
+
+target_include_directories(appRadar PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

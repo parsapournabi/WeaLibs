@@ -4,27 +4,18 @@
 #include <QObject>
 #include <QDebug>
 #include <QVariant>
-#include "QAbstractItemType.h"
+#include "models/QItemBase.h"
 
-class Target : public QAbstractItemBase {
+class Target : public QItemBase {
     Q_OBJECT
-    Q_PROPERTY(float azimuth READ azimuth WRITE setAzimuth NOTIFY dataChanged)
-    Q_PROPERTY(float elevation READ elevation WRITE setElevation NOTIFY dataChanged)
-    Q_PROPERTY(float rangeCell READ rangeCell WRITE setRangeCell NOTIFY dataChanged)
-    Q_PROPERTY(float power READ power WRITE setPower NOTIFY dataChanged)
+    Q_PROPERTY(float azimuth READ azimuth WRITE setAzimuth CONSTANT)
+    Q_PROPERTY(float elevation READ elevation WRITE setElevation CONSTANT)
+    Q_PROPERTY(float rangeCell READ rangeCell WRITE setRangeCell CONSTANT)
+    Q_PROPERTY(float power READ power WRITE setPower CONSTANT)
 public:
     explicit Target(float az = 1.0, float elv = 1.0, float rc = 1.0 , float p = 1.0) :
         m_azimuth(az), m_elevation(elv), m_rangeCell(rc), m_power(p)
     {
-
-        for (QString name : getSelfPropertiesNames() + getParentPropertiesNames()) {
-            QMap<QString, QVariant> mp;
-            mp["visible"] = true;
-            mp["columnWidth"] = 200;
-            mp["title"] = name.toUpper();
-            addExtraData(name, mp);
-        }
-        addExtraData("power", "visible", false);
     }
 
     enum TargetRoles {
@@ -52,6 +43,7 @@ public:
             {AllRole, "all"}
         };
     }
+
     QVariant getValueByRole(int role) override {
         switch (role) {
         case AzimuthRole: return azimuth();
@@ -69,7 +61,7 @@ public:
     }
 
     float azimuth() const { return m_azimuth; }
-    void setAzimuth(float az) { m_azimuth = az; emit dataChanged();}
+    void setAzimuth(float az) { m_azimuth = az;}
 
     float elevation() const{ return m_elevation; }
     void setElevation(float elv){ m_elevation = elv; }
@@ -78,8 +70,7 @@ public:
     void setRangeCell(float range_cell){ m_rangeCell =  range_cell; }
 
     float power() const { return m_power; }
-    void setPower(float power){ m_power = power;
-        }
+    void setPower(float power){ m_power = power; }
 
 
 private:

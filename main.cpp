@@ -5,9 +5,10 @@
 #include <QLoggingCategory>
 #include <qloggingcategory.h>
 #include <QThread>
-#include "TargetModel.h"
-#include "worker.h"
-#include "fps.h"
+
+#include "common/worker.h"
+#include "common/fps.h"
+#include "models/examples/SortFilterProxy.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,26 +21,24 @@ int main(int argc, char *argv[])
 
         qputenv("QT_ASSUME_STDERR_HAS_CONSOLE", "1");
 //        qputenv("QSG_INFO", "1");
-
+        qmlRegisterType<Fps>("CustomItems", 1, 0, "Fps");
+        qmlRegisterType<SortFilterProxyModel>("CustomItems", 1, 0, "SortFilterProxyModel");
 
         TargetModel targetModel;
-        Target *t = new Target(1.0, 2.0, 3.0, 4.0);
-//        qDebug() << t->getProperties();
-        Target *t1 = new Target(1.0, 2.0, 3.0, 4.0);
-        Target *t2 = new Target(1.0, 2.0, 3.0, 4.0);
+        // Custom Filtering class
+        SortFilterProxyModel filter;
+        filter.setSourceModel(&targetModel);
+        filter.m_targetModel = &targetModel;
+        filter.setFilterCaseSensitivity(Qt::CaseInsensitive);
 
-        targetModel.insertItem(t, 0);
-        targetModel.insertItem(t2, 1);
-        targetModel.insertItem(t1, 2);
         Worker* worker = new Worker();
-        for (int i = 3; i < 4; i++) {
+        for (int i = 0; i < 10000; i++) {
             Target *tar = new Target();
             targetModel.insertItem(tar, i);
-            worker->targets.append(tar);
         }
         worker->loop = true;
+        worker->targets = &targetModel;
         qDebug() << targetModel.roleNames();
-        qmlRegisterType<Fps>("CustomItems", 1, 0, "Fps");
 
         QQmlApplicationEngine engine;
         const QUrl url(QStringLiteral("qrc:/main.qml"));
@@ -48,20 +47,9 @@ int main(int argc, char *argv[])
                 if (!obj && url == objUrl)
                     QCoreApplication::exit(-1);
             }, Qt::QueuedConnection);
-        engine.rootContext()->setContextProperty("targetModel", &targetModel);
-//        engine.rootContext()->setContextProperty("fpsC", &fpsC);
+        engine.rootContext()->setContextProperty("tableModel", &targetModel);
+        engine.rootContext()->setContextProperty("proxyModel", &filter); // If you want to use filtering else uncommnet above line
         engine.load(url);
         return app.exec();
-
-
-//    QQmlApplicationEngine engine;
-//    QObject::connect(
-//        &engine,
-//        &QQmlApplicationEngine::objectCreationFailed,
-//        &app,
-//        []() { QCoreApplication::exit(-1); },
-//        Qt::QueuedConnection);
-//    engine.rootContext()->setContextProperty("targetModel", &targetModel);
-//    engine.loadFromModule("Radar", "Main");
 
 }

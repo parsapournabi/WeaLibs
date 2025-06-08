@@ -2,9 +2,8 @@
 #define WORKER_H
 
 #include <QObject>
-#include <QTimer>
-#include "TargetModel.h"
-#include "Target.h"
+#include "models/examples/TargetModel.h"
+
 class Worker : public QObject
 {
     Q_OBJECT
@@ -13,9 +12,7 @@ public:
 
     void timelaps();
 
-    QTimer *timer;
-
-    QVector<Target*> targets;
+    TargetModel *targets;
 
     QThread *thread;
 

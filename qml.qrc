@@ -1,9 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>main.qml</file>
-        <file>RadarView.qml</file>
-        <file>TargetItem.qml</file>
-        <file>ModelTableView.qml</file>
-        <file>CustomRowStyle.qml</file>
-    </qresource>
-</RCC>

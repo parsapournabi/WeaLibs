@@ -16,7 +16,8 @@ import QtQml 2.12
 import QtGraphicalEffects 1.12
 import CustomItems 1.0
 
-// import "."
+import "./common"
+import "./models"
 
 
 ApplicationWindow {
@@ -24,7 +25,9 @@ ApplicationWindow {
     width: 1250
     height: 800
     title: "Radar with TableView"
-    color: "#c7c7c7"
+    color: "#001820"
+
+    property var targetModel: proxyModel
 
     Rectangle {
         anchors.fill: parent
@@ -42,24 +45,26 @@ ApplicationWindow {
                 Layout.preferredHeight: 500
                 Layout.preferredWidth: 500
                 Layout.leftMargin: 30
+                tarModel: targetModel
             }
             ModelTableView {
                 tableModel: targetModel
                 id: table
+                Layout.fillHeight: true
+                Layout.fillWidth: true
 
-//                anchors.fill: parent
 //                columns: [{"name": "id", "title": "Id", "visible": true, "columnWidth": null},
 //                    {"name": "row", "title": "Row", "visible": true, "columnWidth": null},
 //                    {"name": "azimuth", "title": "Az", "visible": true, "columnWidth": null},
 //                {"name": "elevation", "title": "Elv", "visible": true, "columnWidth": null},
 //                {"name": "rangeCell", "title": "Range", "visible": true, "columnWidth": 400},
 //                {"name": "power", "title": "Power", "visible": true, "columnWidth": null}]
-                columns: targetModel.getProperties(true)
+                columns: targetModel.getHeadersData(true)
 
 //                cellColorList: ["purple"]
-                cellsBorderColorList: ["brown", "dark-blue", "black"]
-                selectedCellsBorderColor: "gray"
-                hoverCellsBorderColor: "red"
+//                cellsBorderColorList: ["brown", "dark-blue", "black"]
+//                selectedCellsBorderColor: "gray"
+//                hoverCellsBorderColor: "red"
 
             }
 
@@ -85,14 +90,16 @@ ApplicationWindow {
 //                text: qsTr("FPS: ") + fpsC.
 
             }
-
-            Button {
-                text: "Add Target"
-                onClicked: targetModel.addTargetFromQml(Math.random()*360, Math.random()*200, Math.random()*200, Math.random()*200)
+            TextArea {
+                id: txtFilter
+                placeholderText: "type to filter..."
+                onTextChanged: {
+                    targetModel.filterString = text;
+                }
             }
 
             Button {
-                text: "Remove Last"
+                text: "Remove Column"
                 onClicked: {
 
                     console.log(sbTargetId.value)
@@ -102,19 +109,25 @@ ApplicationWindow {
                 }
             }
             CheckBox {
-                text: "azimuth visible"
+                text: "Column Visible"
                 onClicked: {
-                    console.log("CheckState", checked)
-//                    table.update()
-                    console.log("Table Result: ", table.columns[3].visible)
-                    targetModel.setProperty("azimuth", "visible", checked)
-                    console.log("Table Result: ", table.columns[3].visible)
-                    console.log("All data: \n", targetModel.getProperties(true))
+                    for (let i = 0; i < table.columns.length; ++i) {
+                        console.log("Name", table.columns[i].name)
+                        if (table.columns[i].name === "row") {
+//                            table.columns[i].visible = checked;
+                            table.columns[i].columnWidth = checked ? 50 : null
+                            table.columns = JSON.parse(JSON.stringify(table.columns))
+                            console.log("Visiblity of Az: ", table.columns[i].visible)
+                            break
+
+                        }
+
+                    }
+
                 }
             }
             SpinBox {
                 id: sbTargetId
-
             }
         }
     }

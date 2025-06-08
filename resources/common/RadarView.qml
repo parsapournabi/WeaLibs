@@ -5,6 +5,7 @@ Item {
     id: radar
     property real centerX: width / 2
     property real centerY: height / 2
+    property var tarModel
 
     Rectangle {
         anchors.fill: parent
@@ -15,7 +16,7 @@ Item {
     }
 
     Repeater {
-        model: targetModel
+        model: tarModel
         delegate: TargetItem {
             centerX: radar.centerX
             centerY: radar.centerY
@@ -26,7 +27,7 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    targetModel.selectItem(model.row)
+                    tarModel.selectItem(model.row)
                 }
             }
         }
