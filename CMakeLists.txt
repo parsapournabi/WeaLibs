@@ -62,9 +62,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Quick)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick)
+find_package(WeaNet REQUIRED)
+
 set(HEADERS
     common/fps.h
     common/worker.h
+    models/QItemListModdelBase.h
     models/QItemListModel.h
     models/QItemBase.h
     models/examples/SortFilterProxy.h
@@ -104,13 +107,15 @@ else()
     else()
         add_executable(appRadar
           ${PROJECT_SOURCES}
+          README.md
 
         )
     endif()
 endif()
 
 target_link_libraries(appRadar
-  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick)
+  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick
+  PRIVATE WeaNet::WeaNet)
 
 target_include_directories(appRadar PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 

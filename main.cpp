@@ -6,9 +6,15 @@
 #include <qloggingcategory.h>
 #include <QThread>
 
-#include "common/worker.h"
+#define USE_NETWORK_SOURCE
+#ifdef USE_NETWORK_SOURCE
+    #include <WeaNet/Manager.h>
+#else
+    #include "common/worker.h"
+#endif
 #include "common/fps.h"
 #include "models/examples/SortFilterProxy.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -17,39 +23,68 @@ int main(int argc, char *argv[])
     #endif
 
 
-        QGuiApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
 
-        qputenv("QT_ASSUME_STDERR_HAS_CONSOLE", "1");
-//        qputenv("QSG_INFO", "1");
-        qmlRegisterType<Fps>("CustomItems", 1, 0, "Fps");
-        qmlRegisterType<SortFilterProxyModel>("CustomItems", 1, 0, "SortFilterProxyModel");
 
-        TargetModel targetModel;
-        // Custom Filtering class
-        SortFilterProxyModel filter;
-        filter.setSourceModel(&targetModel);
-        filter.m_targetModel = &targetModel;
-        filter.setFilterCaseSensitivity(Qt::CaseInsensitive);
+    qputenv("QT_ASSUME_STDERR_HAS_CONSOLE", "1");
+//    qputenv("QSG_INFO", "1");
+    qmlRegisterType<Fps>("CustomItems", 1, 0, "Fps");
+    qmlRegisterType<SortFilterProxyModel>("CustomItems", 1, 0, "SortFilterProxyModel");
 
-        Worker* worker = new Worker();
-        for (int i = 0; i < 10000; i++) {
-            Target *tar = new Target();
-            targetModel.insertItem(tar, i);
-        }
-        worker->loop = true;
-        worker->targets = &targetModel;
-        qDebug() << targetModel.roleNames();
+    TargetModel targetModel;
+    // Custom Filtering class
+    SortFilterProxyModel filter;
+    filter.setSourceModel(&targetModel);
+    filter.m_targetModel = &targetModel;
+    filter.setFilterCaseSensitivity(Qt::CaseInsensitive);
 
-        QQmlApplicationEngine engine;
-        const QUrl url(QStringLiteral("qrc:/main.qml"));
-        QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-            &app, [url](QObject *obj, const QUrl &objUrl) {
-                if (!obj && url == objUrl)
-                    QCoreApplication::exit(-1);
-            }, Qt::QueuedConnection);
-        engine.rootContext()->setContextProperty("tableModel", &targetModel);
-        engine.rootContext()->setContextProperty("proxyModel", &filter); // If you want to use filtering else uncommnet above line
-        engine.load(url);
-        return app.exec();
+#ifdef USE_NETWORK_SOURCE
+    Target *tar = new Target();
+    targetModel.insertItem(tar, 0);
+
+    QThread threadRecv = QThread();
+    Manager* receiver = new Manager();
+    qDebug() << QThread::currentThreadId();
+    receiver->moveToThread(&threadRecv);
+//    QMetaObject::invokeMethod(receiver, "setConnectionType", Qt::QueuedConnection, Q_ARG(int, 2));
+    receiver->setConnectionType(2); // Udp (0= TcpClient, 1 = TcpServer)
+    receiver->setConnectionSetting(12345, 12345, "172.16.50.50"); // Change it to your Address & port
+    receiver->onBind();
+    receiver->onConnect();
+
+    QObject::connect(receiver, &Manager::readyRead, receiver, [&] (LogDataType *obj) {
+            Target *target = targetModel.returnItemObject(0);
+            target->setAzimuth(obj->azimuth());
+            target->setElevation(obj->elevation());
+            target->setRangeCell(obj->range());
+            target->setPower(obj->power());
+            obj->deleteLater();
+
+        }, Qt::AutoConnection);
+    threadRecv.start();
+
+#else
+    Worker* worker = new Worker();
+    for (int i = 0; i < 10000; i++) {
+        Target *tar = new Target();
+        targetModel.insertItem(tar, i);
+    }
+    worker->loop = true;
+    worker->targets = &targetModel;
+#endif
+
+    qDebug() << targetModel.roleNames();
+
+    QQmlApplicationEngine engine;
+    const QUrl url(QStringLiteral("qrc:/main.qml"));
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
+        &app, [url](QObject *obj, const QUrl &objUrl) {
+            if (!obj && url == objUrl)
+                QCoreApplication::exit(-1);
+        }, Qt::QueuedConnection);
+    engine.rootContext()->setContextProperty("tableModel", &targetModel);
+    engine.rootContext()->setContextProperty("proxyModel", &filter); // If you want to use filtering else uncommnet above line
+    engine.load(url);
+    return app.exec();
 
 }
