@@ -4,6 +4,7 @@ This project provides a lightwright and modular framework for integrating a `QAb
 ---
 
 ## File Tree
+```bash
 project_root
 ├── CMakeLists.txt
 ├── common
@@ -28,6 +29,7 @@ project_root
 │   │   └── ModelTableView.qml
 │   └── qml.qrc
 └── tree.txt
+```
 
 ---
 
