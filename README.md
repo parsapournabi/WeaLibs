@@ -17,8 +17,10 @@ project_root
 │   │   ├── SortFilterProxy.h
 │   │   ├── Target.h
 │   │   └── TargetModel.h
+│   ├── IQItemListModel.h
 │   ├── QItemBase.h
-│   └── QItemListModel.h
+│   ├── QItemListModel.h
+│   └── QItemSortFilterProxyModel.h
 ├── README.md
 ├── resources
 │   ├── common
@@ -29,6 +31,7 @@ project_root
 │   │   └── ModelTableView.qml
 │   └── qml.qrc
 └── tree.txt
+
 ```
 
 ---
@@ -36,10 +39,12 @@ project_root
 ## Core C++ Classes
 ### QItemBase.h
 A base template class for list items. Designed for type-safe and generic item structures in a list model.
-### QItemListModelBase.h
+### IQItemListModel.h
 Abstract base class providing interface for items count, data access, notifications, and more.
 ### QItemListModel.h
-Implements a typed list model using `QItemBase<T>`. Designed for reuse with any custom item type.
+Implements a typed list model using `IQItemListModel` with template. Designed for reuse with any custom item type.
+### QItemSOrtFilterProxyModel
+A base template class which inherited from `QSortFilterProxyModel`. You can use this class as your parent SortFilterProxy class.
 
 ---
 
@@ -151,6 +156,15 @@ public:
 
 Custom subclass of `QSortFilterProxyModel`.
 Used to filter/search `TargetModel` (e.g. by ID, velocity, etc.).
+
+**Here is the example of usage on `TextField` filtering:**
+
+- Valids : 10 >,  22 <, 35 >=, 35 <=, 35 =, 10~37 and also the default 12 (only a single digit)
+
+**Also you can use with multi columns filtering by seprating with ','**
+- Valids :  id: 10 > , azimuth: 100.5 ~ 120.0, elevation: 120 >, ...
+
+**Note:** the rule of the filtering patter is: "{role}: {minRange} {condition} {maxRange (optional)}, ..."
 
 ---
 
