@@ -67,8 +67,9 @@ find_package(WeaNet REQUIRED)
 set(HEADERS
     common/fps.h
     common/worker.h
-    models/QItemListModdelBase.h
+    models/IQItemListModel.h
     models/QItemListModel.h
+    models/QItemSortFilterProxyModel.h
     models/QItemBase.h
     models/examples/SortFilterProxy.h
     models/examples/TargetModel.h
@@ -108,6 +109,7 @@ else()
         add_executable(appRadar
           ${PROJECT_SOURCES}
           README.md
+
 
         )
     endif()

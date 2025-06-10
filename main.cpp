@@ -6,7 +6,7 @@
 #include <qloggingcategory.h>
 #include <QThread>
 
-#define USE_NETWORK_SOURCE
+//#define USE_NETWORK_SOURCE
 #ifdef USE_NETWORK_SOURCE
     #include <WeaNet/Manager.h>
 #else
@@ -14,6 +14,7 @@
 #endif
 #include "common/fps.h"
 #include "models/examples/SortFilterProxy.h"
+//#include "models/QItemSortFilterProxyModel.h"
 
 
 int main(int argc, char *argv[])
@@ -35,7 +36,6 @@ int main(int argc, char *argv[])
     // Custom Filtering class
     SortFilterProxyModel filter;
     filter.setSourceModel(&targetModel);
-    filter.m_targetModel = &targetModel;
     filter.setFilterCaseSensitivity(Qt::CaseInsensitive);
 
 #ifdef USE_NETWORK_SOURCE
@@ -47,20 +47,34 @@ int main(int argc, char *argv[])
     qDebug() << QThread::currentThreadId();
     receiver->moveToThread(&threadRecv);
 //    QMetaObject::invokeMethod(receiver, "setConnectionType", Qt::QueuedConnection, Q_ARG(int, 2));
-    receiver->setConnectionType(2); // Udp (0= TcpClient, 1 = TcpServer)
-    receiver->setConnectionSetting(12345, 12345, "172.16.50.50"); // Change it to your Address & port
+    receiver->setConnectionType(1); // Udp (0= TcpClient, 1 = TcpServer)
+    receiver->setConnectionSetting(54321, 54321, "172.16.50.50"); // Change it to your Address & port
     receiver->onBind();
-    receiver->onConnect();
+//    receiver->onConnect();
 
-    QObject::connect(receiver, &Manager::readyRead, receiver, [&] (LogDataType *obj) {
+    QObject::connect(receiver, &Manager::readyReads, receiver, [&] (QSharedPointer<QList<QSharedPointer<LogDataType>>> logDatas,
+                                                                   qreal az, qreal time) {
+//            if (logDatas->size() > 1)
+            qDebug() << "logDataSize is: " << logDatas->size() << az << time;
+            for (int i = 0; i < logDatas->size(); ++i) {
+                qDebug() << logDatas->at(i)->rawVec();
+            }
             Target *target = targetModel.returnItemObject(0);
-            target->setAzimuth(obj->azimuth());
-            target->setElevation(obj->elevation());
-            target->setRangeCell(obj->range());
-            target->setPower(obj->power());
-            obj->deleteLater();
+            target->setAzimuth(logDatas->constLast()->azimuth());
+            target->setElevation(logDatas->constLast()->elevation());
+            target->setRangeCell(logDatas->constLast()->range());
+            target->setPower(logDatas->constLast()->power());
+        }, Qt::DirectConnection);
 
-        }, Qt::AutoConnection);
+//    QObject::connect(receiver, &Manager::readyRead, receiver, [&] (LogDataType *obj) {
+//            Target *target = targetModel.returnItemObject(0);
+//            target->setAzimuth(obj->azimuth());
+//            target->setElevation(obj->elevation());
+//            target->setRangeCell(obj->range());
+//            target->setPower(obj->power());
+//            obj->deleteLater();
+
+//        }, Qt::AutoConnection);
     threadRecv.start();
 
 #else
