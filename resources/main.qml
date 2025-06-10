@@ -111,18 +111,20 @@ ApplicationWindow {
             CheckBox {
                 text: "Column Visible"
                 onClicked: {
-                    for (let i = 0; i < table.columns.length; ++i) {
-                        console.log("Name", table.columns[i].name)
-                        if (table.columns[i].name === "row") {
-//                            table.columns[i].visible = checked;
-                            table.columns[i].columnWidth = checked ? 50 : null
-                            table.columns = JSON.parse(JSON.stringify(table.columns))
-                            console.log("Visiblity of Az: ", table.columns[i].visible)
-                            break
+//                    for (let i = 0; i < table.columns.length; ++i) {
+//                        console.log("Name", table.columns[i].name)
+//                        if (table.columns[i].name === "row") {
+////                            table.columns[i].visible = checked;
+//                            table.columns[i].columnWidth = checked ? 50 : null
+//                            table.columns = JSON.parse(JSON.stringify(table.columns))
+//                            console.log("Visiblity of Az: ", table.columns[i].visible)
+//                            break
 
-                        }
+//                        }
 
-                    }
+//                    }
+                    table.columns[sbTargetId.value].visible = checked
+                    table.columns = JSON.parse(JSON.stringify(table.columns))
 
                 }
             }

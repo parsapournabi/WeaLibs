@@ -4,16 +4,16 @@
 #include <QTimerEvent>
 #include <chrono>
 
-#include "QItemListModdelBase.h"
+#include "IQItemListModel.h"
 
 template<typename ItemType>
-class QItemListModel:  public QItemListModelBase
+class QItemListModel:  public IQItemListModel
 {
 //    Q_OBJECT
     using clock = std::chrono::high_resolution_clock;
 public:
     explicit QItemListModel(QObject* parent = nullptr) :
-        QItemListModelBase(parent)
+        IQItemListModel(parent)
     {
         // Initialization
         update();
