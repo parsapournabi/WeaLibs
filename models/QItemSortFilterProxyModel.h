@@ -24,8 +24,17 @@ public:
     }
 
     void setSourceRoleNames(QHash<int, QByteArray> roleNames) {
-        for (auto it =roleNames.constBegin(); it != roleNames.constEnd(); ++it) {
-            m_sourceRoleNames[QString::fromUtf8(it.value())] = it.key();
+        QVariantList headers = dynamic_cast<IQItemListModel *>(sourceModel())->getHeadersData();
+        for (auto it = roleNames.constBegin(); it != roleNames.constEnd(); ++it) {
+            QString roleNameStr = QString::fromUtf8(it.value());
+            m_sourceRoleNames[roleNameStr.toLower()] = it.key();
+            for (auto &header : headers) {
+                auto mp_header = header.value<QVariantMap>();
+                if (roleNameStr != mp_header["name"])
+                    continue;
+                m_sourceRoleNames[mp_header["title"].value<QString>().toLower()] = it.key();
+                break;
+            }
         }
         m_sourceIsAssigned = true;
     }
@@ -42,7 +51,7 @@ public:
     /// @details: 1 < 130 isValid; 1203 isValid; 123 ~ 12367 isValid; & ...
     /// @details Operations are = "<=>~"
     void filterRegex(QString &textInput) {
-        QStringList textPatterns = textInput.split(',');
+        QStringList textPatterns = textInput.toLower().split(',');
         QString pattern = R"((?:(\w+):\s*)?(-?\d+(?:\.\d+)?)[\t| ]*(>=|<=|=|<|>|~)[\t| ]*(-?\d+(?:\.\d+)?|(?=.*))|(-?\d+(?:\.\d+)?))";
         QRegularExpression re(pattern);
         m_roleFilters.clear();
