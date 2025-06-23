@@ -8,18 +8,24 @@ class Worker : public QObject
 {
     Q_OBJECT
 public:
-    explicit Worker(QObject *parent = nullptr);
+    explicit Worker(TargetModel * targets, QObject *parent = nullptr);
 
     void timelaps();
 
+    void quit();
+
     TargetModel *targets;
 
-    QThread *thread;
+//    QThread *thread;
 
     TargetModel *model;
-    bool loop = false;
+    bool loop = true;
 
 signals:
+    void signalUpdate();
+
+private:
+    bool m_quit = false;
 
 };
 

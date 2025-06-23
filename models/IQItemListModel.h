@@ -23,6 +23,8 @@ public:
 
     virtual Q_INVOKABLE bool editItem(int key, QObject* itemObj) = 0;
 
+    virtual Q_INVOKABLE bool editItemById(int itemId, QObject* itemObj) = 0;
+
     virtual Q_INVOKABLE QVariantList getRowData(int row) const = 0;
 
     virtual Q_INVOKABLE void selectItem(int index) = 0;

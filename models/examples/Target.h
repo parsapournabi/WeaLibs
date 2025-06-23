@@ -14,8 +14,8 @@ class Target : public QItemBase {
     Q_PROPERTY(double rangeCell READ rangeCell WRITE setRangeCell CONSTANT)
     Q_PROPERTY(double power READ power WRITE setPower CONSTANT)
 public:
-    explicit Target(double az = 1.0, double elv = 1.0, double rc = 1.0 , double p = 1.0) :
-        m_azimuth(az), m_elevation(elv), m_rangeCell(rc), m_power(p)
+    explicit Target(double az = 1.0, double elv = 1.0, double rc = 1.0 , double p = 1.0, QObject* parent = nullptr) :
+        m_azimuth(az), m_elevation(elv), m_rangeCell(rc), m_power(p), QItemBase{parent}
     {
     }
 
@@ -62,16 +62,36 @@ public:
     }
 
     float azimuth() const { return m_azimuth; }
-    void setAzimuth(double az) { m_azimuth = az;}
+    void setAzimuth(double az) {
+        if (m_azimuth == az)
+            return;
+        m_azimuth = az;
+        setUpdated(true);
+    }
 
     float elevation() const{ return m_elevation; }
-    void setElevation(double elv){ m_elevation = elv; }
+    void setElevation(double elv){
+        if (m_elevation == elv)
+            return;
+        m_elevation = elv;
+        setUpdated(true);
+    }
 
     float rangeCell() const{ return m_rangeCell; }
-    void setRangeCell(double range_cell){ m_rangeCell =  std::isnan(range_cell) ? 100.0: range_cell; }
+    void setRangeCell(double range_cell){
+        if (m_rangeCell == range_cell)
+            return;
+        m_rangeCell =  std::isnan(range_cell) ? 100.0: range_cell;
+        setUpdated(true);
+    }
 
     float power() const { return m_power; }
-    void setPower(double power){ m_power = power; }
+    void setPower(double power){
+        if (m_power == power)
+            return;
+        m_power = power;
+        setUpdated(true);
+    }
 
 
 private:

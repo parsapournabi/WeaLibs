@@ -2,24 +2,24 @@
 #include <QRandomGenerator>
 #include <QThread>
 
-Worker::Worker(QObject *parent)
-    : QObject{parent}
+Worker::Worker(TargetModel *targetModel, QObject *parent)
+    : targets(targetModel), QObject{parent}
 {
-    QThread *thread = new QThread();
-    this->moveToThread(thread);
-    QObject::connect(thread, &QThread::started, this, &Worker::timelaps);
-    thread->start();
+
 
 }
 
+void Worker::quit() { m_quit = true; }
+
 void Worker::timelaps() {
     // Example of data assigning
-    while (true) {
+    qDebug() << "timelaps thread: " << QThread::currentThreadId() << this->thread();
+    while (!m_quit) {
         if (!loop)
             continue;
         if (targets->isEmpty())
             return;
-        for (int i = 0; i < targets->countItem(); ++i) {
+        for (int i = 300; i < targets->rowCount(); ++i) {
             if (!targets->validItemId(i)) {
                 qDebug() << "Not contains: " << i;
                 continue;
@@ -27,12 +27,18 @@ void Worker::timelaps() {
             }
             double max = 360.0;
             double maxr = 240.0;
+
+            // Editing target example
             Target* target = targets->returnItemObject(i);
             target->setAzimuth(static_cast<float>(QRandomGenerator::global()->bounded(max)));
             target->setElevation(static_cast<float>(QRandomGenerator::global()->bounded(maxr)));
             target->setRangeCell(static_cast<float>(QRandomGenerator::global()->bounded(maxr)));
             target->setPower(static_cast<float>(QRandomGenerator::global()->bounded(maxr)));
+
         }
+//        QMetaObject::invokeMethod(targets, [=]() {targets->updateChangedItems();});
+        emit signalUpdate();
+        QThread::msleep(100);
 
     }
 }

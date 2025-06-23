@@ -3,22 +3,18 @@
 
 #include <QTimerEvent>
 #include <chrono>
-
 #include "IQItemListModel.h"
 
 template<typename ItemType>
 class QItemListModel:  public IQItemListModel
 {
 //    Q_OBJECT
-    using clock = std::chrono::high_resolution_clock;
 public:
+
     explicit QItemListModel(QObject* parent = nullptr) :
         IQItemListModel(parent)
     {
         // Initialization
-        update();
-        m_timerId = startTimer(REFRESH_INTERVAL);
-
         this->roleIdToName = ItemType::getRoles();
         QHashIterator<int, QByteArray> qIt(roleIdToName);
         while (qIt.hasNext())
@@ -56,7 +52,6 @@ public:
 
         return QVariant();
     }
-
 
     Q_INVOKABLE int insertItem(QObject* itemObj, quint32 itemId) override
     {
@@ -96,12 +91,14 @@ public:
         if (items.count() > key)
         {
             items[key] = item;
+            item->setUpdated(false);
+            emit dataChanged(index(key), index(key));
             return true;
         }
         return false;
     }
 
-    Q_INVOKABLE bool editItemById(int itemId, QObject* itemObj)
+    Q_INVOKABLE bool editItemById(int itemId, QObject* itemObj) override
     {
         ItemType *item = qobject_cast<ItemType*>(itemObj);
         if (!item) {
@@ -112,8 +109,11 @@ public:
             qDebug() << "item Id not exists at mapItemIdToObjedct!" << itemId;
             return false;
         }
-        mapItemIdToObject[itemId] = item;
-
+        int row = mapItemIdToRow[itemId];
+        items[row] = item;
+        item->setUpdated(false);
+        emit dataChanged(index(row), index(row));
+//        mapItemIdToObject[itemId] = item;
         return true;
     }
 
@@ -138,13 +138,11 @@ public:
         qDebug() << "Select row: " << index;
         for (int i = 0; i < items.size(); ++i)
             items[i]->setSelected(i == index);
-        update();
-        if (m_selectedIndex != -1)
-            update();
+        updateAll();
         m_selectedIndex = index;
     }
 
-    ItemType * returnItemObject(quint32 itemId)
+    ItemType *returnItemObject(quint32 itemId)
     {
         ItemType * item = nullptr;
         if(mapItemIdToObject.contains(itemId))
@@ -185,14 +183,12 @@ public:
     int getIndex(quint32 key){
         if(mapItemIdToRow.contains(key))
             return mapItemIdToRow[key];
-
         return -1;
     }
 
     bool validItemId(quint32 trgId){
         if(mapItemIdToRow.contains(trgId))
             return true;
-
         return false;
 
     }
@@ -200,15 +196,33 @@ public:
     bool validItemObject(quint32 trgId){
         if(mapItemIdToObject.contains(trgId))
             return true;
-
         return false;
 
     }
 
-    void update(int topLeft = 0, int topRight = -1) {
-//        beginResetModel();
-//        endResetModel();
-        emit dataChanged(index(topLeft), index(topRight == -1 ? items.count() - 1 : topRight));
+    void updateAll() {
+        if (!items.isEmpty())
+            emit dataChanged(index(0), index(items.count() - 1));
+
+    }
+
+    void updateChangedItems() {
+        if (items.isEmpty())
+            return;
+        QVector<int> changedItems;
+        for (int i = 0; i < items.count(); ++i) {
+            if (items[i]->hasUpdated()) {
+                changedItems.append(i);
+                items[i]->setUpdated(false);
+            }
+
+        }
+        if (changedItems.isEmpty())
+            return;
+        auto minMax = std::minmax_element(changedItems.begin(), changedItems.end());
+        int minRow = *minMax.first;
+        int maxRow = *minMax.second;
+        emit dataChanged(index(minRow), index(maxRow));
 
     }
 
@@ -216,12 +230,21 @@ public:
         return mapItemIdToRow.keys();
     }
 
-    int countItem() const {
-        return items.count();
-    }
-
     bool isEmpty() const {
         return items.isEmpty();
+    }
+
+    bool autoRefresh() const { return m_autoRefresh; }
+
+    void setAutoRefresh(bool enable, bool only_changed_items = true) {
+        m_autoRefresh = enable;
+        m_onlyChangedItems = only_changed_items;
+        if (m_autoRefresh && m_timerId == -1)
+            m_timerId = startTimer(refreshInterval);
+        else if (!m_autoRefresh && m_timerId != -1){
+            killTimer(m_timerId);
+            m_timerId = -1;
+        }
     }
 
     void clearData() {
@@ -252,7 +275,7 @@ private:
             items.removeAt(index);
             mapItemIdToRow.remove(key);
             mapItemIdToObject.remove(key);
-            setRowNumbers();
+            updateItemsIndex();
 
             endRemoveRows();
             return true;
@@ -260,7 +283,7 @@ private:
         return false;
     }
 
-    void setRowNumbers() {
+    void updateItemsIndex() {
 
         // Redefining row Numbers
         for (int i = 0; i < items.count(); ++i) {
@@ -271,23 +294,29 @@ private:
 protected:
 
     void timerEvent(QTimerEvent *event) override {
-        if (event->timerId() == m_timerId)
-            update();
+        if (event->timerId() != m_timerId)
+            return;
+        if  (m_onlyChangedItems){
+            updateChangedItems();
+        }
+        else{
+            updateAll();
+        }
     }
+public:
+    int refreshInterval = 100; // ms, UI update cycle
 
 private:
     QHash<QString, int> roleNameToId;
     QHash<int, QByteArray> roleIdToName;
     QVector<ItemType*> items;
-    QMap <quint32 , quint32>mapItemIdToRow;// trgId--->index item
+    QHash <quint32 , quint32>mapItemIdToRow;// trgId--->index item
     QHash<quint32 , ItemType*>mapItemIdToObject;//itemId , object
 
-    int m_timerId;
+    int m_timerId = -1;
+    bool m_autoRefresh = false;
+    bool m_onlyChangedItems = true;
     int m_selectedIndex = -1; // Latest index selected
-
-    std::chrono::time_point<clock> m_nextDataChangeEmit = clock::now();
-
-    const int REFRESH_INTERVAL = 100; // ms, UI update cycle
 
 };
 

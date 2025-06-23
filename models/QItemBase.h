@@ -21,19 +21,34 @@ public:
     }
 
     int id() const { return m_id; }
-    void setId(int id) { m_id = id; }
+    void setId(int id) {
+        if (m_id == id)
+            return;
+        m_id = id;
+        setUpdated(true);
+    }
 
     int row() const { return m_row; }
-    void setRow(int row){ m_row = row; }
+    void setRow(int row){
+        if (m_row == row)
+            return;
+        m_row = row;
+        setUpdated(true);
+    }
 
     bool selected() const { return m_selected; }
-    void setSelected(bool row) {
-        if (m_selected == row)
+    void setSelected(bool selected) {
+        if (m_selected == selected)
             return;
-        m_selected = row;
+        m_selected = selected;
+        setUpdated(true);
     }
 
     bool isEmpty() const { return m_empty; }
+
+    bool hasUpdated() const { return m_hasUpdated; }
+
+    void setUpdated(const bool updated) { m_hasUpdated = updated; }
 
     Q_INVOKABLE QVariantList getSelfProperties() { return getProperties(false); }
 
@@ -91,6 +106,7 @@ private:
     int m_row = 0;
     int m_id = -1; // -1 means Item has no Id!
     bool m_selected = false;
+    bool m_hasUpdated = false;
 
     bool m_empty = false;
     QVariantList m_roles;
