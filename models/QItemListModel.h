@@ -2,6 +2,8 @@
 #define QITEMTABLEMODEL_H
 
 #include <QTimerEvent>
+#include <QMetaObject>
+#include <QMetaEnum>
 #include <chrono>
 #include "IQItemListModel.h"
 
@@ -22,6 +24,7 @@ public:
             qIt.next();
             roleNameToId[QString(qIt.value())] = qIt.key();
         }
+
     }
 
     Q_INVOKABLE QHash<int, QByteArray> roleNames() const override
@@ -34,13 +37,15 @@ public:
         return items.count();
     }
 
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override {
+    Q_INVOKABLE int columnCount(const QModelIndex &parent = QModelIndex()) const override {
         Q_UNUSED(parent)
         return !parent.isValid() ? 1 : 0;
+//        qDebug() << "ColumnsCount" << roleIdToName.count();
+//        return roleIdToName.count();
 
     }
 
-    QVariant data(const QModelIndex &index,int role= Qt::DisplayRole) const override {
+    Q_INVOKABLE QVariant data(const QModelIndex &index,int role= Qt::DisplayRole) const override {
         if(!index.isValid())
             return {};
         int key = index.row();
@@ -52,6 +57,74 @@ public:
 
         return QVariant();
     }
+
+    Q_INVOKABLE QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override{
+        const QMetaObject *metaObj = &ItemType::staticMetaObject;
+        if (!metaObj->enumeratorCount()) {
+            qCritical() << "QItemBase Child class must include Q_ENUM macro for Roles";
+            return QVariant();
+        }
+        QMetaEnum enm = metaObj->enumerator(0);
+        if (role == Qt::DisplayRole) // Entered by Section
+            role = Qt::UserRole + 1 + section; // Locating for specific role...
+        ItemType item;
+        return item.getHeaderDataByRole(role);
+    }
+
+    Q_INVOKABLE QVariantList headersData() const override {
+        const QMetaObject *metaObj = &ItemType::staticMetaObject;
+        if (!metaObj->enumeratorCount()) {
+            qCritical() << "QItemBase Child class must include Q_ENUM macro for Roles";
+            return QVariantList();
+        }
+        QMetaEnum enm = metaObj->enumerator(0);
+        QVariantList headers;
+        ItemType item;
+        for (int i = 0; i < enm.keyCount(); ++i) {
+            int enm_role = enm.value(i);
+            qDebug() << "Prop Name" << enm.key(i) << enm_role;
+            QVariantMap title = item.getHeaderDataByRole(enm_role);
+            title["name"] = QString(roleIdToName[enm_role]);
+            headers.append(title);
+        }
+        return headers;
+    }
+
+    Q_INVOKABLE QVariantList headersTitle() const override {
+        const QMetaObject *metaObj = &ItemType::staticMetaObject;
+        if (!metaObj->enumeratorCount()) {
+            qCritical() << "QItemBase Child class must include Q_ENUM macro for Roles";
+            return QVariantList();
+        }
+        QMetaEnum enm = metaObj->enumerator(0);
+        QVariantList headers;
+        ItemType item;
+        for (int i = 0; i < enm.keyCount(); ++i) {
+            int enm_role = enm.value(i);
+            qDebug() << "Prop Name" << enm.key(i) << enm_role;
+            QString title = item.getTitleByRole(enm_role);
+            headers.append(title);
+        }
+        return headers;
+    }
+
+
+    Q_INVOKABLE QVariantList getRowData(int row) const override
+    {
+        QVariantList rowData;
+        for (auto &role: roleNameToId)
+            rowData.append(data(index(row), role));
+        return rowData;
+    }
+
+    Q_INVOKABLE void selectItem(int index) override {
+        qDebug() << "Select row: " << index;
+        for (int i = 0; i < items.size(); ++i)
+            items[i]->setItemSelected(i == index);
+        updateAll();
+        m_selectedIndex = index;
+    }
+
 
     Q_INVOKABLE int insertItem(QObject* itemObj, quint32 itemId) override
     {
@@ -115,31 +188,6 @@ public:
         emit dataChanged(index(row), index(row));
 //        mapItemIdToObject[itemId] = item;
         return true;
-    }
-
-    Q_INVOKABLE QVariantList getHeadersData(bool getParent = true) const override {
-        if (items.isEmpty()) {
-            ItemType item;
-//            return QVariantList();
-            return getParent ? item.getParentProperties() + item.getSelfProperties() : item.getSelfProperties();
-        }
-        return getParent ? items[0]->getParentProperties() + items[0]->getSelfProperties() : items[0]->getSelfProperties();
-    }
-
-    Q_INVOKABLE QVariantList getRowData(int row) const override
-    {
-        QVariantList rowData;
-        for (auto &role: roleNameToId)
-            rowData.append(data(index(row), role));
-        return rowData;
-    }
-
-    Q_INVOKABLE void selectItem(int index) override {
-        qDebug() << "Select row: " << index;
-        for (int i = 0; i < items.size(); ++i)
-            items[i]->setSelected(i == index);
-        updateAll();
-        m_selectedIndex = index;
     }
 
     ItemType *returnItemObject(quint32 itemId)

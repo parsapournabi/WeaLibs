@@ -17,9 +17,9 @@ void Worker::timelaps() {
     while (!m_quit) {
         if (!loop)
             continue;
-        if (targets->isEmpty())
-            return;
-        for (int i = 300; i < targets->rowCount(); ++i) {
+//        if (targets->isEmpty())
+//            return;
+        for (int i = 0; i < targets->rowCount(); ++i) {
             if (!targets->validItemId(i)) {
                 qDebug() << "Not contains: " << i;
                 continue;
@@ -34,6 +34,7 @@ void Worker::timelaps() {
             target->setElevation(static_cast<float>(QRandomGenerator::global()->bounded(maxr)));
             target->setRangeCell(static_cast<float>(QRandomGenerator::global()->bounded(maxr)));
             target->setPower(static_cast<float>(QRandomGenerator::global()->bounded(maxr)));
+//            qDebug() << target->azimuth() << target->elevation() << target->rangeCell() << target->power();
 
         }
 //        QMetaObject::invokeMethod(targets, [=]() {targets->updateChangedItems();});

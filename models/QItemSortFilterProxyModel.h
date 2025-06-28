@@ -24,7 +24,7 @@ public:
     }
 
     void setSourceRoleNames(QHash<int, QByteArray> roleNames) {
-        QVariantList headers = dynamic_cast<IQItemListModel *>(sourceModel())->getHeadersData();
+        QVariantList headers = dynamic_cast<IQItemListModel *>(sourceModel())->headersData();
         for (auto it = roleNames.constBegin(); it != roleNames.constEnd(); ++it) {
             QString roleNameStr = QString::fromUtf8(it.value());
             m_sourceRoleNames[roleNameStr.toLower()] = it.key();
@@ -75,6 +75,12 @@ public:
     }
 
     // Interface IQItemListModel class Functions
+    Q_INVOKABLE QVariant headerData(int section, Qt::Orientation orientation = Qt::Horizontal, int role = Qt::DisplayRole) {
+        return dynamic_cast<IQItemListModel *>(sourceModel())->headerData(section, orientation, role);
+    }
+    Q_INVOKABLE QVariantList headersData() {
+        return dynamic_cast<IQItemListModel *>(sourceModel())->headersData();
+    }
     Q_INVOKABLE int insertItem(QObject* itemObj, quint32 itemId) {
         return dynamic_cast<IQItemListModel *>(sourceModel())->insertItem(itemObj, itemId);
     }
@@ -94,9 +100,7 @@ public:
     Q_INVOKABLE void selectItem(int index) {
         dynamic_cast<IQItemListModel *>(sourceModel())->selectItem(index);
     }
-    Q_INVOKABLE QVariantList getHeadersData(bool get_parent = true) {
-        return dynamic_cast<IQItemListModel *>(sourceModel())->getHeadersData(get_parent);
-    }
+
 
 signals:
     void filterStringChanged();

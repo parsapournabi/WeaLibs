@@ -59,7 +59,7 @@ ApplicationWindow {
 //                {"name": "elevation", "title": "Elv", "visible": true, "columnWidth": null},
 //                {"name": "rangeCell", "title": "Range", "visible": true, "columnWidth": 400},
 //                {"name": "power", "title": "Power", "visible": true, "columnWidth": null}]
-                columns: targetModel.getHeadersData(true)
+                columns: targetModel.headersData()
 
 //                cellColorList: ["purple"]
 //                cellsBorderColorList: ["brown", "dark-blue", "black"]

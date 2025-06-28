@@ -92,7 +92,7 @@ Rectangle {
             }
 
             function getColor(row, colorList, colorSelect, colorHover) {
-                if (selected)
+                if (itemSelected)
                     return colorSelect
                 if (hoverRow === row)
                     return colorHover

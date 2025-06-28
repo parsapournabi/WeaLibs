@@ -29,7 +29,9 @@ public:
 
     virtual Q_INVOKABLE void selectItem(int index) = 0;
 
-    virtual Q_INVOKABLE QVariantList getHeadersData(bool getParent = true) const = 0;
+    virtual Q_INVOKABLE QVariantList headersData() const = 0;
+
+    virtual Q_INVOKABLE QVariantList headersTitle() const = 0;
 
 };
 

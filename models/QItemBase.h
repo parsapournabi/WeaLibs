@@ -8,17 +8,13 @@
 
 class QItemBase : public QObject {
     Q_OBJECT
-    Q_PROPERTY(int row READ row WRITE setRow CONSTANT)
-    Q_PROPERTY(int id READ id WRITE setId CONSTANT)
-    Q_PROPERTY(bool selected READ selected WRITE setSelected CONSTANT)
 
 public:
     explicit QItemBase(QObject *parent = nullptr) { setEmpty(true); };
 
     virtual QVariant getValueByRole(int role) = 0;
-    virtual int columnCount() {
-        return getProperties(false).length() + getProperties(true).length();
-    }
+    virtual QString getTitleByRole(int role) const = 0;
+    virtual QVariantMap getHeaderDataByRole(int role) const = 0;
 
     int id() const { return m_id; }
     void setId(int id) {
@@ -36,11 +32,11 @@ public:
         setUpdated(true);
     }
 
-    bool selected() const { return m_selected; }
-    void setSelected(bool selected) {
-        if (m_selected == selected)
+    bool itemSelected() const { return m_itemSelected; }
+    void setItemSelected(bool selected) {
+        if (m_itemSelected == selected)
             return;
-        m_selected = selected;
+        m_itemSelected = selected;
         setUpdated(true);
     }
 
@@ -50,62 +46,13 @@ public:
 
     void setUpdated(const bool updated) { m_hasUpdated = updated; }
 
-    Q_INVOKABLE QVariantList getSelfProperties() { return getProperties(false); }
-
-    Q_INVOKABLE QVariantList getParentProperties() { return getProperties(true); }
-
-    Q_INVOKABLE QStringList getSelfPropertiesNames() { return getPropertiesNames(false); }
-
-    Q_INVOKABLE QStringList getParentPropertiesNames() { return getPropertiesNames(true); }
-
 protected:
     void setEmpty(bool empty) { m_empty = empty; }
 
 private:
-    Q_INVOKABLE QVariantList getProperties(bool isParent) {
-        QVariantList props_list;
-        const QMetaObject *metaObj;
-
-        if (isParent)
-            metaObj = &QItemBase::staticMetaObject;
-        else
-            metaObj = metaObject();
-
-        for (int i = metaObj->propertyOffset(); i < metaObj->propertyCount(); ++i) {
-            QMetaProperty prop = metaObj->property(i);
-            QVariantMap entry;
-            const char *prop_name = prop.name();
-
-            entry["name"] = prop_name;
-            entry["title"] = prop_name;
-            entry["visible"] = true;
-//            entry["value"] = isParent ? -1 : prop.read(this);
-//            qDebug() << "Entry: " << entry;
-            props_list.append(entry);
-        }
-        return props_list;
-    }
-
-    Q_INVOKABLE QStringList getPropertiesNames(bool isParent) {
-        QStringList names;
-        const QMetaObject *metaObj;
-
-        if (isParent)
-            metaObj = &QItemBase::staticMetaObject;
-        else
-            metaObj = metaObject();
-
-        for (int i = metaObj->propertyOffset(); i < metaObj->propertyCount(); ++i) {
-            QMetaProperty prop = metaObj->property(i);
-            names.append(prop.name());
-        }
-        return names;
-    }
-
-private:
     int m_row = 0;
     int m_id = -1; // -1 means Item has no Id!
-    bool m_selected = false;
+    bool m_itemSelected = false;
     bool m_hasUpdated = false;
 
     bool m_empty = false;

@@ -12,7 +12,7 @@
 #include "models/examples/TargetModel.h"
 
 //#define USE_NETWORK_SOURCE
-//#define AUTO_REFRESH_UI
+#define AUTO_REFRESH_UI
 
 #ifdef USE_NETWORK_SOURCE
     #include <WeaNet/Manager.h>
@@ -84,8 +84,8 @@ int main(int argc, char *argv[])
 //    targetModel.setAutoRefresh(true, false); // Update all
     targetModel.setAutoRefresh(true); // Update only changed items
 #else
-//    QObject::connect(&worker, &Worker::signalUpdate, &targetModel, &TargetModel::updateChangedItems);
-    QObject::connect(&worker, &Worker::signalUpdate, &targetModel, &TargetModel::updateAll);
+    QObject::connect(&worker, &Worker::signalUpdate, &targetModel, &TargetModel::updateChangedItems);
+//    QObject::connect(&worker, &Worker::signalUpdate, &targetModel, &TargetModel::updateAll);
 #endif
     workerThread.start();
 #endif

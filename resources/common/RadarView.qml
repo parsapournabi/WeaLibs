@@ -23,7 +23,7 @@ Item {
             azimuth: model.azimuth
             elevation: model.elevation
             range: model.rangeCell
-            selected: model.selected
+            selected: model.itemSelected
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
