@@ -34,11 +34,11 @@ Rectangle {
     property font rowFont: Qt.font({ family: "Arial", pointSize: 11,  weight: 300, bold: false})
 
     // Table Props
-    required property var tableModel
+    property var tableModel
     property int hoverRow: -1
 
     // Ordering Props
-    required property var columns /** name: str, title: str, visible: bool, columnWidth: int || null **/
+    property var columns /** name: str, title: str, visible: bool, columnWidth: int || null **/
 
     // Headers (Columns)
     clip: true
@@ -119,7 +119,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         hoverEnabled: true
-                        onClicked: {                            
+                        onClicked: {
                             tableModel.selectItem(row)
                         }
                         onEntered: {

@@ -30,9 +30,6 @@ public:
     virtual Q_INVOKABLE void selectItem(int index) = 0;
 
     virtual Q_INVOKABLE QVariantList headersData() const = 0;
-
-    virtual Q_INVOKABLE QVariantList headersTitle() const = 0;
-
 };
 
 #endif // IQITEMLISTMODDELBASE_H

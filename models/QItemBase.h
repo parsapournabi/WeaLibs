@@ -6,15 +6,45 @@
 #include <QVariantList>
 #include <qmetaobject.h>
 
+enum class BaseItemRoles: int {
+    IdRole = 1,
+    RowRole,
+    ItemSelectedRole
+};
+
 class QItemBase : public QObject {
     Q_OBJECT
 
 public:
+
     explicit QItemBase(QObject *parent = nullptr) { setEmpty(true); };
 
+    virtual QString getTitleByRole(int role) const {}
     virtual QVariant getValueByRole(int role) = 0;
-    virtual QString getTitleByRole(int role) const = 0;
     virtual QVariantMap getHeaderDataByRole(int role) const = 0;
+
+    QVariant getBaseItemValueByRole(int role) const {
+        //        qDebug() << "GET VALUE BY ROLE" << role << int(BaseItemRoles::IdRole) << int(BaseItemRoles::ItemSelectedRole);
+        switch (role) {
+        case static_cast<int>(BaseItemRoles::IdRole): return id();
+        case static_cast<int>(BaseItemRoles::RowRole): return row();
+        case static_cast<int>(BaseItemRoles::ItemSelectedRole): return itemSelected();
+        default: return {};
+        }
+
+    }
+
+    QVariantMap getBaseItemHeaderDataByRole(int role) const {
+        //        qDebug() << "GET HEADER BY ROLE" << role << int(BaseItemRoles::IdRole) << int(BaseItemRoles::ItemSelectedRole);
+        switch (role) {
+        case static_cast<int>(BaseItemRoles::IdRole): return QVariantMap({{"title", "ID"}, {"columnWidth", 100}, {"visible", true}, {"kill", true}});
+        case static_cast<int>(BaseItemRoles::RowRole): return QVariantMap({{"title", "ROW"}, {"columnWidth", 100}, {"visible", true}, {"kill", true}});
+        case static_cast<int>(BaseItemRoles::ItemSelectedRole): return QVariantMap({{"title", "SELECTED"}, {"columnWidth", 100}, {"visible", true}, {"kill", true}});
+        default: return QVariantMap();
+        }
+
+    }
+
 
     int id() const { return m_id; }
     void setId(int id) {

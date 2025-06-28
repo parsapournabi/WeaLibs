@@ -9,24 +9,22 @@
 
 class Target : public QItemBase {
     Q_OBJECT
-//    Q_PROPERTY(double azimuth READ azimuth WRITE setAzimuth CONSTANT)
-//    Q_PROPERTY(double elevation READ elevation WRITE setElevation CONSTANT)
-//    Q_PROPERTY(double rangeCell READ rangeCell WRITE setRangeCell CONSTANT)
-//    Q_PROPERTY(double power READ power WRITE setPower CONSTANT)
+
 public:
     explicit Target(double az = 1.0, double elv = 1.0, double rc = 1.0 , double p = 1.0, QObject* parent = nullptr) :
         m_azimuth(az), m_elevation(elv), m_rangeCell(rc), m_power(p), QItemBase{parent}
     {
     }
 
-    enum TargetRoles {
-        IdRole= Qt::UserRole + 1,
-        RowRole,
-        ItemSelectedRole,
-        AzimuthRole,
+    enum class TargetRoles : int {
+//        IdRole
+//        RowRole,
+//        ItemSelectedRole,
+        AzimuthRole = Qt::UserRole + 1,
         ElevationRole,
         RangeCellRole,
         PowerRole,
+        NameRole,
 //        TargetObjectRole,
 //        AllRole
     };
@@ -34,13 +32,22 @@ public:
 
     static QHash<int, QByteArray> getRoles() {
         return {
-            {AzimuthRole, "azimuth"},
-            {ElevationRole, "elevation"},
-            {RangeCellRole, "rangeCell"},
-            {PowerRole, "power"},
-            { ItemSelectedRole, "itemSelected" },
-            { RowRole, "row" },
-            { IdRole, "id" },
+            {static_cast<int>(TargetRoles::AzimuthRole), "azimuth"},
+            {static_cast<int>(TargetRoles::ElevationRole), "elevation"},
+            {static_cast<int>(TargetRoles::RangeCellRole), "rangeCell"},
+            {static_cast<int>(TargetRoles::NameRole), "name"},
+            {static_cast<int>(TargetRoles::PowerRole), "power"},
+//            {static_cast<int>(TargetRoles::ItemSelectedRole), "itemSelected"},
+//            {static_cast<int>(TargetRoles::RowRole), "row"},
+//            {static_cast<int>(TargetRoles::IdRole), "id"},
+
+//            {ElevationRole, "elevation"},
+//            {RangeCellRole, "rangeCell"},
+//            {NameRole, "name"},
+//            {PowerRole, "power"},
+//            { ItemSelectedRole, "itemSelected" },
+//            { RowRole, "row" },
+//            { IdRole, "id" },
 //            {TargetObjectRole, "targetObject",},
 //            {AllRole, "all"}
         };
@@ -48,13 +55,15 @@ public:
 
     QVariant getValueByRole(int role) override {
         switch (role) {
-        case AzimuthRole: return azimuth();
-        case ElevationRole: return elevation();
-        case RangeCellRole: return rangeCell();
-        case PowerRole: return power();
-        case ItemSelectedRole: return itemSelected();
-        case RowRole: return row();
-        case IdRole: return id();
+        case static_cast<int>(TargetRoles::AzimuthRole): return azimuth();
+        case static_cast<int>(TargetRoles::ElevationRole): return elevation();
+        case static_cast<int>(TargetRoles::RangeCellRole): return rangeCell();
+        case static_cast<int>(TargetRoles::NameRole): return name();
+        case static_cast<int>(TargetRoles::PowerRole): return power();
+//        case static_cast<int>(TargetRoles::ItemSelectedRole): return itemSelected();
+//        case static_cast<int>(TargetRoles::RowRole): return row();
+//        case static_cast<int>(TargetRoles::IdRole): return id();
+
 //        case TargetObjectRole: return QVariant::fromValue(this);
 
         default: return {};
@@ -64,26 +73,28 @@ public:
 
     QString getTitleByRole(int role) const override {
         switch (role) {
-        case AzimuthRole: return QString("Az");
-        case ElevationRole: return QString("Elv");
-        case RangeCellRole: return QString("Range Cell");
-        case PowerRole: return QString("Power");
-        case ItemSelectedRole: return QString("Selected");
-        case RowRole: return QString("Row");
-        case IdRole: return QString("Id");
+        case static_cast<int>(TargetRoles::AzimuthRole): return QString("Az");
+        case static_cast<int>(TargetRoles::ElevationRole): return QString("Elv");
+        case static_cast<int>(TargetRoles::RangeCellRole): return QString("Range Cell");
+        case static_cast<int>(TargetRoles::NameRole): return QString("Target Name");
+        case static_cast<int>(TargetRoles::PowerRole): return QString("Power");
+//        case static_cast<int>(TargetRoles::ItemSelectedRole): return QString("Selected");
+//        case static_cast<int>(TargetRoles::RowRole): return QString("Row");
+//        case static_cast<int>(TargetRoles::IdRole): return QString("ID");
         default: return QString();
         }
     }
 
     QVariantMap getHeaderDataByRole(int role) const override {
         switch (role) {
-        case AzimuthRole: return QVariantMap({{"title", "Az"}, {"columnWidth", 100}, {"visible", true}});
-        case ElevationRole: return QVariantMap({{"title", "Elv"}, {"columnWidth", 100}, {"visible", true}});;
-        case RangeCellRole: return QVariantMap({{"title", "RangeCell"}, {"columnWidth", 100}, {"visible", true}});;
-        case PowerRole: return QVariantMap({{"title", "Power"}, {"columnWidth", 100}, {"visible", true}});;
-        case ItemSelectedRole: return QVariantMap({{"title", "Select"}, {"columnWidth", 100}, {"visible", true}});;
-        case RowRole: return QVariantMap({{"title", "Row"}, {"columnWidth", 100}, {"visible", true}});;
-        case IdRole: return QVariantMap({{"title", "ID"}, {"columnWidth", 100}, {"visible", true}});;
+        case static_cast<int>(TargetRoles::AzimuthRole): return QVariantMap({{"title", "Az"}, {"columnWidth", 100}, {"visible", true}, {"kill", false}}); // If False or not contains that will not kill else that gonna be removed from model.
+        case static_cast<int>(TargetRoles::ElevationRole): return QVariantMap({{"title", "Elv"}, {"columnWidth", 100}, {"visible", true}});
+        case static_cast<int>(TargetRoles::RangeCellRole): return QVariantMap({{"title", "RangeCell"}, {"columnWidth", 100}, {"visible", true}});
+        case static_cast<int>(TargetRoles::NameRole): return QVariantMap({{"title", "Target Names"}, {"columnWidth", 100}, {"visible", true}});
+        case static_cast<int>(TargetRoles::PowerRole): return QVariantMap({{"title", "Power"}, {"columnWidth", 100}, {"visible", true}});
+//        case static_cast<int>(TargetRoles::ItemSelectedRole): return QVariantMap({{"title", "Select"}, {"columnWidth", 100}, {"visible", true}});
+//        case static_cast<int>(TargetRoles::RowRole): return QVariantMap({{"title", "Row"}, {"columnWidth", 100}, {"visible", true}});
+//        case static_cast<int>(TargetRoles::IdRole): return QVariantMap({{"title", "ID"}, {"columnWidth", 100}, {"visible", true}});
         default: return QVariantMap();
         }
 
@@ -122,12 +133,16 @@ public:
         setUpdated(true);
     }
 
+    QString name() const { return m_name; }
+    void setName(const QString &name) { m_name = name; setUpdated(true);}
+
 
 private:
     double m_azimuth = 0.0;
     double m_elevation = 0.0;
     double m_rangeCell = 0.0;
     double m_power = 0.0;
+    QString m_name;
 
 };
 

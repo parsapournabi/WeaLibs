@@ -6,6 +6,7 @@
 #include <QMetaEnum>
 #include <chrono>
 #include "IQItemListModel.h"
+#include "QItemBase.h"
 
 template<typename ItemType>
 class QItemListModel:  public IQItemListModel
@@ -17,14 +18,18 @@ public:
         IQItemListModel(parent)
     {
         // Initialization
-        this->roleIdToName = ItemType::getRoles();
+        roleIdToName = ItemType::getRoles();
+
         QHashIterator<int, QByteArray> qIt(roleIdToName);
         while (qIt.hasNext())
         {
             qIt.next();
-            roleNameToId[QString(qIt.value())] = qIt.key();
+            int key = qIt.key();
+            m_lastKeyRole = m_lastKeyRole > key ? m_lastKeyRole : key;
+            roleNameToId[QString(qIt.value())] = key;
         }
-
+        // Adding Defualt QItemBase properties(getter & setter) like row, id, itemSelected
+        addBaseRoles();
     }
 
     Q_INVOKABLE QHash<int, QByteArray> roleNames() const override
@@ -50,9 +55,9 @@ public:
             return {};
         int key = index.row();
         if (items.count() > key) {
-//            if (role == Qt::DisplayRole)
-                // Default Filtering column
-            return items[key]->getValueByRole(role);
+            if (role <= m_lastKeyRole)
+                return items[key]->getValueByRole(role);
+            return items[key]->getBaseItemValueByRole(role - m_lastKeyRole);
         }
 
         return QVariant();
@@ -68,6 +73,8 @@ public:
         if (role == Qt::DisplayRole) // Entered by Section
             role = Qt::UserRole + 1 + section; // Locating for specific role...
         ItemType item;
+        if (role > m_lastKeyRole)
+            return item.getBaseItemHeaderDataByRole(role - m_lastKeyRole);
         return item.getHeaderDataByRole(role);
     }
 
@@ -80,34 +87,17 @@ public:
         QMetaEnum enm = metaObj->enumerator(0);
         QVariantList headers;
         ItemType item;
-        for (int i = 0; i < enm.keyCount(); ++i) {
-            int enm_role = enm.value(i);
-            qDebug() << "Prop Name" << enm.key(i) << enm_role;
-            QVariantMap title = item.getHeaderDataByRole(enm_role);
-            title["name"] = QString(roleIdToName[enm_role]);
-            headers.append(title);
+
+        int keyCnt = enm.keyCount();
+        for (int i = Qt::UserRole + 1; i < m_lastKeyRole + int(BaseItemRoles::ItemSelectedRole)  + 1; ++i) {
+            QVariantMap header = i > m_lastKeyRole ? item.getBaseItemHeaderDataByRole(i - m_lastKeyRole) : item.getHeaderDataByRole(i);
+            header["name"] = QString(roleIdToName[i]);
+            if (header.contains(QString("kill")) && header[QString("kill")] == true) // If Kill is True that must not include at modelRoles
+                continue;
+            headers.append(header);
         }
         return headers;
     }
-
-    Q_INVOKABLE QVariantList headersTitle() const override {
-        const QMetaObject *metaObj = &ItemType::staticMetaObject;
-        if (!metaObj->enumeratorCount()) {
-            qCritical() << "QItemBase Child class must include Q_ENUM macro for Roles";
-            return QVariantList();
-        }
-        QMetaEnum enm = metaObj->enumerator(0);
-        QVariantList headers;
-        ItemType item;
-        for (int i = 0; i < enm.keyCount(); ++i) {
-            int enm_role = enm.value(i);
-            qDebug() << "Prop Name" << enm.key(i) << enm_role;
-            QString title = item.getTitleByRole(enm_role);
-            headers.append(title);
-        }
-        return headers;
-    }
-
 
     Q_INVOKABLE QVariantList getRowData(int row) const override
     {
@@ -313,6 +303,17 @@ public:
     }
 private:
 
+    // Base Role appending
+    void addBaseRoles() {
+        roleIdToName[m_lastKeyRole + int(BaseItemRoles::IdRole)] = QByteArray("id");
+        roleIdToName[m_lastKeyRole + int(BaseItemRoles::RowRole)] = QByteArray("row");
+        roleIdToName[m_lastKeyRole + int(BaseItemRoles::ItemSelectedRole)] = QByteArray("itemSelected");
+        // Also must be add on roleNameToId
+        roleNameToId[QString("id")] = m_lastKeyRole + int(BaseItemRoles::IdRole);
+        roleNameToId[QString("row")] = m_lastKeyRole + int(BaseItemRoles::RowRole);
+        roleNameToId[QString("itemSelected")] = m_lastKeyRole + int(BaseItemRoles::ItemSelectedRole);
+    }
+
     // Overload method
     bool removeItem(ItemType* item, quint32 key)
     {
@@ -364,6 +365,7 @@ private:
     int m_timerId = -1;
     bool m_autoRefresh = false;
     bool m_onlyChangedItems = true;
+    int m_lastKeyRole = -1;
     int m_selectedIndex = -1; // Latest index selected
 
 };

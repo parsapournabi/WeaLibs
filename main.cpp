@@ -34,6 +34,9 @@ int main(int argc, char *argv[])
     qmlRegisterType<Fps>("CustomItems", 1, 0, "Fps");
 
     TargetModel targetModel;
+    qDebug() << "Target roleNames" << targetModel.roleNames();
+//    qDebug() << "Header Data" << targetModel.headerData(0, Qt::Horizontal);
+    qDebug() << "HEADERS DATA: " << targetModel.headersData();
     // Custom Filtering class
     SortFilterProxyModel filter;
     filter.setSourceModel(&targetModel);
@@ -71,6 +74,8 @@ int main(int argc, char *argv[])
 
     for (int i = 0; i < 10000; i++) {
         Target *tar = new Target();
+        QString name = QString("Target i" + QString::number(i));
+        tar->setName(name);
         targetModel.insertItem(tar, i);
     }
 
@@ -79,7 +84,7 @@ int main(int argc, char *argv[])
 
 #ifdef AUTO_REFRESH_UI
     // Modify REFRESH_INTERVAL for update cycle (units ms)
-    targetModel.refreshInterval = 1000; // ms (By Default is 100ms)
+    targetModel.refreshInterval = 100; // ms (By Default is 100ms)
 
 //    targetModel.setAutoRefresh(true, false); // Update all
     targetModel.setAutoRefresh(true); // Update only changed items
