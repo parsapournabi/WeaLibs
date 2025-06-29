@@ -92,7 +92,7 @@ Custom data item representing a radar target(Or you can replace it with your own
 **Note**: Replace these attributes with your own data.
 
 ```cpp
-    enum TargetRoles {
+    enum class TargetRoles : int {
         AzimuthRole = Qt::UserRole + 1,
         ElevationRole,
         RangeCellRole,
@@ -103,6 +103,7 @@ Custom data item representing a radar target(Or you can replace it with your own
         TargetObjectRole,
         AllRole
     };
+    Q_ENUM(TargetRoles)
     
     static QHash<int, QByteArray> getRoles() {
         return {
@@ -133,7 +134,30 @@ Custom data item representing a radar target(Or you can replace it with your own
         }
     
     }
+    
+
+    QVariantMap getHeaderDataByRole(int role) const override {
+        switch (role) {
+        case static_cast<int>(TargetRoles::AzimuthRole): return QVariantMap({{"title", "Az"}, {"columnWidth", 100}, {"visible", true}, {"kill", false}}); // If False or not contains that will not kill else that gonna be removed from model.
+        case static_cast<int>(TargetRoles::ElevationRole): return QVariantMap({{"title", "Elv"}, {"columnWidth", 100}, {"visible", true}});
+        case static_cast<int>(TargetRoles::RangeCellRole): return QVariantMap({{"title", "RangeCell"}, {"columnWidth", 100}, {"visible", true}});
+        case static_cast<int>(TargetRoles::NameRole): return QVariantMap({{"title", "Target Names"}, {"columnWidth", 100}, {"visible", true}});
+        case static_cast<int>(TargetRoles::PowerRole): return QVariantMap({{"title", "Power"}, {"columnWidth", 100}, {"visible", true}});
+    //        case static_cast<int>(TargetRoles::ItemSelectedRole): return QVariantMap({{"title", "Select"}, {"columnWidth", 100}, {"visible", true}});
+    //        case static_cast<int>(TargetRoles::RowRole): return QVariantMap({{"title", "Row"}, {"columnWidth", 100}, {"visible", true}});
+    //        case static_cast<int>(TargetRoles::IdRole): return QVariantMap({{"title", "ID"}, {"columnWidth", 100}, {"visible", true}});
+        default: return QVariantMap();
+        }
+    }
 ```
+
+---
+
+**NOTE: As you see there is no need to implement RowRole, IdRole, SelectedRole. These base roles will implicitly add on [QItemListModel](http://172.16.50.13/parsa/qcustommodels/-/blob/main/models/QItemListModel.h#L307) class.**
+
+---
+
+**NOTE: If you want to ignore some roles on `TableView`, set `kill` key to `true` on getHeaderDataByRole initialization.**
 
 ### TargetModel.h
 
@@ -196,12 +220,12 @@ ModelTableView {
     id: table
     Layout.fillHeight: true
     Layout.fillWidth: true
-    columns: targetModel.getHeadersData(true)
+    columns: targetModel.headersData()
 
-//                cellColorList: ["purple"]
-//                cellsBorderColorList: ["brown", "dark-blue", "black"]
-//                selectedCellsBorderColor: "gray"
-//                hoverCellsBorderColor: "red"
+//    cellColorList: ["purple"]
+//    cellsBorderColorList: ["brown", "dark-blue", "black"]
+//    selectedCellsBorderColor: "gray"
+//    hoverCellsBorderColor: "red"
 
 }
 
@@ -286,7 +310,7 @@ Item {
             azimuth: model.azimuth
             elevation: model.elevation
             range: model.rangeCell
-            selected: model.selected
+            selected: model.itemSelected
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
