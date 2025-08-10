@@ -6,7 +6,7 @@
 #include <qloggingcategory.h>
 #include <QThread>
 
-#include "common/fps.h"
+#include "fps.h"
 #include "models/examples/SortFilterProxy.h"
 #include "models/examples/Target.h"
 #include "models/examples/TargetModel.h"
