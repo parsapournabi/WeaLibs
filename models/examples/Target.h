@@ -17,10 +17,11 @@ public:
     }
 
     enum class TargetRoles : int {
-//        IdRole
-//        RowRole,
+
 //        ItemSelectedRole,
         AzimuthRole = Qt::UserRole + 1,
+        IdRole,
+        RowRole,
         ElevationRole,
         RangeCellRole,
         PowerRole,
@@ -38,8 +39,8 @@ public:
             {static_cast<int>(TargetRoles::NameRole), "name"},
             {static_cast<int>(TargetRoles::PowerRole), "power"},
 //            {static_cast<int>(TargetRoles::ItemSelectedRole), "itemSelected"},
-//            {static_cast<int>(TargetRoles::RowRole), "row"},
-//            {static_cast<int>(TargetRoles::IdRole), "id"},
+            {static_cast<int>(TargetRoles::RowRole), "row"},
+            {static_cast<int>(TargetRoles::IdRole), "id"},
 
 //            {ElevationRole, "elevation"},
 //            {RangeCellRole, "rangeCell"},
@@ -61,8 +62,8 @@ public:
         case static_cast<int>(TargetRoles::NameRole): return name();
         case static_cast<int>(TargetRoles::PowerRole): return power();
 //        case static_cast<int>(TargetRoles::ItemSelectedRole): return itemSelected();
-//        case static_cast<int>(TargetRoles::RowRole): return row();
-//        case static_cast<int>(TargetRoles::IdRole): return id();
+        case static_cast<int>(TargetRoles::RowRole): return row();
+        case static_cast<int>(TargetRoles::IdRole): return id();
 
 //        case TargetObjectRole: return QVariant::fromValue(this);
 
@@ -79,8 +80,8 @@ public:
         case static_cast<int>(TargetRoles::NameRole): return QString("Target Name");
         case static_cast<int>(TargetRoles::PowerRole): return QString("Power");
 //        case static_cast<int>(TargetRoles::ItemSelectedRole): return QString("Selected");
-//        case static_cast<int>(TargetRoles::RowRole): return QString("Row");
-//        case static_cast<int>(TargetRoles::IdRole): return QString("ID");
+        case static_cast<int>(TargetRoles::RowRole): return QString("Row");
+        case static_cast<int>(TargetRoles::IdRole): return QString("ID");
         default: return QString();
         }
     }
@@ -93,8 +94,8 @@ public:
         case static_cast<int>(TargetRoles::NameRole): return QVariantMap({{"title", "Target Names"}, {"columnWidth", 100}, {"visible", true}});
         case static_cast<int>(TargetRoles::PowerRole): return QVariantMap({{"title", "Power"}, {"columnWidth", 100}, {"visible", true}});
 //        case static_cast<int>(TargetRoles::ItemSelectedRole): return QVariantMap({{"title", "Select"}, {"columnWidth", 100}, {"visible", true}});
-//        case static_cast<int>(TargetRoles::RowRole): return QVariantMap({{"title", "Row"}, {"columnWidth", 100}, {"visible", true}});
-//        case static_cast<int>(TargetRoles::IdRole): return QVariantMap({{"title", "ID"}, {"columnWidth", 100}, {"visible", true}});
+        case static_cast<int>(TargetRoles::RowRole): return QVariantMap({{"title", "Row"}, {"columnWidth", 100}, {"visible", true}});
+        case static_cast<int>(TargetRoles::IdRole): return QVariantMap({{"title", "ID"}, {"columnWidth", 100}, {"visible", true}});
         default: return QVariantMap();
         }
 
