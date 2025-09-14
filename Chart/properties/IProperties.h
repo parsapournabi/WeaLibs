@@ -1,12 +1,12 @@
 #ifndef IPROPERTIES_H
 #define IPROPERTIES_H
 
-#include <QObject>
+#include <QQuickItem>
 
-class IProperties : public QObject {
+class IProperties : public QQuickItem {
     Q_OBJECT
 public:
-    IProperties(QObject *parent = nullptr) : QObject{parent}
+    IProperties(QQuickItem *parent = nullptr) : QQuickItem{parent}
     {
         connect(this, &IProperties::changed, this, [=]() { setDataRead(1); });
     }

@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>images/targetPressed.png</file>
+        <file>images/upHovered.png</file>
+    </qresource>
+</RCC>

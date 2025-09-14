@@ -8,7 +8,7 @@ class PropertyBackground : public IProperties {
     Q_PROPERTY(QString color READ color WRITE setColor NOTIFY changed)
     Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity NOTIFY changed)
 public:
-    PropertyBackground(QObject *parent = nullptr) : IProperties{parent} {}
+    PropertyBackground(QQuickItem *parent = nullptr) : IProperties{parent} {}
 
     const QString color() const {
         return m_color;

@@ -7,7 +7,7 @@
 
 #include "fps.h"
 #include "GLChartview.h"
-#include "MainClass.h"
+#include "datasource.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     fmt.setMajorVersion(4);
     fmt.setMinorVersion(6);
     fmt.setDepthBufferSize(24);
-    fmt.setSwapInterval(0);
+    fmt.setSwapInterval(1);
     fmt.setProfile(QSurfaceFormat::CoreProfile);
     fmt.setRenderableType(QSurfaceFormat::OpenGL);
     fmt.setSwapBehavior(QSurfaceFormat::DoubleBuffer);
@@ -41,17 +41,7 @@ int main(int argc, char *argv[])
             << curFmt.swapInterval();
 
     qmlRegisterType<Fps>("CustomItems", 1, 0, "Fps");
-    GLChartView::registerMetaTypes();
 
-    QThread thread;
-    MainClass mainClass;
-    mainClass.moveToThread(&thread);
-
-    QObject::connect(&thread, &QThread::started, &thread, [=]() {qDebug() << "Thread Started!"; });
-    QObject::connect(&thread, &QThread::finished, &thread, [=]() {qDebug() << "Thread Finished!"; });
-    QObject::connect(&mainClass, &MainClass::destroyed, &thread, [&]() { qDebug() << "App Destroyed: "; thread.quit(); thread.wait(); });
-
-    thread.start();
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
@@ -60,7 +50,14 @@ int main(int argc, char *argv[])
             if (!obj && url == objUrl)
                 QCoreApplication::exit(-1);
         }, Qt::QueuedConnection);
-    engine.rootContext()->setContextProperty("mainClass", &mainClass);
+
+    GLChartView::registerMetaTypes();
+    DataSource dataSource;
+
+    engine.rootContext()->setContextProperty("series0Ptr", dataSource.series0);
+    engine.rootContext()->setContextProperty("series1Ptr", dataSource.series1);
+    engine.rootContext()->setContextProperty("series2Ptr", dataSource.series2);
+
     engine.load(url);
     return app.exec();
 

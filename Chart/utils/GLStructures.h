@@ -2,6 +2,8 @@
 #define GLSTRUCTURES_H
 
 #include "GLMathUtils.h"
+#include "GLEnums.h"
+
 #include <QVector2D>
 #include <QVector4D>
 #include <QDebug>
@@ -13,6 +15,17 @@ struct Projection {
     qreal bottom;
     qreal top;
 };
+
+struct SeriesProps {
+    int startIndex, endIndex;
+    GLMarkerShape markerShape; // Shape: 0 == Square, 1 == Circle, 2 == Texture
+    int markerSize;
+    GLColorType colorType;
+    GLSeriesType type;
+    double padding; // Required because on chart.vert std430 has padding for 16Bytes
+    QVector4D color;
+};
+static_assert(sizeof(SeriesProps) % 16 == 0, "Struct SeriesProps must be multiple of 16 bytes");
 
 union ChartColor {
     struct {

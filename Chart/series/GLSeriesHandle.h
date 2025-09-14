@@ -2,31 +2,28 @@
 #define GLSERIESHANDLE_H
 
 #include <QSharedPointer>
-#include "IGLSeriesView.h"
+#include "GLAbstractSeries.h"
 
 class GLSeriesHandle : public QObject {
     Q_OBJECT
 public:
-    explicit GLSeriesHandle(QSharedPointer<IGLSeriesView> view, QObject *parent = nullptr) :
+    explicit GLSeriesHandle(QSharedPointer<GLAbstractSeries> view, QObject *parent = nullptr) :
         QObject{parent},
         m_view(std::move(view)) {}
 
-    IGLSeriesView &view() { return *m_view; }
-    const IGLSeriesView &view() const { return *m_view; }
+    GLAbstractSeries &view() { return *m_view; }
+    const GLAbstractSeries &view() const { return *m_view; }
 
-    void emitSelectionChanged(const QVector<int> &indices) {
+    void emitselected(const QVector<int> &indices) {
+        if (indices.isEmpty())
+            return;
         QVariant payload = m_view->makeSelectVariant(indices);
         const int vectorTypeId = m_view->vectorMetaTypeId();
-//        emit selectionChanged(payload, vectorTypeId);
-        emit m_view->selectionChanged(payload, vectorTypeId);
+        emit m_view->selected(payload, vectorTypeId);
     }
 
-signals:
-    // Generic signal (works with any T once its QVector<T> is registered)
-    void selectionChanged(const QVariant &payload, int vectorTypeId);
-
 private:
-    QSharedPointer<IGLSeriesView> m_view;
+    QSharedPointer<GLAbstractSeries> m_view;
 
 };
 

@@ -10,7 +10,7 @@ class PropertyAxisRange : public IProperties {
     Q_PROPERTY(qreal maxX READ maxX WRITE setMaxX NOTIFY changed)
     Q_PROPERTY(qreal maxY READ maxY WRITE setMaxY NOTIFY changed)
 public:
-    PropertyAxisRange(QObject *parent = nullptr) : IProperties{parent} {}
+    PropertyAxisRange(QQuickItem *parent = nullptr) : IProperties{parent} {}
 
     const qreal &minX() const {
         return m_minX;
