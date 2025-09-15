@@ -21,6 +21,8 @@ set(PROJECT_SOURCES
     ${HEADERS}
     ${SOURCES}
     ${QML_FILES}
+    README.md
+    tree.txt
 )
 
 
