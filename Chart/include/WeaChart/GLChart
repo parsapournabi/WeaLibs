@@ -1,0 +1,10 @@
+#ifndef GLCHART_H
+#define GLCHART_H
+
+#include "WeaChart/config.h"
+
+// Includes
+#include "WeaChart/scenes/GLChartview.h"
+#include "WeaChart/series/GLSeriesStorage.h"
+
+#endif

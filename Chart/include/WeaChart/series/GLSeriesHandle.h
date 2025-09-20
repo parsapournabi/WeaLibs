@@ -4,7 +4,7 @@
 #include <QSharedPointer>
 #include "GLAbstractSeries.h"
 
-class GLSeriesHandle : public QObject {
+class WEACHART_API GLSeriesHandle : public QObject {
     Q_OBJECT
 public:
     explicit GLSeriesHandle(QSharedPointer<GLAbstractSeries> view, QObject *parent = nullptr) :

@@ -1,6 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import GLItems 1.0
+import com.wearily.WeaChart 1.0
 
 Item {
     id: root

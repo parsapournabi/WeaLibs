@@ -1,13 +1,13 @@
-#include "GLChartRenderer.h"
+#include "WeaChart/scenes/GLChartRenderer.h"
 
 #include <QOpenGLFramebufferObjectFormat>
 #include <QOpenGLFunctions>
 #include <QSet>
 
-#include "GLChartview.h"
-#include "GLStructures.h"
+#include "WeaChart/scenes/GLChartview.h"
+#include "WeaChart/utils/GLStructures.h"
 
-void APIENTRY callBackOutput(GLenum source,
+WEACHART_API void APIENTRY callBackOutput(GLenum source,
                              GLenum type,
                              GLuint id,
                              GLenum severity,
@@ -218,12 +218,12 @@ void GLChartRenderer::initShaders()
     // Vertex + Fragment
     m_program->create();
     bool vert_result = m_program->addShaderFromSourceFile(QOpenGLShader::Vertex,
-                                                          ":/shadersChart/chart.vert");
+                                                          ":/shadersChart/shaders/chart.vert");
     if(!vert_result)
         qCritical() << "Cannot open chart.vert!" << vert_result;
 
     bool frag_result = m_program->addShaderFromSourceFile(QOpenGLShader::Fragment,
-                                                          ":/shadersChart/chart.frag");
+                                                          ":/shadersChart/shaders/chart.frag");
     if(!frag_result)
         qCritical() << "Cannot open chart.frag!" << frag_result;
 

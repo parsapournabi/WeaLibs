@@ -1,13 +1,14 @@
 #ifndef PROPERTYSERIES_H
 #define PROPERTYSERIES_H
 
+#include "WeaChart/series/GLEnums.h"
 #include "IProperties.h"
-#include "GLEnums.h"
+
 #include <QColor>
 #include <QDebug>
 #include <QImage>
 
-class PropertySeries : public IProperties {
+class WEACHART_API PropertySeries : public IProperties {
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(bool visible READ visible WRITE setVisible NOTIFY visibleChanged)

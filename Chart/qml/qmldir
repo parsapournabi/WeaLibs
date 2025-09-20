@@ -1,0 +1,5 @@
+module com.wearily.WeaChart
+GLChartFrame 1.0 GLChartFrame.qml
+GLItemLegend 1.0 GLItemLegend.qml
+GLLegend 1.0 GLLegend.qml
+typeinfo plugins.qmltypes

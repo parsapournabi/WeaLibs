@@ -2,6 +2,7 @@
 #define GLENUMS_H
 
 #include <QObject>
+#include "WeaChart/WeaChart_export.h"
 
 enum GLSeriesType {
     SeriesTypeScatter = 0, // 0
@@ -24,7 +25,7 @@ enum GLMarkerShape {
 };
 Q_DECLARE_METATYPE(GLMarkerShape)
 
-class GLMetaEnums : public QObject {
+class WEACHART_API GLMetaEnums : public QObject {
     Q_OBJECT
 public:
     enum GLSeriesType {

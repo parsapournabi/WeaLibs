@@ -4,7 +4,7 @@
 #include "GLAbstractSeries.h"
 
 template<typename T>
-class GLSeriesStorage final : public GLAbstractSeries {
+class WEACHART_API GLSeriesStorage final : public GLAbstractSeries {
     static_assert(std::is_base_of_v<PointXYBase, T>,
                   "ERROR At GLSeriesStorage class: T must inherit from 'PointXYBase' struct!");
 public:

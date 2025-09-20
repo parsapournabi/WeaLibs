@@ -2,8 +2,9 @@
 #define IPROPERTIES_H
 
 #include <QQuickItem>
+#include "WeaChart/WeaChart_export.h"
 
-class IProperties : public QQuickItem {
+class WEACHART_API IProperties : public QQuickItem {
     Q_OBJECT
 public:
     IProperties(QQuickItem *parent = nullptr) : QQuickItem{parent}

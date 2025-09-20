@@ -3,10 +3,10 @@
 
 #include <QVariant>
 #include <QImage>
-#include "GLStructures.h"
-#include "properties/PropertySeries.h"
+#include "WeaChart/utils/GLStructures.h"
+#include "WeaChart/properties/PropertySeries.h"
 
-class GLAbstractSeries : public PropertySeries {
+class WEACHART_API GLAbstractSeries : public PropertySeries {
     Q_OBJECT
 public:
     explicit GLAbstractSeries(QQuickItem *parent = nullptr) : PropertySeries{parent} {}

@@ -3,7 +3,7 @@
 
 #include "IProperties.h"
 
-class PropertyBackground : public IProperties {
+class WEACHART_API PropertyBackground : public IProperties {
     Q_OBJECT
     Q_PROPERTY(QString color READ color WRITE setColor NOTIFY changed)
     Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity NOTIFY changed)

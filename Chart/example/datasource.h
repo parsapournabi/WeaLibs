@@ -1,7 +1,7 @@
 #ifndef DATASOURCE_H
 #define DATASOURCE_H
 
-#include "GLSeriesStorage.h"
+#include "WeaChart/series/GLSeriesStorage.h"
 
 #include <QThread>
 #include <QBasicTimer>

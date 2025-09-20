@@ -6,7 +6,7 @@
 #include <QThread>
 
 #include "fps.h"
-#include "GLChartview.h"
+#include "WeaChart/scenes/GLChartview.h"
 #include "datasource.h"
 
 int main(int argc, char *argv[])
@@ -42,7 +42,6 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<Fps>("CustomItems", 1, 0, "Fps");
 
-
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
@@ -51,7 +50,7 @@ int main(int argc, char *argv[])
                 QCoreApplication::exit(-1);
         }, Qt::QueuedConnection);
 
-    GLChartView::registerMetaTypes();
+    GLChartView::registerMetaTypes(&engine);
     DataSource dataSource;
 
     engine.rootContext()->setContextProperty("series0Ptr", dataSource.series0);

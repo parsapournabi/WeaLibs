@@ -9,12 +9,13 @@
 #include <QOpenGLTexture>
 #include <QOpenGLBuffer>
 #include <QPair>
+#include "WeaChart/WeaChart_export.h"
 
 struct Projection;
 struct SeriesProps;
 struct PointXYBase;
 
-class GLChartRenderer : public QQuickFramebufferObject::Renderer, protected QOpenGLFunctions_4_5_Core
+class WEACHART_API GLChartRenderer : public QQuickFramebufferObject::Renderer, protected QOpenGLFunctions_4_5_Core
 {
 public:
     GLChartRenderer();

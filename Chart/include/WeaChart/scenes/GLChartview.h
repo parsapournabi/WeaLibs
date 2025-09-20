@@ -6,20 +6,22 @@
 #include <QElapsedTimer>
 #include <QBasicTimer>
 #include <QQmlListProperty>
+#include <QQmlApplicationEngine>
 #include <QMutex>
 
-#include "properties/PropertyBackground.h"
-#include "properties/PropertyAxisRange.h"
+#include "WeaChart/properties/PropertyBackground.h"
+#include "WeaChart/properties/PropertyAxisRange.h"
 
 #include "GLChartRenderer.h"
-#include "GLStructures.h"
-#include "GLSeriesHandle.h"
-#include "GLSeriesItem.h"
+#include "WeaChart/utils/GLStructures.h"
+#include "WeaChart/series/GLSeriesHandle.h"
+#include "WeaChart/series/GLSeriesItem.h"
+#include "WeaChart/config.h"
 
 constexpr int MAX_CHART_TOTAL_POINTS = 6'000'000;
 
 Q_DECLARE_METATYPE(Qt::MouseButton)
-class GLChartView : public QQuickFramebufferObject
+class WEACHART_API GLChartView : public QQuickFramebufferObject
 {
     Q_OBJECT
     Q_PROPERTY(PropertyBackground *background READ background CONSTANT)
@@ -58,7 +60,7 @@ public:
     Q_INVOKABLE const QVector<GLSeriesHandle*> &handles() const;
 
     // STATIC
-    static void registerMetaTypes() {
+    static void registerMetaTypes(QQmlApplicationEngine *engine) {
 //        qRegisterMetaType<PointXYBase>("PointXYBase");
 //        qRegisterMetaType<QVector<PointXYBase>>("QVector<PointXYBase>");
 
@@ -66,12 +68,14 @@ public:
         qRegisterMetaType<GLColorType>("GLColorType");
         qRegisterMetaType<GLMarkerShape>("GLMarkerShape");
 
-        qmlRegisterUncreatableType<GLMetaEnums>("GLItems", 1, 0, "GL", "Only Enums class");
-        qmlRegisterType<PropertySeries>("GLItems", 1, 0, "GLSeries");
-        qmlRegisterType<GLSeriesItem>("GLItems", 1, 0, "GLSeriesItem");
-        qmlRegisterType<GLChartView>("GLItems", 1, 0, "GLChartView");
-        qmlRegisterType<PropertyBackground>("GLItems", 1, 0, "GLBackgroundProperty");
-        qmlRegisterType<PropertyAxisRange>("GLItems", 1, 0, "GLAxisRangeProperty");
+        qmlRegisterUncreatableType<GLMetaEnums>("com.wearily.WeaChart", 1, 0, "GL", "Only Enums class");
+        qmlRegisterType<PropertySeries>("com.wearily.WeaChart", 1, 0, "GLSeries");
+        qmlRegisterType<GLSeriesItem>("com.wearily.WeaChart", 1, 0, "GLSeriesItem");
+        qmlRegisterType<GLChartView>("com.wearily.WeaChart", 1, 0, "GLChartView");
+        qmlRegisterType<PropertyBackground>("com.wearily.WeaChart", 1, 0, "GLBackgroundProperty");
+        qmlRegisterType<PropertyAxisRange>("com.wearily.WeaChart", 1, 0, "GLAxisRangeProperty");
+        // REQUIRED ELSE IT MAY Crash the application
+        engine->addImportPath(WeaChart_QML_IMPORT_PATH);
     }
     static void addInstance(GLChartView *instance) { GLChartView::Instances.append(instance); }
 

@@ -5,7 +5,8 @@ import QtQuick 2.15
 import QtQuick.Dialogs 1.3
 
 import CustomItems 1.0
-import GLItems 1.0
+import com.wearily.WeaChart 1.0
+import "qrc:/qml" // Importing WeaChart resources.qrc/qml prefix .
 
 Window {
     id: root
@@ -588,7 +589,7 @@ Window {
                     name: "Series 0"
                     color: "red"
                     markerSize: 50
-                    markerShape: GL.ShapeTexture
+                    markerShape: GL.ShapeSquare
                     markerIconUrl: ":/images/targetPressed.png"
                 }
                 GLSeriesItem {

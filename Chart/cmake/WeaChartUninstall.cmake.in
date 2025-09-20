@@ -1,0 +1,11 @@
+set(MANIFEST "${CMAKE_CURRENT_LIST_DIR}/install_manifest.txt")
+if(NOT EXISTS "${MANIFEST}")
+	message(FATAL_ERROR "Cannot find install manifest: ${MANIFEST}")
+endif()
+
+file(READ "${MANIFEST}" files)
+string(REPLACE "\n" ";" files "${files}")
+foreach(file ${files})
+	message(STATUS "Removing ${file}")
+	execute_process(COMMAND rm -f "${file}")
+endforeach()

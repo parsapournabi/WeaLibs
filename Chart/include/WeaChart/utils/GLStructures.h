@@ -2,21 +2,21 @@
 #define GLSTRUCTURES_H
 
 #include "GLMathUtils.h"
-#include "GLEnums.h"
+#include "WeaChart/series/GLEnums.h"
 
 #include <QVector2D>
 #include <QVector4D>
 #include <QDebug>
 #include <QColor>
 
-struct Projection {
+WEACHART_API struct Projection {
     qreal left;
     qreal right;
     qreal bottom;
     qreal top;
 };
 
-struct SeriesProps {
+WEACHART_API struct SeriesProps {
     int startIndex, endIndex;
     GLMarkerShape markerShape; // Shape: 0 == Square, 1 == Circle, 2 == Texture
     int markerSize;
@@ -27,7 +27,7 @@ struct SeriesProps {
 };
 static_assert(sizeof(SeriesProps) % 16 == 0, "Struct SeriesProps must be multiple of 16 bytes");
 
-union ChartColor {
+WEACHART_API union ChartColor {
     struct {
         quint8 r, g, b, a;
     };
@@ -35,7 +35,7 @@ union ChartColor {
     quint8 channels[4];
 };
 
-struct PointXYBase {
+WEACHART_API struct PointXYBase {
     // Fields
     QVector2D position;
     ChartColor color;

@@ -3,7 +3,7 @@
 
 #include "IProperties.h"
 
-class PropertyAxisRange : public IProperties {
+class WEACHART_API PropertyAxisRange : public IProperties {
     Q_OBJECT
     Q_PROPERTY(qreal minX READ minX WRITE setMinX NOTIFY changed)
     Q_PROPERTY(qreal minY READ minY WRITE setMinY NOTIFY changed)

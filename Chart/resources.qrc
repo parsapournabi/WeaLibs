@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/GLChartFrame.qml</file>
+        <file>qml/GLItemLegend.qml</file>
+        <file>qml/GLLegend.qml</file>
+        <file>qml/plugins.qmltypes</file>
+        <file>qml/qmldir</file>
+    </qresource>
+    <qresource prefix="/shadersChart">
+        <file>shaders/chart.frag</file>
+        <file>shaders/chart.vert</file>
+    </qresource>
+</RCC>

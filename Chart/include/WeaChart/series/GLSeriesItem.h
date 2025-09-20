@@ -6,7 +6,7 @@
 #include <QMetaMethod>
 #include <QMetaObject>
 
-class GLSeriesItem :  public GLAbstractSeries{
+class WEACHART_API GLSeriesItem :  public GLAbstractSeries{
     Q_OBJECT
     Q_PROPERTY(GLAbstractSeries *series READ series WRITE setSeries NOTIFY seriesChanged)
 public:

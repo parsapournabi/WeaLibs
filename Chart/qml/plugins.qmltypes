@@ -1,0 +1,24 @@
+{
+    "module": "com.wearily.WeaChart",
+    "version": "1.0",
+    "classes": [
+        {
+            "name": "GLChartFrame",
+            "extends": "QQuick.Item",
+            "file": "GLChartFrame.qml",
+            "decription": "Chart Main screen frame."
+        },
+        {
+            "name": "GLItemLegend",
+            "extends": "QQuick.Item",
+            "file": "GLItemLegend.qml",
+            "decription": "Chart ItemLegend."
+        },
+        {
+            "name": "GLLegend",
+            "extends": "QQuick.Item",
+            "file": "GLLegend.qml",
+            "decription": "Chart Legend Item."
+        }
+    ]
+}

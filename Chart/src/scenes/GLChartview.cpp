@@ -1,4 +1,4 @@
-#include "GLChartview.h"
+#include "WeaChart/scenes/GLChartview.h"
 
 #include <QRandomGenerator>
 #include <omp.h>
