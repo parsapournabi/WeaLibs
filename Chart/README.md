@@ -6,60 +6,78 @@ A high-performance, flexible charting librarry built with `C++`, `OpenGL`, `QML`
 ## File Tree
 ```bash
 .
-├── chart.frag
-├── chart.vert
+├── cmake
+│   ├── config.h.in
+│   ├── WeaChartConfig.cmake.in
+│   └── WeaChartUninstall.cmake.in
 ├── CMakeLists.txt
 ├── example
-│   ├── CMakeLists.txt
-│   ├── datasource.cpp
-│   ├── datasource.h
-│   ├── images
-│   │   ├── targetPressed.png
-│   │   └── upHovered.png
-│   ├── main.cpp
-│   ├── main.qml
-│   └── resources.qrc
-├── GLChartFrame.qml
-├── GLItemLegend.qml
-├── GLLegend.qml
-├── glresources.qrc
-├── properties
-│   ├── IProperties.h
-│   ├── PropertyAxisRange.h
-│   ├── PropertyBackground.h
-│   └── PropertySeries.h
+│   ├── CMakeLists.txt
+│   ├── datasource.cpp
+│   ├── datasource.h
+│   ├── images
+│   │   ├── targetPressed.png
+│   │   └── upHovered.png
+│   ├── main.cpp
+│   ├── main.qml
+│   └── resources.qrc
+├── include
+│   └── WeaChart
+│       ├── config.h
+│       ├── GLChart
+│       ├── properties
+│       │   ├── IProperties.h
+│       │   ├── PropertyAxisRange.h
+│       │   ├── PropertyBackground.h
+│       │   └── PropertySeries.h
+│       ├── scenes
+│       │   ├── GLChartRenderer.h
+│       │   └── GLChartview.h
+│       ├── series
+│       │   ├── GLAbstractSeries.h
+│       │   ├── GLEnums.h
+│       │   ├── GLSeriesHandle.h
+│       │   ├── GLSeriesItem.h
+│       │   └── GLSeriesStorage.h
+│       ├── utils
+│       │   ├── GLMathUtils.h
+│       │   └── GLStructures.h
+│       └── WeaChart_export.h
+├── install.sh
+├── qml
+│   ├── GLChartFrame.qml
+│   ├── GLItemLegend.qml
+│   ├── GLLegend.qml
+│   ├── plugins.qmltypes
+│   └── qmldir
 ├── README.md
-├── scenes
-│   ├── GLChartRenderer.cpp
-│   ├── GLChartRenderer.h
-│   ├── GLChartview.cpp
-│   └── GLChartview.h
-├── series
-│   ├── GLAbstractSeries.h
-│   ├── GLEnums.h
-│   ├── GLSeriesHandle.h
-│   ├── GLSeriesItem.h
-│   └── GLSeriesStorage.h
+├── resources.qrc
+├── shaders
+│   ├── chart.frag
+│   └── chart.vert
+├── src
+│   └── scenes
+│       ├── GLChartRenderer.cpp
+│       └── GLChartview.cpp
 ├── tree.txt
-└── utils
-    ├── GLMathUtils.h
-    └── GLStructures.h
-
+└── uninstall.sh
 ```
 ---
 
 ## Table of Contents
 1. [Requirements](#requirements)
-2. [Features](#features)
-3. [Series Types](#series-types)
-4. [Custom Data Struct](#custom-data-struct)
-5. [Color Options](#color-options)
-6. [Interaction](#interaction)
-7. [Grid and Background](#grid-and-background)
-8. [Memory and Performance](#memory-and-performance)
-9. [Configuration](#configuration)
-10. [Warnings and Best Practices](#warnings-and-best-practices)
-11. [Example](#example)
+2. [Build and Installation](#build-and-installation)
+3. [Usage and Importing](#usage-and-importing)
+4. [Features](#features)
+5. [Series Types](#series-types)
+6. [Custom Data Struct](#custom-data-struct)
+7. [Color Options](#color-options)
+8. [Interaction](#interaction)
+9. [Grid and Background](#grid-and-background)
+10. [Memory and Performance](#memory-and-performance)
+11. [Configuration](#configuration)
+12. [Warnings and Best Practices](#warnings-and-best-practices)
+13. [Example](#example)
 ---
 
 ## Requirements
@@ -68,6 +86,122 @@ A high-performance, flexible charting librarry built with `C++`, `OpenGL`, `QML`
 - Qt: 5.15
 - OS: Cross-platform (Linux, Windows)
 - Dependencies: QtQuick, OpenGL, QCore
+---
+## Build and Installation
+This project uses **CMake** as its build system and is cross-platform.
+
+### 1. Clone the Repository
+```bash
+git clone http://172.16.50.13/parsa/qcustommodels.git
+cd QCustomModels/Chart
+```
+
+### 2. Build Instruction
+#### Linux
+Make sure you have **cmake** and a **C++ compiler (gcc/g++)**
+
+```bash
+$ ~/QQCustomModels/Chart: ./install.sh
+```
+
+>[!INFO]
+> Usually the `INSTALL_PREFIX` on linux is: `/usr/local/...`
+
+>[!INFO]
+> You can pass custom `INSTALL_PREFIX` like below.
+
+```bash
+$ ~/QQCustomModels/Chart: ./install.sh /my/custom/path
+```
+
+#### Windows
+Make sure you have **CMake** and **(MinGW or MSVC)**  compiler installed.
+Run `cmd` as Adminstrator, then do like below:
+
+```bash
+cd QCustoModels/Chart
+mkdir BUILD
+cd BUILD
+cmake .. -DBUILD_EXAMPLE=OFF -G "MinGW Makefiles" # or another generator if needed
+cmake --build . --config Release
+cmake --install .
+```
+
+>[!INFO]
+> Usually the `CMAKE_INSTALL_PREFIX` on windows is: `C:/Program Files/WeaChart/`
+
+>[!INFO]
+> You can pass custom `CMAKE_INSTALL_PREFIX` like below.
+
+```bash
+...
+cmake .. -DBUILD_EXAMPLE=OFF -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX="C:/My/Custom/Path/WeaChart"
+...
+```
+---
+
+## Usage and Importing
+After installing the library follow these sequence:
+- Add **Quick**, **Qml**, **OpenGL** components.
+- Config C++ as 17 version.
+- Assign **QML_IMPORT_PATH** with [WeaChart_QML_IMPORT_PATH](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/config.h#L3) (it's optional, this will help **IDE** to shows Component properties and completetion.)
+- Implement **WeaChart** lib and includes.
+
+>[!INFO]
+> If after assigning **QML_IMPORT_PATH** Components were still **Unknown**, restart Qt Creator application and then it works :)
+
+### qmake
+Here is an example of usage **WeaChart** on **.pro** application:
+
+```qmake
+QT += quick core opengl
+CONFIG += c++17
+
+...
+
+# The path will comes from INSTALL_PREFIX at installation stage.
+# You can print "WeaChart_QML_IMPORT_PATH" constant on main.cpp to see which path is on your system.
+QML_IMPORT_PATH = /usr/local/share/qml/ # Change it with your installation path.
+... 
+
+unix:!macx: LIBS += -L/usr/local/lib64 -lWeaChart # Change it with your installation path.
+unix:!macx: INCLUDEPATH += /usr/local/include # Change it with your installation path.
+
+```
+
+### CMake
+Here is an example of usage **WeaChart** on **CMakeLists.txt**.
+
+```CMake
+
+cmake_minimum_required(VERSION 3.14)
+project(myProject VERSION 0.1 LANGUAGES CXX)
+
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Quick OpenGL)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick OpenGL)
+# Note: If you installed on specific location path make sure you specify here like: find_package(WeaChart PATHS "my/custom/path/" REQUIRED)
+find_package(WeaChart REQUIRED) 
+
+# Note: Also its same like above Note.
+# Optional.
+# You can print "WeaChart_QML_IMPORT_PATH" constant on main.cpp to see which path is on your system.
+set(QML_IMPORT_PATH /usr/local/share/qml CACHE STRING "" FORCE)
+
+add_executable(myProject
+        main.cpp
+        qml.qrc
+)
+
+target_link_libraries(myProject PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick WeaChart::WeaChart)
+
+```
 ---
 
 ## Features
@@ -94,7 +228,7 @@ Scatter, Line, Area.
 - Fill area under line with configurable color.
 ---
 
-## Custom Data Structs
+## Custom Data Struct
 
 Series are implemented as **templates**:
 ```cpp
@@ -104,7 +238,7 @@ class GLSeriesStorage {...};
 - T must inherit from `PointXYBase`.
 - `PointXYBase` contains:
   - `QVector2D` position.
-  - [ChartColor](172.16.50.13/parsa/qcustommodels/-/blob/parsa-chart/Chart/utils/GLStructures.h/) color(rgba).
+  - [ChartColor](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/utils/GLStructures.h#L30-L36) color(rgba).
 
 This design allows storing **custom data per point**, which can be emitted via signals upon **selection**.
 
@@ -130,10 +264,10 @@ Each series supports three color modes:
 ---
 
 >[!INFO]
-> see [GLEnums.h](http://172.16.50.13/parsa/qcustommodels/-/blob/parsa-chart/Chart/series/GLEnums.h) for more details about types.
+> see [GLEnums.h](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/series/GLEnums.h) for more details about types.
 
 ## Interaction
-- Pan (optional), set `limitView`: **true** property on [GLChartFrame.qml](http://172.16.50.13/parsa/qcustommodels/-/blob/parsa-chart/Chart/GLChartFrame.qml).
+- Pan (optional), set `limitView`: **true** property on [GLChartFrame.qml](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L43).
 - Zoom in/out.
 - RubberBand selection.
 - Multi-selection with `Ctrl`.
@@ -146,7 +280,7 @@ Each series supports three color modes:
 ---
 
 ## Memory and Performance
-- Minimum chart memory: 12 * 6MB = 72MB  [see MAX_CHART_TOTAL_POINTS](http://172.16.50.13/parsa/qcustommodels/-/blob/parsa-chart/Chart/scenes/GLChartview.h)
+- Minimum chart memory: 12 * 6MB = 72MB  [see MAX_CHART_TOTAL_POINTS](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/scenes/GLChartview.h#L21)
 - Configurable via internal variable.
 - Performance depends on: 
         - Number of points per series.
@@ -156,7 +290,7 @@ Each series supports three color modes:
 ---
 
 ## Configuration
-- **Pan friction** adjustable. [velocityCoefficient](http://172.16.50.13/parsa/qcustommodels/-/blob/parsa-chart/Chart/GLChartFrame.qml)
+- **Pan friction** adjustable. [velocityCoefficient](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L44)
 - **Mouse buttons** for Pan/Zoom/Select configurable.
 - **Marker size** adjustable per series.
 - **Series color** mode adjustable per series.
@@ -182,8 +316,8 @@ Drawing a simple filled triangle:
 #include <QDebug>
 #include <QThread>
 
-#include "GLChartview.h"
-#include "GLSeriesStorage.h"
+// Importing WeaChart Lib
+#include <WeaChart/GLChart>
 
 int main(int argc, char *argv[])
 {
@@ -206,6 +340,9 @@ int main(int argc, char *argv[])
     #endif
 
     QGuiApplication app(argc, argv);
+    
+    // Activating QDebug
+    qputenv("QT_ASSUME_STDERR_HAS_CONSOLE", "1");
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
@@ -215,8 +352,15 @@ int main(int argc, char *argv[])
                 QCoreApplication::exit(-1);
         }, Qt::QueuedConnection);
 
+    /** 
+        Printing WeaChart_QML_IMPORT_PATH, 
+        Assigning this string to QML_IMPORT_PATH (on CMakeLists.txt or .pro)
+        helps IDE to read .qml files properties and options.
+    **/
+    qDebug() << "WeaChart_QML_IMPORT_PATH: " << WeaChart_QML_IMPORT_PATH;
+
     // Register MetaTypes of chart
-    GLChartView::registerMetaTypes();
+    GLChartView::registerMetaTypes(&engine);
 
     // Creating series
     GLSeriesStorage<PointXYBase> mySeries;
@@ -243,7 +387,7 @@ import QtQuick.Layouts 1.15
 import QtQuick 2.15
 import QtQuick.Dialogs 1.3
 
-import GLItems 1.0
+import com.wearily.WeaChart 1.0 // Importing qml files.
 
 Window {
     id: root
@@ -270,7 +414,7 @@ Window {
 ```
 
 ### Best Practice
-[See example usage](http://172.16.50.13/parsa/qcustommodels/-/tree/parsa-chart/Chart/example)
+[See example usage](http://172.16.50.13/parsa/qcustommodels/-/tree/main/Chart/example)
 
 ## Additional Notes
 - Highly **customizable** and flexible charting system.
