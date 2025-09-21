@@ -101,7 +101,8 @@ cd QCustomModels/Chart
 Make sure you have **cmake** and a **C++ compiler (gcc/g++)**
 
 ```bash
-$ ~/QQCustomModels/Chart: ./install.sh
+$ ~/QQCustomModels/Chart: chmod x+ install.sh
+$ ~/QQCustomModels/Chart: sudo ./install.sh
 ```
 
 >[!INFO]
@@ -111,7 +112,7 @@ $ ~/QQCustomModels/Chart: ./install.sh
 > You can pass custom `INSTALL_PREFIX` like below.
 
 ```bash
-$ ~/QQCustomModels/Chart: ./install.sh /my/custom/path
+$ ~/QQCustomModels/Chart: sudo ./install.sh /my/custom/path
 ```
 
 #### Windows

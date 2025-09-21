@@ -1,0 +1,56 @@
+.
+├── cmake
+│   ├── config.h.in
+│   ├── WeaChartConfig.cmake.in
+│   └── WeaChartUninstall.cmake.in
+├── CMakeLists.txt
+├── example
+│   ├── CMakeLists.txt
+│   ├── datasource.cpp
+│   ├── datasource.h
+│   ├── images
+│   │   ├── targetPressed.png
+│   │   └── upHovered.png
+│   ├── main.cpp
+│   ├── main.qml
+│   └── resources.qrc
+├── include
+│   └── WeaChart
+│       ├── config.h
+│       ├── GLChart
+│       ├── properties
+│       │   ├── IProperties.h
+│       │   ├── PropertyAxisRange.h
+│       │   ├── PropertyBackground.h
+│       │   └── PropertySeries.h
+│       ├── scenes
+│       │   ├── GLChartRenderer.h
+│       │   └── GLChartview.h
+│       ├── series
+│       │   ├── GLAbstractSeries.h
+│       │   ├── GLEnums.h
+│       │   ├── GLSeriesHandle.h
+│       │   ├── GLSeriesItem.h
+│       │   └── GLSeriesStorage.h
+│       ├── utils
+│       │   ├── GLMathUtils.h
+│       │   └── GLStructures.h
+│       └── WeaChart_export.h
+├── install.sh
+├── qml
+│   ├── GLChartFrame.qml
+│   ├── GLItemLegend.qml
+│   ├── GLLegend.qml
+│   ├── plugins.qmltypes
+│   └── qmldir
+├── README.md
+├── resources.qrc
+├── shaders
+│   ├── chart.frag
+│   └── chart.vert
+├── src
+│   └── scenes
+│       ├── GLChartRenderer.cpp
+│       └── GLChartview.cpp
+├── tree.txt
+└── uninstall.sh

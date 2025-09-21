@@ -13,7 +13,7 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Quick)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick)
 find_package(WeaNet REQUIRED)
 
-add_library(libQCustomModels STATIC README.md tree.txt)
+add_library(libQCustomModels STATIC README.md .gitignore tree.txt)
 
 add_subdirectory(Tools)
 add_subdirectory(ListModel)
