@@ -1,0 +1,8 @@
+<map id="IProperties" name="IProperties">
+<area shape="rect" id="node3" href="$classPropertyAxisRange.html" title="Contains the minX, maxX, minY, maxY properties, which define the limits of the Chart XY axes..." alt="" coords="5,155,140,181"/>
+<area shape="rect" id="node4" href="$classPropertyBackground.html" title="the color/opacity style of OpenGL FramebufferObject (FBO) " alt="" coords="164,155,304,181"/>
+<area shape="rect" id="node5" href="$classPropertySeries.html" title="Abstract Series properties contains in this class. " alt="" coords="329,155,438,181"/>
+<area shape="rect" id="node6" href="$classGLAbstractSeries.html" title="Abstract series class (it can&#39;t be create as object). Creation idea of this class is: Because the GLS..." alt="" coords="320,229,447,256"/>
+<area shape="rect" id="node7" href="$classGLSeriesItem.html" title="GLSeriesStorage class as QML Component. " alt="" coords="256,304,359,331"/>
+<area shape="rect" id="node8" href="$classGLSeriesStorage.html" title="Template series class based on GLAbstractSeries. THe GLSeriesStorage works like a vector..." alt="" coords="383,304,536,331"/>
+</map>

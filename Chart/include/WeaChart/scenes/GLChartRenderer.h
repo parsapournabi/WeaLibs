@@ -15,16 +15,32 @@ struct Projection;
 struct SeriesProps;
 struct PointXYBase;
 
+/// @brief Chart renderer based on QQuickFramebufferObject::Renderer
+/// @details GLChartView FBO renderer, uses OpenGL 4.6 core. contains a glProgram.
+/// single VertexArrayObject and also has single points VertexBufferObject and a ShaderStorageBuffer.
+/// - MVP of renderer depends on `GLChartView axisRange(minX, maxX ...) and PAN/Zoom projection`.
+/// - Three type of glDrawArrays it has. (GL_POINTS, GL_LINE_STRIP, GL_TRIANGLE_STRIP).
+/// - Also texture sampler can attach on fragmentShader`.
+/// - Blending is enable. updating buffers isn't like write subdata (every time it will write whole of the buffer).
 class WEACHART_API GLChartRenderer : public QQuickFramebufferObject::Renderer, protected QOpenGLFunctions_4_5_Core
 {
 public:
     GLChartRenderer();
     ~GLChartRenderer();
 
+    /// @brief The QQuickFramebufferObject::Renderer virtual method that must be override.
+    /// @return FBO pointer.
     QOpenGLFramebufferObject *createFramebufferObject(const QSize &size) override;
+    /// @brief The QQuickFramebufferObject::Renderer virtual method that can be override.
+    /// @details Synchronizing the Variables between Renderer & FBO.
+    /// @param The FBO Object which should be cast into the GLChartView type.
+    /// @note After the first synchronization call, The m_initialized will set to true.
     void synchronize(QQuickFramebufferObject *item) override;
+    /// @brief The QQuickFramebufferObject::Renderer virtual method that must be override.
+    /// @note The rendering process will not start until the m_initialized is set to true.
     void render() override;
 
+    /// @brief Writing the new dataset into the whole of the Vertex Buffer object.
     void updatePosVbo();
 
 protected:
@@ -33,16 +49,23 @@ protected:
     const QPair<int, int> fboSize() const;
 
 private:
+    /// @brief Initializing OpenGL functions, debug mode and flags.
     void initGL();
+    /// @brief Creating a OpenGL shader program and linking the Shader files with it.
     void initShaders();
-    void initData();
+    /// @brief The VertexArrayObject, Shader Storage buffer and The Vertex Buffer creation & allocation.
+    /// @details After the method done the m_initBuffer will set to the true.
     void initBuffers();
 
 
     // Renderer Attributes
+    /// @brief shader program.
     QOpenGLShaderProgram *m_program = nullptr;
+    /// @brief Vertex Array Object (Stores VBO & SSBO and all other buffers).
     QOpenGLVertexArrayObject m_vao;
+    /// @brief Vertex buffer Object Stores an array of point position + point color.
     QOpenGLBuffer m_vboPoints;
+    /// @brief Shader storage buffer object, stores all series information refers points.
     GLuint m_ssboSeriesProps;
     bool m_initBuffers = false;
     bool m_initialized = false;

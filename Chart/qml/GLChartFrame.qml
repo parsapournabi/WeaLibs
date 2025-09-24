@@ -16,6 +16,8 @@ Item {
     property real backgroundOpacity: 0.3
     property string xTitle: "X Axis"
     property string yTitle: "Y Axis"
+    property int xTitlePosY: root.height - 5
+    property int yTitlePosX: 0
     property font titleFont: Qt.font({ pixelSize: 13, bold: true})
     property color titleColor: "black"
     property font labelFont: Qt.font({ pixelSize: 11})
@@ -338,7 +340,7 @@ Item {
     // X Title
     Text {
         anchors.horizontalCenter: parent.horizontalCenter
-        y: parent.height - 5
+        y: root.xTitlePosY
         color: root.titleColor
         font: root.titleFont
         text: root.xTitle
@@ -346,11 +348,12 @@ Item {
     // Y Title
     Text {
         anchors.verticalCenter: parent.verticalCenter
-        x: 0
+        x: root.yTitlePosX
         rotation: -90
+        horizontalAlignment: Qt.AlignLeft
+        verticalAlignment: Qt.AlignBottom
         color: root.titleColor
         font: root.titleFont
         text: root.yTitle
     }
-
 }

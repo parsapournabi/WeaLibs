@@ -11,6 +11,9 @@ A high-performance, flexible charting librarry built with `C++`, `OpenGL`, `QML`
 │   ├── WeaChartConfig.cmake.in
 │   └── WeaChartUninstall.cmake.in
 ├── CMakeLists.txt
+├── docs
+│   ├── mainpage.h
+│   └── README.md
 ├── example
 │   ├── CMakeLists.txt
 │   ├── datasource.cpp
@@ -60,7 +63,9 @@ A high-performance, flexible charting librarry built with `C++`, `OpenGL`, `QML`
 │       ├── GLChartRenderer.cpp
 │       └── GLChartview.cpp
 ├── tree.txt
-└── uninstall.sh
+├── uninstall.sh
+└── WeaChart.qdocconf
+
 ```
 ---
 
@@ -78,6 +83,8 @@ A high-performance, flexible charting librarry built with `C++`, `OpenGL`, `QML`
 11. [Configuration](#configuration)
 12. [Warnings and Best Practices](#warnings-and-best-practices)
 13. [Example](#example)
+14. [Additional Notes](#additional-notes)
+15. [Information](#information)
 ---
 
 ## Requirements
@@ -421,4 +428,12 @@ Window {
 - Highly **customizable** and flexible charting system.
 - Supports **real-time updates**, but excessive property changes reduce performance.
 - Designed for **professional applications** requiring high-performance rendering.
+---
 
+## Information
+
+If you want to learn more about the **WeaChart** library and view the full
+documentation, refer to the following sections:
+
+- [See the complete documentation](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/docs/html/index.html)
+- [See the source code description](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/docs/README.md)

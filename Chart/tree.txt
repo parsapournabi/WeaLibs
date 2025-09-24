@@ -4,6 +4,9 @@
 │   ├── WeaChartConfig.cmake.in
 │   └── WeaChartUninstall.cmake.in
 ├── CMakeLists.txt
+├── docs
+│   ├── mainpage.h
+│   └── README.md
 ├── example
 │   ├── CMakeLists.txt
 │   ├── datasource.cpp
@@ -53,4 +56,7 @@
 │       ├── GLChartRenderer.cpp
 │       └── GLChartview.cpp
 ├── tree.txt
-└── uninstall.sh
+├── uninstall.sh
+└── WeaChart.qdocconf
+
+36 directories, 116 files

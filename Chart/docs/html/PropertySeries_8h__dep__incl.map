@@ -1,0 +1,9 @@
+<map id="include/WeaChart/properties/PropertySeries.h" name="include/WeaChart/properties/PropertySeries.h">
+<area shape="rect" id="node2" href="$GLAbstractSeries_8h.html" title="include/WeaChart/series\l/GLAbstractSeries.h" alt="" coords="239,95,405,136"/>
+<area shape="rect" id="node3" href="$GLSeriesHandle_8h.html" title="include/WeaChart/series\l/GLSeriesHandle.h" alt="" coords="50,184,215,225"/>
+<area shape="rect" id="node7" href="$GLSeriesItem_8h.html" title="include/WeaChart/series\l/GLSeriesItem.h" alt="" coords="239,184,405,225"/>
+<area shape="rect" id="node8" href="$GLSeriesStorage_8h.html" title="include/WeaChart/series\l/GLSeriesStorage.h" alt="" coords="429,184,594,225"/>
+<area shape="rect" id="node4" href="$GLChartview_8h.html" title="include/WeaChart/scenes\l/GLChartview.h" alt="" coords="141,273,313,315"/>
+<area shape="rect" id="node5" href="$GLChartRenderer_8cpp.html" title="src/scenes/GLChartRenderer.cpp" alt="" coords="5,363,223,389"/>
+<area shape="rect" id="node6" href="$GLChartview_8cpp.html" title="src/scenes/GLChartview.cpp" alt="" coords="247,363,437,389"/>
+</map>

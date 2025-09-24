@@ -1,0 +1,6 @@
+<map id="GLAbstractSeries" name="GLAbstractSeries">
+<area shape="rect" id="node5" href="$classGLSeriesItem.html" title="GLSeriesStorage class as QML Component. " alt="" coords="5,304,108,331"/>
+<area shape="rect" id="node6" href="$classGLSeriesStorage.html" title="Template series class based on GLAbstractSeries. THe GLSeriesStorage works like a vector..." alt="" coords="132,304,285,331"/>
+<area shape="rect" id="node2" href="$classPropertySeries.html" title="Abstract Series properties contains in this class. " alt="" coords="78,155,187,181"/>
+<area shape="rect" id="node3" href="$classIProperties.html" title="Abstract QML/C++ Property class. " alt="" coords="89,80,176,107"/>
+</map>

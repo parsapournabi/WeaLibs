@@ -9,6 +9,8 @@
 #include <QDebug>
 #include <QColor>
 
+/// @brief OpenGL projection matrix.
+/// @details Referer GLChartView. params should be set with the minX, maxX, minY and maxY.
 WEACHART_API struct Projection {
     qreal left;
     qreal right;
@@ -16,17 +18,25 @@ WEACHART_API struct Projection {
     qreal top;
 };
 
+/// @brief Shader & C++ struct API.
+/// @details The SeriesProps will be used in the shader program.
+/// There is an identical struct defined there.
+/// @throw assertion if size of the struct % 16 is not multiple of 16 bytes.
+/// @note Make sure the size of SeriesProps is a multiple of 16;
+/// otherwise you'll get an error.
 WEACHART_API struct SeriesProps {
     int startIndex, endIndex;
     GLMarkerShape markerShape; // Shape: 0 == Square, 1 == Circle, 2 == Texture
     int markerSize;
     GLColorType colorType;
     GLSeriesType type;
+    /// @brief Required! in the shaders, std430 has padding for 16 bytes.
     double padding; // Required because on chart.vert std430 has padding for 16Bytes
     QVector4D color;
 };
 static_assert(sizeof(SeriesProps) % 16 == 0, "Struct SeriesProps must be multiple of 16 bytes");
 
+/// @brief Point Color as Union struct object with sizoef the 4 bytes.
 WEACHART_API union ChartColor {
     struct {
         quint8 r, g, b, a;
@@ -35,6 +45,10 @@ WEACHART_API union ChartColor {
     quint8 channels[4];
 };
 
+/// @brief Base chart's point struct.
+/// @details Contains two fields: position and color.
+/// @note You can create your own struct by inheriting from this struct, but make sure
+/// to register the new struct using Q_DECLARE_METATYPE. (Same as below).
 WEACHART_API struct PointXYBase {
     // Fields
     QVector2D position;

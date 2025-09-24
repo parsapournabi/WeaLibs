@@ -9,22 +9,21 @@ enum GLSeriesType {
     SeriesTypeLine,
     SeriesTypeArea,
 };
-Q_DECLARE_METATYPE(GLSeriesType)
 
 enum GLColorType {
     MixBasePointColor = 0, // 0
     OnlyBaseColor,
     OnlyPointColor
 };
-Q_DECLARE_METATYPE(GLColorType)
 
 enum GLMarkerShape {
     ShapeSquare = 0, // 0
     ShapeCircle,
     ShapeTexture
 };
-Q_DECLARE_METATYPE(GLMarkerShape)
 
+/// @details Each enums must contains at enum of this class.
+/// @brief GLMetaEnums will use on QML enums. on com.wearily.WeaChart url
 class WEACHART_API GLMetaEnums : public QObject {
     Q_OBJECT
 public:
@@ -49,5 +48,9 @@ public:
     Q_ENUM(GLSeriesType)
     Q_ENUM(GLMarkerShape)
 };
+
+Q_DECLARE_METATYPE(GLSeriesType) // Decalartion reason is: this enum want use as type of Q_PROPERTY(...).
+Q_DECLARE_METATYPE(GLColorType) // Decalartion reason is: this enum want use as type of Q_PROPERTY(...).
+Q_DECLARE_METATYPE(GLMarkerShape) // Decalartion reason is: this enum want use as type of Q_PROPERTY(...).
 
 #endif // GLENUMS_H

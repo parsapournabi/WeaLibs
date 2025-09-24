@@ -557,7 +557,7 @@ Window {
                 topMargin: 80
 
                 useGrid: cbUseGrid.checked
-                decimalPlaces: 2
+                decimalPlaces: 0
                 majorXCount: spinGridHMajor.value
                 majorYCount: spinGridVMajor.value
                 minorPerMajor: spinGridHMinor.value
@@ -566,7 +566,9 @@ Window {
                 backgroundColor: colorDialog.currentColor
                 backgroundOpacity: colorDialog.currentAlpha
                 xTitle: "This is X Axis"
-                yTitle: "This is Y Axis"
+                yTitle: "Frequency Channel"
+//                xTitlePosY: glChartFrame.height - 30
+//                yTitlePosX: -10
 
                 selectViewMouseButton: Qt.RightButton
                 selectPointsMouseButton: Qt.LeftButton

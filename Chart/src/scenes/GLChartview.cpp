@@ -381,6 +381,7 @@ void GLChartView::mousePressEvent(QMouseEvent *event)
         m_panning = true;
         m_lastMousePos = event->pos();
         m_panVelocity = QPointF(0, 0);
+        // If auto pan after released wasn't finish yet, kill that process.
         if (m_panTimerId != -1) {
             killTimer(m_panTimerId);
             m_panTimerId = -1;
@@ -417,7 +418,7 @@ void GLChartView::mouseMoveEvent(QMouseEvent *event)
 
         m_panVelocity = delta / dt;
 
-        emit updateQml();
+        emit updateQml(); // updating labels number values.
 
         update();
     }
@@ -431,7 +432,7 @@ void GLChartView::mouseReleaseEvent(QMouseEvent *event)
         m_panning = false;
         m_panElaps.restart();
         if (m_panTimerId == -1) {
-            m_panTimerId = startTimer(16);
+            m_panTimerId = startTimer(16); // Start PAN deceleration ramp timer.
         }
     }
 

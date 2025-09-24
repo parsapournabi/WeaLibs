@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(WeaChart VERSION 1.1 LANGUAGES CXX)
+project(WeaChart VERSION 1.2 LANGUAGES CXX)
 
 include(GNUInstallDirs)
 
@@ -41,6 +41,8 @@ add_library(WeaChart SHARED
     install.sh
     uninstall.sh
     README.md
+    docs/README.md
+    WeaChart.qdocconf
     cmake/WeaChartConfig.cmake.in
     cmake/WeaChartUninstall.cmake.in
     cmake/config.h.in

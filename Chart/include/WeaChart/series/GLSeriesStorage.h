@@ -3,13 +3,21 @@
 
 #include "GLAbstractSeries.h"
 
+/// @brief Template series class based on `GLAbstractSeries`.
+/// THe GLSeriesStorage works like a vector, meaning you can add points using methods such as
+/// `append`, `replace`, and others.
+/// The reason for making this class a template is to provides greater flexibility compared to
+/// `QtChart`. In QChart, you can only use `QPointF` as an item, but here you can pass your own custom
+/// point data type structs (or simply use the `PointXYBase` struct if you prefer).
+///
+/// @note T must inherit from `PointXYBase`; otherwise, you will get a compile-time-error.
 template<typename T>
 class WEACHART_API GLSeriesStorage final : public GLAbstractSeries {
     static_assert(std::is_base_of_v<PointXYBase, T>,
                   "ERROR At GLSeriesStorage class: T must inherit from 'PointXYBase' struct!");
 public:
-    inline void append(const T& point) noexcept { m_points << point; }
-    inline void append(T &&point) { m_points << point; }
+    inline void append(const T& point) { m_points.append(point); }
+    inline void append(T &&point) { m_points.append(point); }
     inline void append(const QVector<T> &points) { m_points += points; }
 
     inline void insert(int i, T &&point) { m_points.insert(i, point); }
@@ -25,10 +33,10 @@ public:
     inline const T* data() const { return m_points.data(); }
     inline const T* constData() const { return m_points.constData(); }
 
-    void clear() { m_points.clear(); }
+    inline void clear() noexcept { m_points.clear(); }
 
     inline const T &at(int i) const { return m_points.at(i); }
-    inline T &at(int i) { return m_points[i]; }
+    inline T &at(int i) { return m_points.at(i); }
 
     inline T &operator[](int i) { return m_points[i]; }
     inline const T &operator[](int i) const { return m_points[i]; }
@@ -43,20 +51,24 @@ public:
     GLSeriesStorage &operator=(const QVector<T> &points) { m_points = std::move(points); }
 
     // Use replace instead of clear + append, it's optimized for performance
+    /// @brief Most optimize points assignment.
     void replace(const QVector<T> &points) { m_points = std::move(points); }
 
+    /// @brief series points.
+    /// @return m_points.
     const QVector<T> &points() const { return m_points; }
 
     // Overriden methods form GLAbstractSeries
     inline int size() const noexcept override { return m_points.size(); }
     inline int count() const noexcept override { return m_points.size(); }
     inline int length() const noexcept override { return m_points.size(); }
-    void reserve(int size) noexcept override { m_points.reserve(size); }
+    void reserve(int size) override { m_points.reserve(size); }
     void resize(int size) override { m_points.resize(size); }
     inline bool empty() const noexcept override { return m_points.empty(); }
     inline bool isEmpty() const noexcept override { m_points.isEmpty(); }
 
 protected:
+    /** These methods are only used in the GLChartView class. **/
     PointXYBase baseAt(int i) const override {
         const T& p = m_points.at(i);
         return static_cast<const PointXYBase&>(p);
@@ -94,6 +106,7 @@ protected:
 
     }
 
+    /// @details Converting T to QVariant because a template type cannot be passed through a signal argument.
     QVariant makeSelectVariant(const QVector<int> &indices) const override {
         QVector<T>  sel;
         sel.reserve(indices.size());

@@ -9,6 +9,7 @@
 #define WEACHART_API __declspec(dllimport)
 #endif
 #else
+/// @brief MSVC Import/Export API.
 #define WEACHART_API
 #endif
 

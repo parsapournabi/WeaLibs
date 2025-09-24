@@ -120,7 +120,6 @@ void GLChartRenderer::synchronize(QQuickFramebufferObject *item)
 void GLChartRenderer::render()
 {
     if (!m_initialized) return;
-    initData();
     initBuffers();
 
     glViewport(0, 0, fboSize().first, fboSize().second);
@@ -234,12 +233,6 @@ void GLChartRenderer::initShaders()
         qCritical() << "Failed to link Chart Shaders files!";
         exit(EXIT_FAILURE);
     }
-}
-
-void GLChartRenderer::initData()
-{
-    if (m_initBuffers) return;
-
 }
 
 void GLChartRenderer::initBuffers()

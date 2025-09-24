@@ -8,21 +8,36 @@
 #include <QDebug>
 #include <QImage>
 
+/// @brief Abstract Series properties contains in this class.
 class WEACHART_API PropertySeries : public IProperties {
     Q_OBJECT
+    /// @brief name of the series which uses on GLLegend (UI).
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    /// @brief Series visibility, making "false" of this property will ignore series process & UI (also it will hide at GLLegend).
     Q_PROPERTY(bool visible READ visible WRITE setVisible NOTIFY visibleChanged)
+    /// @details: color: QColor => base color of series,
+    ///  @note series contains at least Two type of colors (referer `colorType`,
+    /// color prop is base color of series which can MIX with each "points color" or "only base color" or ignoring base color (See colorType property.)
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
+    /// @brief The type of series color for showing at UI.
+    ///  @note please see "WeaChart/series/GLEnums.h" for more details.
     Q_PROPERTY(GLColorType colorType READ colorType WRITE setColorType NOTIFY colorTypeChanged)
+    /// @brief There is three type of series, "scatter", "line" and "area",
+    ///  @note please see "WeaChart/series/GLEnums.h" for more details.
     Q_PROPERTY(GLSeriesType type READ type WRITE setType NOTIFY typeChanged)
+    /// @brief The shape of marker (ONLY ON SCATTER TYPE) visual.
+    ///  @note please see "WeaChart/series/GLEnums.h" for more details.
     Q_PROPERTY(GLMarkerShape markerShape READ markerShape WRITE setMarkerShape NOTIFY markerShapeChanged) // only at scatter
+    /// @brief Only in the scatterSeriesType, The size of the points.
     Q_PROPERTY(int markerSize READ markerSize WRITE setMarkerSize NOTIFY markerSizeChanged) // only at scatter
-//    Q_PROPERTY(QImage markerIcon READ markerIcon NOTIFY markerIconChanged)
+    /// @brief When you choose `GLMarkerShape::ShapeTexture`, you must set this property to :/path/of/your/icon.
     Q_PROPERTY(QString markerIconUrl READ markerIconUrl WRITE setMarkerIconUrl NOTIFY markerIconUrlChanged)
 public:
     explicit PropertySeries(QQuickItem *parent = nullptr) : IProperties{parent} {}
 
+    /// @brief getter of the name property.
     inline QString name() const { return m_name; }
+    /// @brief setter of the name property.
     inline void setName(const QString &name) {
         if (m_name == name) return;
         m_name = name;
@@ -30,7 +45,9 @@ public:
         emit changed();
     }
 
+    /// @brief getter of the visible property.
     inline bool visible() const { return m_visible; }
+    /// @brief setter of the visible property.
     inline void setVisible(bool visible) {
         if (m_visible == visible) return;
         m_visible = visible;
@@ -38,7 +55,9 @@ public:
         emit changed();
     }
 
+    /// @brief getter of the color property.
     inline QColor color() const { return m_color; }
+    /// @brief setter of the color property.
     inline void setColor(const QColor &color) {
         if (m_color == color) return;
         m_color = color;
@@ -46,7 +65,9 @@ public:
         emit changed();
     }
 
+    /// @brief getter of the colorType property.
     inline GLColorType colorType() const { return m_colorType; }
+    /// @brief setter of the colorType property.
     inline void setColorType(GLColorType type) {
         if (m_colorType == type) return;
         m_colorType = type;
@@ -54,13 +75,16 @@ public:
         emit changed();
     }
 
+    /// @brief getter of the type property.
     inline GLSeriesType type() const { return m_type; }
+    /// @brief setter of the type property.
     inline void setType(GLSeriesType type) {
         if (m_type == type) return;
         m_type = type;
         emit typeChanged();
         emit changed();
     }
+    /// @brief setter of the type property.
     inline void setType(int type) {
         if (m_type == type) return;
         m_type = static_cast<GLSeriesType>(type);
@@ -68,7 +92,9 @@ public:
         emit changed();
     }
 
+    /// @brief getter of the markerShape property.
     inline GLMarkerShape markerShape() const { return m_markerShape; }
+    /// @brief setter of the markerShape property.
     inline void setMarkerShape(GLMarkerShape shape) {
         if (m_markerShape == shape) return;
         m_markerShape = shape;
@@ -76,7 +102,9 @@ public:
         emit changed();
     }
 
+    /// @brief getter of the markerSize property.
     inline int markerSize() const { return m_markerSize; }
+    /// @brief setter of the markerSize property.
     inline void setMarkerSize(int size) {
         if (m_markerSize == size) return;
         m_markerSize = size;
@@ -84,8 +112,11 @@ public:
         emit changed();
     }
 
+    /// @return markerIcon as an image.
     inline QImage *markerIconPtr() const { return &m_markerIcon; }
+    /// @brief getter of the markerIcon private property.
     inline const QImage &markerIcon() const { return m_markerIcon; }
+    /// @brief setter of the markerIcon private property.
     inline void setMarkerIcon(const QString &path) {
         m_markerIconUrl = path;
         m_markerIcon = QImage(m_markerIconUrl);
@@ -93,7 +124,9 @@ public:
 //        emit markerIconChanged();
         emit changed();
     }
+    /// @brief getter of the markerIconUrl property.
     inline QString markerIconUrl() const { return m_markerIconUrl; }
+    /// @brief setter of the markerIconUrl property.
     inline void setMarkerIconUrl(QString url) {
         if (url.startsWith("qrc:")) url.replace(0, 3, "");
         if (m_markerIconUrl == url) return;
@@ -108,15 +141,12 @@ public:
 
 signals:
     void nameChanged();
-//    void visibleChanged();
     void colorChanged();
     void colorTypeChanged();
     void typeChanged();
     void markerShapeChanged();
     void markerSizeChanged();
-//    void markerIconChanged();
     void markerIconUrlChanged();
-    void selected(const QVariant &payload, int vectorTypeId);
 
 protected:
     QString m_name = "Unknown series name";
