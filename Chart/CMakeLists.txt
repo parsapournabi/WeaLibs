@@ -46,6 +46,7 @@ add_library(WeaChart SHARED
     cmake/WeaChartConfig.cmake.in
     cmake/WeaChartUninstall.cmake.in
     cmake/config.h.in
+    docs/document.html
 )
 
 # Referer include/WeaChart/WeaChart_export.h
