@@ -5,7 +5,6 @@ import com.wearily.WeaChart 1.0
 Item {
     id: root
     property bool useGrid: true
-    property int decimalPlaces: 2
     property int majorXCount: 7 // Number of X major Grid
     property int majorYCount: 7 // Number of Y major Grid
     property int minorPerMajor: 4 // Number of sub grids per each majorGrid.
@@ -24,6 +23,10 @@ Item {
     property color labelColor: "black"
     property string xLabelSuffix: "" // For example xLabelSuffix: "$", then value from 100.0 goes to 100.0$
     property string yLabelSuffix: "" // Same as xLabelSuffix
+    property int xLabelDecimalPlaces: 2
+    property int yLabelDecimalPlaces: 2
+    property real xLabelScaleFactor: 1.0 // Monitor Scaling for example minX = 0.0 & maxX = 1.0, by giving this property to 100.0, the UI minX & maxX will be in range of the 0.0~100.0.
+    property real yLabelScaleFactor: 1.0 // Monitor Scaling for example minY = 0.0 & maxY = 1.0, by giving this property to 100.0, the UI minX & maxX will be in range of the 0.0~100.0.
 
     property int leftMargin: 40
     property int rightMargin: 20
@@ -320,8 +323,8 @@ Item {
             y: root.height - root.bottomMargin + 4
             color: root.labelColor
             font: root.labelFont
-            text: (glChartView.projLeft + index * ((glChartView.projRight - glChartView.projLeft)
-                                                   / root.majorXCount)).toFixed(decimalPlaces) + root.xLabelSuffix
+            text: (root.xLabelScaleFactor * (glChartView.projLeft + index * ((glChartView.projRight - glChartView.projLeft)
+                                                   / root.majorXCount))).toFixed(xLabelDecimalPlaces) + root.xLabelSuffix
         }
     }
     // Labels for major Y
@@ -332,8 +335,8 @@ Item {
             y: root.topMargin + index * ((root.height - root.topMargin - root.bottomMargin) / root.majorYCount) - 8
             color: root.labelColor
             font: root.labelFont
-            text: (glChartView.projTop - index * ((glChartView.projTop - glChartView.projBottom)
-                                                  / root.majorYCount)).toFixed(decimalPlaces) + root.yLabelSuffix
+            text: (root.yLabelScaleFactor * (glChartView.projTop - index * ((glChartView.projTop - glChartView.projBottom)
+                                                  / root.majorYCount))).toFixed(yLabelDecimalPlaces) + root.yLabelSuffix
         }
     }
 

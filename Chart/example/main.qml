@@ -557,7 +557,8 @@ Window {
                 topMargin: 80
 
                 useGrid: cbUseGrid.checked
-                decimalPlaces: 0
+                yLabelDecimalPlaces: 0
+                xLabelDecimalPlaces: 0
                 majorXCount: spinGridHMajor.value
                 majorYCount: spinGridVMajor.value
                 minorPerMajor: spinGridHMinor.value

@@ -126,7 +126,7 @@ void GLChartRenderer::render()
     glClearColor(m_fboBgColor.redF(), m_fboBgColor.greenF(), m_fboBgColor.blueF(), m_fboOpacity);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    static QMatrix4x4 projection;
+    QMatrix4x4 projection;
     projection.setToIdentity();
     projection.ortho(m_fboProj->left, m_fboProj->right, m_fboProj->bottom, m_fboProj->top, -1, 1);
 
@@ -168,6 +168,7 @@ void GLChartRenderer::render()
             m_fboSeriesTexs->at(idx).data()->bind(0);
         }
         m_vao.bind();
+        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, m_ssboSeriesProps);
         glDrawArrays(mode, prop.startIndex, prop.endIndex - prop.startIndex);
         m_vao.release();
         if (prop.markerShape == GLMarkerShape::ShapeTexture &&

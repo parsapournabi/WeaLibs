@@ -75,9 +75,10 @@ WEACHART_API struct PointXYBase {
         position(_position),
         color{_color} {}
 
-    PointXYBase(float x, float y, ChartColor _color = {0, 0, 0, 0})
+    template <typename T1, typename T2>
+    PointXYBase(T1 x, T2 y, ChartColor _color = {0, 0, 0, 0})
         :
-        position(x, y),
+        position((float) x, (float) y),
         color{_color} {}
 
     template<typename T1, typename T2, typename T3, typename T4>
@@ -91,10 +92,10 @@ WEACHART_API struct PointXYBase {
             GLutils::normalize_to_uint8(alpha)
         } {}
 
-    template<typename T1, typename T2, typename T3, typename T4>
-    PointXYBase(float x, float y, T1 red = 0, T2 green = 0, T3 blue = 0, T4 alpha = 0)
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+    PointXYBase(T1 x, T2 y, T3 red = 0, T4 green = 0, T5 blue = 0, T6 alpha = 0)
         :
-        position(x, y),
+        position((float) x, (float) y),
         color {
             GLutils::normalize_to_uint8(red),
             GLutils::normalize_to_uint8(green),
