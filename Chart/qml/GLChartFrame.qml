@@ -28,6 +28,7 @@ Item {
     property real xLabelScaleFactor: 1.0 // Monitor Scaling for example minX = 0.0 & maxX = 1.0, by giving this property to 100.0, the UI minX & maxX will be in range of the 0.0~100.0.
     property real yLabelScaleFactor: 1.0 // Monitor Scaling for example minY = 0.0 & maxY = 1.0, by giving this property to 100.0, the UI minX & maxX will be in range of the 0.0~100.0.
 
+    // Anchors Properties
     property int leftMargin: 40
     property int rightMargin: 20
     property int bottomMargin: 30
@@ -38,7 +39,7 @@ Item {
     property int selectViewMouseButton: Qt.RightButton // See mouseItemView id for more detail
 
     // ReadOnly
-    property var chart: glChartView
+    readonly property var chart: glChartView // Also uses on GLLegend chart property
 
     // Chart Properties
     property real minX: 0

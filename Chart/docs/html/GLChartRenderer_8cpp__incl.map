@@ -1,16 +1,23 @@
 <map id="src/scenes/GLChartRenderer.cpp" name="src/scenes/GLChartRenderer.cpp">
-<area shape="rect" id="node2" href="$GLChartRenderer_8h.html" title="WeaChart/scenes/GLChartRenderer.h" alt="" coords="734,177,978,203"/>
-<area shape="rect" id="node15" href="$GLChartview_8h.html" title="WeaChart/scenes/GLChartview.h" alt="" coords="1265,87,1484,114"/>
-<area shape="rect" id="node22" href="$GLStructures_8h.html" title="WeaChart/utils/GLStructures.h" alt="" coords="1023,355,1225,382"/>
-<area shape="rect" id="node11" href="$WeaChart__export_8h.html" title="WeaChart/WeaChart_export.h" alt="" coords="1498,512,1697,539"/>
-<area shape="rect" id="node18" href="$PropertyBackground_8h.html" title="WeaChart/properties\l/PropertyBackground.h" alt="" coords="1901,348,2056,389"/>
-<area shape="rect" id="node21" href="$PropertyAxisRange_8h.html" title="WeaChart/properties\l/PropertyAxisRange.h" alt="" coords="1726,348,1877,389"/>
-<area shape="rect" id="node30" href="$GLSeriesHandle_8h.html" title="WeaChart/series/GLSeries\lHandle.h" alt="" coords="1585,169,1764,211"/>
-<area shape="rect" id="node36" href="$GLSeriesItem_8h.html" title="WeaChart/series/GLSeries\lItem.h" alt="" coords="1889,169,2068,211"/>
-<area shape="rect" id="node39" href="$config_8h.html" title="WeaChart/config.h" alt="" coords="1060,177,1191,203"/>
-<area shape="rect" id="node19" href="$IProperties_8h.html" title="IProperties.h" alt="" coords="1753,437,1850,464"/>
-<area shape="rect" id="node23" href="$GLMathUtils_8h.html" title="GLMathUtils.h" alt="" coords="740,437,847,464"/>
-<area shape="rect" id="node25" href="$GLEnums_8h.html" title="WeaChart/series/GLEnums.h" alt="" coords="1179,437,1373,464"/>
-<area shape="rect" id="node32" href="$GLAbstractSeries_8h.html" title="GLAbstractSeries.h" alt="" coords="1626,266,1763,293"/>
-<area shape="rect" id="node35" href="$PropertySeries_8h.html" title="WeaChart/properties\l/PropertySeries.h" alt="" coords="1361,348,1503,389"/>
+<area shape="rect" id="node2" href="$GLChartRenderer_8h.html" title="WeaChart/scenes/GLChartRenderer.h" alt="" coords="589,177,833,203"/>
+<area shape="rect" id="node15" href="$GLChartview_8h.html" title="WeaChart/scenes/GLChartview.h" alt="" coords="1886,87,2104,114"/>
+<area shape="rect" id="node22" href="$GLStructures_8h.html" title="WeaChart/utils/GLStructures.h" alt="" coords="2514,355,2716,382"/>
+<area shape="rect" id="node11" href="$WeaChart__export_8h.html" title="WeaChart/WeaChart_export.h" alt="" coords="1624,512,1822,539"/>
+<area shape="rect" id="node18" href="$PropertyBackground_8h.html" title="WeaChart/properties\l/PropertyBackground.h" alt="" coords="1368,348,1523,389"/>
+<area shape="rect" id="node21" href="$PropertyAxisRange_8h.html" title="WeaChart/properties\l/PropertyAxisRange.h" alt="" coords="1589,348,1740,389"/>
+<area shape="rect" id="node31" href="$GLSeriesHandle_8h.html" title="WeaChart/series/GLSeries\lHandle.h" alt="" coords="2331,169,2510,211"/>
+<area shape="rect" id="node37" href="$GLSeriesItem_8h.html" title="WeaChart/series/GLSeries\lItem.h" alt="" coords="2534,169,2712,211"/>
+<area shape="rect" id="node40" href="$GLChartVerticalLineItem_8h.html" title="WeaChart/overlay/tools\l/GLChartVerticalLineItem.h" alt="" coords="1904,169,2086,211"/>
+<area shape="rect" id="node45" href="$GLChartHorizontalLineItem_8h.html" title="WeaChart/overlay/tools\l/GLChartHorizontalLineItem.h" alt="" coords="2110,169,2306,211"/>
+<area shape="rect" id="node46" href="$GLChartVerticalGateItem_8h.html" title="WeaChart/overlay/tools\l/GLChartVerticalGateItem.h" alt="" coords="1470,169,1656,211"/>
+<area shape="rect" id="node48" href="$GLChartHorizontalGateItem_8h.html" title="WeaChart/overlay/tools\l/GLChartHorizontalGateItem.h" alt="" coords="1680,169,1880,211"/>
+<area shape="rect" id="node49" href="$config_8h.html" title="WeaChart/config.h" alt="" coords="2736,177,2867,203"/>
+<area shape="rect" id="node19" href="$IProperties_8h.html" title="IProperties.h" alt="" coords="1674,437,1772,464"/>
+<area shape="rect" id="node23" href="$GLMathUtils_8h.html" title="GLMathUtils.h" alt="" coords="2832,437,2939,464"/>
+<area shape="rect" id="node25" href="$GLEnums_8h.html" title="WeaChart/series/GLEnums.h" alt="" coords="2101,437,2294,464"/>
+<area shape="rect" id="node33" href="$GLAbstractSeries_8h.html" title="GLAbstractSeries.h" alt="" coords="2366,266,2504,293"/>
+<area shape="rect" id="node36" href="$PropertySeries_8h.html" title="WeaChart/properties\l/PropertySeries.h" alt="" coords="2202,348,2345,389"/>
+<area shape="rect" id="node41" href="$GLChartLineItem_8h.html" title="WeaChart/overlay/tools\l/GLChartLineItem.h" alt="" coords="1916,259,2074,300"/>
+<area shape="rect" id="node42" href="$GLChartItemBase_8h.html" title="WeaChart/overlay/tools\l/GLChartItemBase.h" alt="" coords="1881,348,2040,389"/>
+<area shape="rect" id="node47" href="$GLChartGateItem_8h.html" title="WeaChart/overlay/tools\l/GLChartGateItem.h" alt="" coords="1701,259,1860,300"/>
 </map>

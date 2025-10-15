@@ -47,12 +47,28 @@
  *	- GLSeriesHandle
  *@}
  *
+ *\defgroup tools_code Tools
+ *@{
+ *	\brief Provides C++/QML Tools and Items classes.
+ *	- GLChartItemBase
+ *	- GLChartLineItem
+ *	- GLChartVerticalLineItem
+ *	- GLChartHorizontalLineItem
+ *	- GLChartGateItem
+ *	- GLChartVerticalGateItem
+ *	- GLChartHorizontalGateItem
+ *@}
+ *
+ *
  *\defgroup enum_code Enumerations
  *@{
  *	\brief Provides all enumations declared in to the library.
  *	- GLSeriesType : GLEnums.h
  *	- GLColorType : GLEnums.h
  *	- GLMarkerShape : GLEnums.h
+ *	- GLAutoScalePolicy: GLEnums.h
+ *	- GLItemType: GLEnums.h
+ *	- GLStyleLine: GLEnums.h
  *@}
  *
  *\defgroup structs_code Structs

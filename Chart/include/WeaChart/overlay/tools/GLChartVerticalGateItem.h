@@ -1,8 +1,9 @@
 #ifndef GLCHARTVERTICALGATEITEM_H
 #define GLCHARTVERTICALGATEITEM_H
 
-#include "GLChartGateItem.h"
+#include "WeaChart/overlay/tools/GLChartGateItem.h"
 
+/// @brief Same as GLChartGateItem but the different is the vertical property is equal true by default.
 class GLChartVerticalGateItem : public GLChartGateItem
 {
     Q_OBJECT

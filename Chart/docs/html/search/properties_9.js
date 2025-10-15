@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['type',['type',['../classPropertySeries.html#a1533f5b3f9d3031760d1cee0d572b556',1,'PropertySeries']]]
+  ['opacity',['opacity',['../classPropertyBackground.html#af33e91b91f3d20ce1ace7d98ff0454bf',1,'PropertyBackground']]]
 ];

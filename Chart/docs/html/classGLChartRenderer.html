@@ -101,9 +101,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad3bdac3d8ce552a7107695ab21010b57"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartRenderer.html#ad3bdac3d8ce552a7107695ab21010b57">render</a> () override</td></tr>
 <tr class="memdesc:ad3bdac3d8ce552a7107695ab21010b57"><td class="mdescLeft">&#160;</td><td class="mdescRight">The QQuickFramebufferObject::Renderer virtual method that must be override.  <a href="#ad3bdac3d8ce552a7107695ab21010b57">More...</a><br /></td></tr>
 <tr class="separator:ad3bdac3d8ce552a7107695ab21010b57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35fdaf5ad0666660fabffff72ffb583d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartRenderer.html#a35fdaf5ad0666660fabffff72ffb583d">drawMainProgram</a> ()</td></tr>
+<tr class="separator:a35fdaf5ad0666660fabffff72ffb583d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bbefe16f59599faef8d119333ec3c9c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartRenderer.html#a2bbefe16f59599faef8d119333ec3c9c">drawItemsProgram</a> ()</td></tr>
+<tr class="separator:a2bbefe16f59599faef8d119333ec3c9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a918842bde0129d98c154a6447c92720b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartRenderer.html#a918842bde0129d98c154a6447c92720b">updatePosVbo</a> ()</td></tr>
 <tr class="memdesc:a918842bde0129d98c154a6447c92720b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writing the new dataset into the whole of the Vertex Buffer object.  <a href="#a918842bde0129d98c154a6447c92720b">More...</a><br /></td></tr>
 <tr class="separator:a918842bde0129d98c154a6447c92720b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a254ff884bd1761d06f8f469a9cd01323"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartRenderer.html#a254ff884bd1761d06f8f469a9cd01323">allocateItemsVbo</a> ()</td></tr>
+<tr class="memdesc:a254ff884bd1761d06f8f469a9cd01323"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocating ChartItems Vertex Buffer.  <a href="#a254ff884bd1761d06f8f469a9cd01323">More...</a><br /></td></tr>
+<tr class="separator:a254ff884bd1761d06f8f469a9cd01323"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79a359ce4ddcd453ffcd13cbf007d8d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartRenderer.html#a79a359ce4ddcd453ffcd13cbf007d8d6">writeItemsVbo</a> (int offset, const QVector2D *data, int count)</td></tr>
+<tr class="memdesc:a79a359ce4ddcd453ffcd13cbf007d8d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writing each ChartItem properties into the ChartItem Vertex Buffer.  <a href="#a79a359ce4ddcd453ffcd13cbf007d8d6">More...</a><br /></td></tr>
+<tr class="separator:a79a359ce4ddcd453ffcd13cbf007d8d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -154,6 +164,25 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a254ff884bd1761d06f8f469a9cd01323"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a254ff884bd1761d06f8f469a9cd01323">&#9670;&nbsp;</a></span>allocateItemsVbo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GLChartRenderer::allocateItemsVbo </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Allocating ChartItems Vertex Buffer. </p>
+
+</div>
+</div>
 <a id="a45951f6f205f793ce389ab5d24f60c62"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a45951f6f205f793ce389ab5d24f60c62">&#9670;&nbsp;</a></span>createFramebufferObject()</h2>
 
@@ -180,6 +209,40 @@ Protected Member Functions</h2></td></tr>
 
 <p>The QQuickFramebufferObject::Renderer virtual method that must be override. </p>
 <dl class="section return"><dt>Returns</dt><dd>FBO pointer. </dd></dl>
+
+</div>
+</div>
+<a id="a2bbefe16f59599faef8d119333ec3c9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bbefe16f59599faef8d119333ec3c9c">&#9670;&nbsp;</a></span>drawItemsProgram()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GLChartRenderer::drawItemsProgram </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a35fdaf5ad0666660fabffff72ffb583d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35fdaf5ad0666660fabffff72ffb583d">&#9670;&nbsp;</a></span>drawMainProgram()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GLChartRenderer::drawMainProgram </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -290,6 +353,42 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Writing the new dataset into the whole of the Vertex Buffer object. </p>
+
+</div>
+</div>
+<a id="a79a359ce4ddcd453ffcd13cbf007d8d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79a359ce4ddcd453ffcd13cbf007d8d6">&#9670;&nbsp;</a></span>writeItemsVbo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GLChartRenderer::writeItemsVbo </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVector2D *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writing each ChartItem properties into the ChartItem Vertex Buffer. </p>
 
 </div>
 </div>

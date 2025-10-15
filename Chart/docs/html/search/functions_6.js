@@ -1,11 +1,20 @@
 var searchData=
 [
   ['getinstance',['getInstance',['../classGLChartView.html#a4e2df567c843c9b3fa0c9c5f7fb1f542',1,'GLChartView']]],
-  ['getseriesfromqml',['getSeriesFromQml',['../classGLChartView.html#abdead0f81bfdf91863fff1107c9a6952',1,'GLChartView']]],
   ['glabstractseries',['GLAbstractSeries',['../classGLAbstractSeries.html#a24cae83ecd2931498af9edc032f3f12f',1,'GLAbstractSeries']]],
+  ['glchartgateitem',['GLChartGateItem',['../classGLChartGateItem.html#aa67b4522c28c24b3e36f79672e5fd071',1,'GLChartGateItem']]],
+  ['glcharthorizontalgateitem',['GLChartHorizontalGateItem',['../classGLChartHorizontalGateItem.html#ad5e047d1d3bba731a6de9e83f9e57352',1,'GLChartHorizontalGateItem']]],
+  ['glcharthorizontallineitem',['GLChartHorizontalLineItem',['../classGLChartHorizontalLineItem.html#a7a0a7433fd5427bdec8e221c5d075665',1,'GLChartHorizontalLineItem']]],
+  ['glchartitembase',['GLChartItemBase',['../classGLChartItemBase.html#a85b0a4aed64e34fc2d45886c9784d126',1,'GLChartItemBase']]],
+  ['glchartlineitem',['GLChartLineItem',['../classGLChartLineItem.html#a82072c74a3508ec8e4749a83e83d812e',1,'GLChartLineItem']]],
   ['glchartrenderer',['GLChartRenderer',['../classGLChartRenderer.html#a023446277d84c082cfd1d089b7f127aa',1,'GLChartRenderer']]],
+  ['glchartverticalgateitem',['GLChartVerticalGateItem',['../classGLChartVerticalGateItem.html#a717e786914332e8e84c0306197f44299',1,'GLChartVerticalGateItem']]],
+  ['glchartverticallineitem',['GLChartVerticalLineItem',['../classGLChartVerticalLineItem.html#a72297246153d3444458bcb04bb94ff11',1,'GLChartVerticalLineItem']]],
   ['glchartview',['GLChartView',['../classGLChartView.html#a44810f4b8039c471961c9d5ae3416dff',1,'GLChartView']]],
   ['glserieshandle',['GLSeriesHandle',['../classGLSeriesHandle.html#af52951e9a93a10701e2e93e37bdff4fc',1,'GLSeriesHandle']]],
   ['glseriesitem',['GLSeriesItem',['../classGLSeriesItem.html#ae01eae74b07d1d21acab25ea024bc8d6',1,'GLSeriesItem']]],
+  ['gradient',['gradient',['../classGLChartItemBase.html#af62034ff0462148a8b93518393175e07',1,'GLChartItemBase']]],
+  ['gradientasvec4d',['gradientAsVec4D',['../classGLChartItemBase.html#ae6e60dfe8c9c67de1ab45f15dd91ce98',1,'GLChartItemBase']]],
+  ['gradientchanged',['gradientChanged',['../classGLChartItemBase.html#af4f470b387b857e53870e3af38def3eb',1,'GLChartItemBase']]],
   ['green',['green',['../structPointXYBase.html#ad67258a1c6a6c32c576618da3b3b7f27',1,'PointXYBase']]]
 ];

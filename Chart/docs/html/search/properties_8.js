@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['series',['series',['../classGLSeriesItem.html#a46894bc893488fdedcf8d05cc2eea8b2',1,'GLSeriesItem']]]
+  ['name',['name',['../classPropertySeries.html#a8ab587bb5f019bc86e08ab9706b3cdf0',1,'PropertySeries']]]
 ];

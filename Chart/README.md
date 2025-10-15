@@ -135,7 +135,8 @@ cd qcustommodels/Chart
 ```
 
 ### 2. Build Instruction
-#### Linux
+
+<details><summary><h4> Linux </h4></summary>
 Make sure you have **cmake** and a **C++ compiler (gcc/g++)**
 
 ```bash
@@ -152,8 +153,9 @@ $ ~/qcustommodels/Chart: sudo ./install.sh
 ```bash
 $ ~/qcustommodels/Chart: sudo ./install.sh /my/custom/path
 ```
+</details>
 
-#### Windows
+<details><summary><h4> Windows </h4></summary>
 Make sure you have **CMake** and **(MinGW or MSVC)**  compiler installed.
 Run `cmd` as Adminstrator, then do like below:
 
@@ -189,7 +191,9 @@ cmake .. -DBUILD_EXAMPLE=OFF -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX="C:/My/
 ...
 ```
 
-#### Using Source code
+</details>
+
+<details><summary><h4> Using the source code </h4></summary>
 To avoid installing the library and using it via source code follow these steps:
 1. Create directory named `libs/WeaChart` in your **PROJECT_SOURCE_ROOT**.
 2. Copy the `include`, `qml`, `shaders`, `src` and `resources.qrc` to your  **PROJECT_SOURCE_ROOT/libs/WeaChart**
@@ -197,18 +201,19 @@ To avoid installing the library and using it via source code follow these steps:
 4. Add `libs/WeaChart/include` to your project **INCLUDEPATH**.
 5. Use **import "qml/"** into the each .qml files that you want to use **WeaChart Qml Components**.
 ---
+</details>
 
 ## Usage and Importing
 After installing the library follow these sequence:
 - Add **Quick**, **Qml**, **OpenGL** components.
 - Config C++ as 17 version.
-- Assign **QML_IMPORT_PATH** with [WeaChart_QML_IMPORT_PATH](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/config.h#L3) (it's optional, this will help **IDE** to shows Component properties and completetion.)
+- Assign **QML_IMPORT_PATH** with [WeaChart_QML_IMPORT_PATH](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/config.h#L4) (it's optional, this will help **IDE** to shows Component properties and completetion.)
 - Implement **WeaChart** lib and includes.
 
 > [!INFO]
 > If after assigning **QML_IMPORT_PATH** Components were still **Unknown**, restart Qt Creator application and then it works :)
 
-### qmake
+<details><summary><h3> qmake </h3></summary>
 Here is an example of usage **WeaChart** on **.pro** application:
 
 ```qmake
@@ -226,8 +231,9 @@ unix:!macx: LIBS += -L/usr/local/lib64 -lWeaChart # Change it with your installa
 unix:!macx: INCLUDEPATH += /usr/local/include # Change it with your installation path.
 
 ```
+</details>
 
-### CMake
+<details><summary><h3> CMake </h3></summary>
 Here is an example of usage **WeaChart** on **CMakeLists.txt**.
 
 ```CMake
@@ -260,7 +266,7 @@ add_executable(myProject
 target_link_libraries(myProject PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick WeaChart::WeaChart)
 
 ```
----
+</details>
 
 ## Features
 - Supported **three sereis types**:
@@ -296,7 +302,7 @@ class GLSeriesStorage {...};
 - T must inherit from `PointXYBase`.
 - `PointXYBase` contains:
   - `QVector2D` position.
-  - [ChartColor](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/utils/GLStructures.h#L30-L36) color(rgba).
+  - [ChartColor](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/utils/GLStructures.h#L40-L46) color(rgba).
 
 This design allows storing **custom data per point**, which can be emitted via signals upon **selection**.
 
@@ -365,7 +371,9 @@ Each series supports three color modes:
 Import all files and directories instead **example** directory to your project.
 ### Quick Start
 Drawing a simple filled triangle:
-1. main.cpp:
+
+<details><summary> main.cpp </summary>
+
 ```cpp
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
@@ -437,7 +445,9 @@ int main(int argc, char *argv[])
 }
 
 ```
-2- main.qml
+</details>
+
+<details><summary> main.qml </summary>
 ```qml
 import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
@@ -470,6 +480,7 @@ Window {
     }
 }
 ```
+</details>
 
 ### Best Practice
 [See example usage](http://172.16.50.13/parsa/qcustommodels/-/tree/main/Chart/example)
@@ -489,7 +500,7 @@ documentation, refer to the following sections:
 - [See the source code description](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/docs/README.md)
 
 ## TODO
-- [ ] Complete GLChartItemBase `Gradient` property.
+- [ ] Complete GLChartItemBase `Gradient` and `lineWidth` property.
 - [ ] Creating a Gallery example for each series type and options.
 - [ ] Make the library as `PIMPL`.
 - [ ] Making the WeaChart available for Qt6.

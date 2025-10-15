@@ -94,6 +94,12 @@ Collaboration diagram for GLChartView:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
+<tr class="memitem:a6070b22ed53443214e7bb6bce65c8342"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a6070b22ed53443214e7bb6bce65c8342">normXtoWorld</a> (const float &amp;pX) const</td></tr>
+<tr class="memdesc:a6070b22ed53443214e7bb6bce65c8342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting X pixels to the World x position(refers to the projection).  <a href="#a6070b22ed53443214e7bb6bce65c8342">More...</a><br /></td></tr>
+<tr class="separator:a6070b22ed53443214e7bb6bce65c8342"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a161e5bdca8e579c68b85bbeeea940379"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a161e5bdca8e579c68b85bbeeea940379">normYtoWorld</a> (const float &amp;pY) const</td></tr>
+<tr class="memdesc:a161e5bdca8e579c68b85bbeeea940379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting Y pixels to the World y position(refers to the projection).  <a href="#a161e5bdca8e579c68b85bbeeea940379">More...</a><br /></td></tr>
+<tr class="separator:a161e5bdca8e579c68b85bbeeea940379"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5a4b2167761c04ab9ddf24398ec9972"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#af5a4b2167761c04ab9ddf24398ec9972">updateSeries</a> ()</td></tr>
 <tr class="separator:af5a4b2167761c04ab9ddf24398ec9972"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a541d13c6cf04aeb846464be4f6c9dd0f"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a541d13c6cf04aeb846464be4f6c9dd0f">updateAxisRange</a> ()</td></tr>
@@ -123,6 +129,10 @@ Signals</h2></td></tr>
 <tr class="separator:ab488b07fd6430f5cc3cab385081e0992"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f43e86fa468e32dcc781168d900780c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a4f43e86fa468e32dcc781168d900780c">limitViewChanged</a> ()</td></tr>
 <tr class="separator:a4f43e86fa468e32dcc781168d900780c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12e6fa7d4af77cfb6e8e0bfd6e2fea2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a12e6fa7d4af77cfb6e8e0bfd6e2fea2d">autoScalePolicyChanged</a> ()</td></tr>
+<tr class="separator:a12e6fa7d4af77cfb6e8e0bfd6e2fea2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53cedb68a77723293d71bfd09691101b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a53cedb68a77723293d71bfd09691101b">fitWindowChanged</a> ()</td></tr>
+<tr class="separator:a53cedb68a77723293d71bfd09691101b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -133,15 +143,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:adb3716565e81926d153fc33f18874d35"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGLChartRenderer.html">GLChartRenderer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#adb3716565e81926d153fc33f18874d35">createRenderer</a> () const override</td></tr>
 <tr class="memdesc:adb3716565e81926d153fc33f18874d35"><td class="mdescLeft">&#160;</td><td class="mdescRight">required virtual method on the QQuickFramebufferObject that should be overridden.  <a href="#adb3716565e81926d153fc33f18874d35">More...</a><br /></td></tr>
 <tr class="separator:adb3716565e81926d153fc33f18874d35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abdead0f81bfdf91863fff1107c9a6952"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#abdead0f81bfdf91863fff1107c9a6952">getSeriesFromQml</a> ()</td></tr>
-<tr class="memdesc:abdead0f81bfdf91863fff1107c9a6952"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automatically Reading <a class="el" href="classGLSeriesItem.html" title="GLSeriesStorage class as QML Component. ">GLSeriesItem</a> {} which are implemented as child in GLChartFrame (QML). GLChartFrame { <a class="el" href="classGLSeriesItem.html" title="GLSeriesStorage class as QML Component. ">GLSeriesItem</a> { id: series0.  <a href="#abdead0f81bfdf91863fff1107c9a6952">More...</a><br /></td></tr>
-<tr class="separator:abdead0f81bfdf91863fff1107c9a6952"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6070b22ed53443214e7bb6bce65c8342"><td class="memItemLeft" align="right" valign="top">const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a6070b22ed53443214e7bb6bce65c8342">normXtoWorld</a> (const float &amp;pX) const</td></tr>
-<tr class="memdesc:a6070b22ed53443214e7bb6bce65c8342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting X pixels to the World x position(refers to the projection).  <a href="#a6070b22ed53443214e7bb6bce65c8342">More...</a><br /></td></tr>
-<tr class="separator:a6070b22ed53443214e7bb6bce65c8342"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a161e5bdca8e579c68b85bbeeea940379"><td class="memItemLeft" align="right" valign="top">const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a161e5bdca8e579c68b85bbeeea940379">normYtoWorld</a> (const float &amp;pY) const</td></tr>
-<tr class="memdesc:a161e5bdca8e579c68b85bbeeea940379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting Y pixels to the World y position(refers to the projection).  <a href="#a161e5bdca8e579c68b85bbeeea940379">More...</a><br /></td></tr>
-<tr class="separator:a161e5bdca8e579c68b85bbeeea940379"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7708f628306971b99baa249c6e5764d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#ae7708f628306971b99baa249c6e5764d">readQmlComponents</a> ()</td></tr>
+<tr class="memdesc:ae7708f628306971b99baa249c6e5764d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automatically Reading <a class="el" href="classGLSeriesItem.html" title="GLSeriesStorage class as QML Component. ">GLSeriesItem</a> {} which are implemented as child in GLChartFrame (QML). GLChartFrame { <a class="el" href="classGLSeriesItem.html" title="GLSeriesStorage class as QML Component. ">GLSeriesItem</a> { id: series0.  <a href="#ae7708f628306971b99baa249c6e5764d">More...</a><br /></td></tr>
+<tr class="separator:ae7708f628306971b99baa249c6e5764d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82fd41b04e537a68b6c1bbf0185dc419"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classPropertyBackground.html">PropertyBackground</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a82fd41b04e537a68b6c1bbf0185dc419">background</a> () const</td></tr>
 <tr class="memdesc:a82fd41b04e537a68b6c1bbf0185dc419"><td class="mdescLeft">&#160;</td><td class="mdescRight">getter of the background property.  <a href="#a82fd41b04e537a68b6c1bbf0185dc419">More...</a><br /></td></tr>
 <tr class="separator:a82fd41b04e537a68b6c1bbf0185dc419"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,13 +173,33 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8c53330c087f66d20125747ce21cd574"><td class="memItemLeft" align="right" valign="top">QVariantList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a8c53330c087f66d20125747ce21cd574">legendItems</a> () const</td></tr>
 <tr class="memdesc:a8c53330c087f66d20125747ce21cd574"><td class="mdescLeft">&#160;</td><td class="mdescRight">getter of the legendItems property.  <a href="#a8c53330c087f66d20125747ce21cd574">More...</a><br /></td></tr>
 <tr class="separator:a8c53330c087f66d20125747ce21cd574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14edde227f04d814cd02ba981dfce34f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="GLEnums_8h.html#afa2f3ba9dea3b7606773d2e1a69017bd">GLAutoScalePolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a14edde227f04d814cd02ba981dfce34f">autoScalePolicy</a> () const noexcept</td></tr>
+<tr class="memdesc:a14edde227f04d814cd02ba981dfce34f"><td class="mdescLeft">&#160;</td><td class="mdescRight">getter of the autoScalePolicy property.  <a href="#a14edde227f04d814cd02ba981dfce34f">More...</a><br /></td></tr>
+<tr class="separator:a14edde227f04d814cd02ba981dfce34f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4175dfef38b98d91bf8501e601cae122"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a4175dfef38b98d91bf8501e601cae122">setAutoScalePolicy</a> (<a class="el" href="GLEnums_8h.html#afa2f3ba9dea3b7606773d2e1a69017bd">GLAutoScalePolicy</a> policy) noexcept</td></tr>
+<tr class="memdesc:a4175dfef38b98d91bf8501e601cae122"><td class="mdescLeft">&#160;</td><td class="mdescRight">setter of the autoScalePolicy property.  <a href="#a4175dfef38b98d91bf8501e601cae122">More...</a><br /></td></tr>
+<tr class="separator:a4175dfef38b98d91bf8501e601cae122"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab03f5f5430b282f82ce00c850f309b06"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#ab03f5f5430b282f82ce00c850f309b06">fitWindow</a> () const noexcept</td></tr>
+<tr class="memdesc:ab03f5f5430b282f82ce00c850f309b06"><td class="mdescLeft">&#160;</td><td class="mdescRight">getter of the fitWindow property.  <a href="#ab03f5f5430b282f82ce00c850f309b06">More...</a><br /></td></tr>
+<tr class="separator:ab03f5f5430b282f82ce00c850f309b06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae84cd733ef040b8b2ca59da3fb3e1a35"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#ae84cd733ef040b8b2ca59da3fb3e1a35">setFitWindow</a> (bool fit) noexcept</td></tr>
+<tr class="memdesc:ae84cd733ef040b8b2ca59da3fb3e1a35"><td class="mdescLeft">&#160;</td><td class="mdescRight">setter of the fitWindow property.  <a href="#ae84cd733ef040b8b2ca59da3fb3e1a35">More...</a><br /></td></tr>
+<tr class="separator:ae84cd733ef040b8b2ca59da3fb3e1a35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9aab53eaa50d9ed564a2aaa36218f9c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGLSeriesHandle.html">GLSeriesHandle</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a9aab53eaa50d9ed564a2aaa36218f9c7">addSeries</a> (QSharedPointer&lt; <a class="el" href="classGLAbstractSeries.html">GLAbstractSeries</a> &gt; storage)</td></tr>
 <tr class="memdesc:a9aab53eaa50d9ed564a2aaa36218f9c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adding a <a class="el" href="classGLSeriesHandle.html" title="FBO(GLChartView) handles series read/write via this class. ">GLSeriesHandle</a> using storage param, then the handler will add into the m_view member.  <a href="#a9aab53eaa50d9ed564a2aaa36218f9c7">More...</a><br /></td></tr>
 <tr class="separator:a9aab53eaa50d9ed564a2aaa36218f9c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80b60b00f4a66feb2a9072eecbf47221"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGLSeriesHandle.html">GLSeriesHandle</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a80b60b00f4a66feb2a9072eecbf47221">addSeriesPtr</a> (<a class="el" href="classGLAbstractSeries.html">GLAbstractSeries</a> *series)</td></tr>
 <tr class="separator:a80b60b00f4a66feb2a9072eecbf47221"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a719dc160b73e1fda75378f0fa6afc9"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE const QVector&lt; <a class="el" href="classGLSeriesHandle.html">GLSeriesHandle</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a2a719dc160b73e1fda75378f0fa6afc9">handles</a> () const</td></tr>
+<tr class="memitem:a2a719dc160b73e1fda75378f0fa6afc9"><td class="memItemLeft" align="right" valign="top">const QVector&lt; <a class="el" href="classGLSeriesHandle.html">GLSeriesHandle</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a2a719dc160b73e1fda75378f0fa6afc9">handles</a> () const</td></tr>
 <tr class="separator:a2a719dc160b73e1fda75378f0fa6afc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8a06fbc8b85087f31cea65cd969b496"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#aa8a06fbc8b85087f31cea65cd969b496">addItem</a> (<a class="el" href="classGLChartItemBase.html">GLChartItemBase</a> *item)</td></tr>
+<tr class="memdesc:aa8a06fbc8b85087f31cea65cd969b496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adding <a class="el" href="classGLChartItemBase.html" title="AbstractChartItem based on QQuickItem contains base properties and methods. ">GLChartItemBase</a> base class to FBO.  <a href="#aa8a06fbc8b85087f31cea65cd969b496">More...</a><br /></td></tr>
+<tr class="separator:aa8a06fbc8b85087f31cea65cd969b496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba81e43076aa5c1becc25304e30ddf03"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#aba81e43076aa5c1becc25304e30ddf03">removeItem</a> (<a class="el" href="classGLChartItemBase.html">GLChartItemBase</a> *item)</td></tr>
+<tr class="memdesc:aba81e43076aa5c1becc25304e30ddf03"><td class="mdescLeft">&#160;</td><td class="mdescRight">removing <a class="el" href="classGLChartItemBase.html" title="AbstractChartItem based on QQuickItem contains base properties and methods. ">GLChartItemBase</a> from FBO.  <a href="#aba81e43076aa5c1becc25304e30ddf03">More...</a><br /></td></tr>
+<tr class="separator:aba81e43076aa5c1becc25304e30ddf03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ef37f0fe35769197fc0bb4152f9b7ed"><td class="memItemLeft" align="right" valign="top">const QVector&lt; <a class="el" href="classGLChartItemBase.html">GLChartItemBase</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a4ef37f0fe35769197fc0bb4152f9b7ed">chartItems</a> () const</td></tr>
+<tr class="separator:a4ef37f0fe35769197fc0bb4152f9b7ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -243,6 +267,12 @@ Properties</h2></td></tr>
 <tr class="memitem:a121be122aeae9dbf5a1d914c85279bab"><td class="memItemLeft" align="right" valign="top">Qt::MouseButton&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a121be122aeae9dbf5a1d914c85279bab">panMouseButton</a> = Qt::MiddleButton</td></tr>
 <tr class="memdesc:a121be122aeae9dbf5a1d914c85279bab"><td class="mdescLeft">&#160;</td><td class="mdescRight">The PAN button (it should be leftButton or rightButton or middleButton)  default: Qt::MiddleButton.  <a href="#a121be122aeae9dbf5a1d914c85279bab">More...</a><br /></td></tr>
 <tr class="separator:a121be122aeae9dbf5a1d914c85279bab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a411d628a5dbc249fc571581d2fcc53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="GLEnums_8h.html#afa2f3ba9dea3b7606773d2e1a69017bd">GLAutoScalePolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a0a411d628a5dbc249fc571581d2fcc53">autoScalePolicy</a></td></tr>
+<tr class="memdesc:a0a411d628a5dbc249fc571581d2fcc53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Auto Scaling Policy with Minimum and maximum vertex in the chart.  <a href="#a0a411d628a5dbc249fc571581d2fcc53">More...</a><br /></td></tr>
+<tr class="separator:a0a411d628a5dbc249fc571581d2fcc53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65d586e2be94abd3c61cb5d8ede3426f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLChartView.html#a65d586e2be94abd3c61cb5d8ede3426f">fitWindow</a></td></tr>
+<tr class="memdesc:a65d586e2be94abd3c61cb5d8ede3426f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A boolean to activate windows fit (autoScale) or not.  <a href="#a65d586e2be94abd3c61cb5d8ede3426f">More...</a><br /></td></tr>
+<tr class="separator:a65d586e2be94abd3c61cb5d8ede3426f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -320,6 +350,26 @@ Friends</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="aa8a06fbc8b85087f31cea65cd969b496"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8a06fbc8b85087f31cea65cd969b496">&#9670;&nbsp;</a></span>addItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GLChartView::addItem </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classGLChartItemBase.html">GLChartItemBase</a> *&#160;</td>
+          <td class="paramname"><em>item</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adding <a class="el" href="classGLChartItemBase.html" title="AbstractChartItem based on QQuickItem contains base properties and methods. ">GLChartItemBase</a> base class to FBO. </p>
 
 </div>
 </div>
@@ -434,6 +484,59 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a14edde227f04d814cd02ba981dfce34f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14edde227f04d814cd02ba981dfce34f">&#9670;&nbsp;</a></span>autoScalePolicy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="GLEnums_8h.html#afa2f3ba9dea3b7606773d2e1a69017bd">GLAutoScalePolicy</a> GLChartView::autoScalePolicy </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>getter of the autoScalePolicy property. </p>
+<dl class="section return"><dt>Returns</dt><dd>GLAutoScalePolicy. </dd></dl>
+
+</div>
+</div>
+<a id="a12e6fa7d4af77cfb6e8e0bfd6e2fea2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12e6fa7d4af77cfb6e8e0bfd6e2fea2d">&#9670;&nbsp;</a></span>autoScalePolicyChanged</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GLChartView::autoScalePolicyChanged </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a03f0ce9298255192b3adb50689551364"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a03f0ce9298255192b3adb50689551364">&#9670;&nbsp;</a></span>axisRange()</h2>
 
@@ -472,6 +575,24 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a4ef37f0fe35769197fc0bb4152f9b7ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ef37f0fe35769197fc0bb4152f9b7ed">&#9670;&nbsp;</a></span>chartItems()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVector&lt; <a class="el" href="classGLChartItemBase.html">GLChartItemBase</a> * &gt; &amp; GLChartView::chartItems </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>All <a class="el" href="classGLChartItemBase.html" title="AbstractChartItem based on QQuickItem contains base properties and methods. ">GLChartItemBase</a> which contains in GLChartFrame </dd></dl>
+
+</div>
+</div>
 <a id="adb3716565e81926d153fc33f18874d35"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adb3716565e81926d153fc33f18874d35">&#9670;&nbsp;</a></span>createRenderer()</h2>
 
@@ -496,6 +617,59 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>required virtual method on the QQuickFramebufferObject that should be overridden. </p>
+
+</div>
+</div>
+<a id="ab03f5f5430b282f82ce00c850f309b06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab03f5f5430b282f82ce00c850f309b06">&#9670;&nbsp;</a></span>fitWindow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GLChartView::fitWindow </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>getter of the fitWindow property. </p>
+<dl class="section return"><dt>Returns</dt><dd>bool. </dd></dl>
+
+</div>
+</div>
+<a id="a53cedb68a77723293d71bfd09691101b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53cedb68a77723293d71bfd09691101b">&#9670;&nbsp;</a></span>fitWindowChanged</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GLChartView::fitWindowChanged </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -535,26 +709,6 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="abdead0f81bfdf91863fff1107c9a6952"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abdead0f81bfdf91863fff1107c9a6952">&#9670;&nbsp;</a></span>getSeriesFromQml()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void GLChartView::getSeriesFromQml </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Automatically Reading <a class="el" href="classGLSeriesItem.html" title="GLSeriesStorage class as QML Component. ">GLSeriesItem</a> {} which are implemented as child in GLChartFrame (QML). GLChartFrame { <a class="el" href="classGLSeriesItem.html" title="GLSeriesStorage class as QML Component. ">GLSeriesItem</a> { id: series0. </p>
-<p>} <a class="el" href="classGLSeriesItem.html" title="GLSeriesStorage class as QML Component. ">GLSeriesItem</a> { id: series1 } } In this situation, process will find 2 children of type <code><a class="el" href="classGLSeriesItem.html" title="GLSeriesStorage class as QML Component. ">GLSeriesItem</a></code>, and then pass each of them to the addSeriesPtr method. </p>
-
-</div>
-</div>
 <a id="a2a719dc160b73e1fda75378f0fa6afc9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2a719dc160b73e1fda75378f0fa6afc9">&#9670;&nbsp;</a></span>handles()</h2>
 
@@ -569,6 +723,7 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>All <a class="el" href="classGLSeriesHandle.html" title="FBO(GLChartView) handles series read/write via this class. ">GLSeriesHandle</a> (also <a class="el" href="classGLAbstractSeries.html" title="Abstract series class (it can&#39;t be create as object). Creation idea of this class is: Because the GLS...">GLAbstractSeries</a>) which contains in GLChartFrame </dd></dl>
 
 </div>
 </div>
@@ -772,10 +927,13 @@ Friends</h2></td></tr>
 </div>
 </div>
 <a id="a6070b22ed53443214e7bb6bce65c8342"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6070b22ed53443214e7bb6bce65c8342">&#9670;&nbsp;</a></span>normXtoWorld()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6070b22ed53443214e7bb6bce65c8342">&#9670;&nbsp;</a></span>normXtoWorld</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">const float GLChartView::normXtoWorld </td>
@@ -785,6 +943,11 @@ Friends</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Converting X pixels to the World x position(refers to the projection). </p>
@@ -799,10 +962,13 @@ Friends</h2></td></tr>
 </div>
 </div>
 <a id="a161e5bdca8e579c68b85bbeeea940379"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a161e5bdca8e579c68b85bbeeea940379">&#9670;&nbsp;</a></span>normYtoWorld()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a161e5bdca8e579c68b85bbeeea940379">&#9670;&nbsp;</a></span>normYtoWorld</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">const float GLChartView::normYtoWorld </td>
@@ -812,6 +978,11 @@ Friends</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Converting Y pixels to the World y position(refers to the projection). </p>
@@ -964,6 +1135,26 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="ae7708f628306971b99baa249c6e5764d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7708f628306971b99baa249c6e5764d">&#9670;&nbsp;</a></span>readQmlComponents()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GLChartView::readQmlComponents </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Automatically Reading <a class="el" href="classGLSeriesItem.html" title="GLSeriesStorage class as QML Component. ">GLSeriesItem</a> {} which are implemented as child in GLChartFrame (QML). GLChartFrame { <a class="el" href="classGLSeriesItem.html" title="GLSeriesStorage class as QML Component. ">GLSeriesItem</a> { id: series0. </p>
+<p>} <a class="el" href="classGLSeriesItem.html" title="GLSeriesStorage class as QML Component. ">GLSeriesItem</a> { id: series1 } } In this situation, process will find 2 children of type <code><a class="el" href="classGLSeriesItem.html" title="GLSeriesStorage class as QML Component. ">GLSeriesItem</a></code>, and then pass each of them to the addSeriesPtr method. </p>
+
+</div>
+</div>
 <a id="a55b90c2fecb33541460bf561ae8f4365"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a55b90c2fecb33541460bf561ae8f4365">&#9670;&nbsp;</a></span>registerMetaTypes()</h2>
 
@@ -997,6 +1188,26 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="aba81e43076aa5c1becc25304e30ddf03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba81e43076aa5c1becc25304e30ddf03">&#9670;&nbsp;</a></span>removeItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GLChartView::removeItem </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classGLChartItemBase.html">GLChartItemBase</a> *&#160;</td>
+          <td class="paramname"><em>item</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>removing <a class="el" href="classGLChartItemBase.html" title="AbstractChartItem based on QQuickItem contains base properties and methods. ">GLChartItemBase</a> from FBO. </p>
+
+</div>
+</div>
 <a id="a948aa8918a1279f4f5a23e5d5912fe47"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a948aa8918a1279f4f5a23e5d5912fe47">&#9670;&nbsp;</a></span>selectFinished</h2>
 
@@ -1022,6 +1233,74 @@ Friends</h2></td></tr>
 
 <p>-&gt; The slot will call with Mouse "onReleased" event. </p>
 <p>-&gt; Method will emit Selected Points. </p>
+
+</div>
+</div>
+<a id="a4175dfef38b98d91bf8501e601cae122"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4175dfef38b98d91bf8501e601cae122">&#9670;&nbsp;</a></span>setAutoScalePolicy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GLChartView::setAutoScalePolicy </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="GLEnums_8h.html#afa2f3ba9dea3b7606773d2e1a69017bd">GLAutoScalePolicy</a>&#160;</td>
+          <td class="paramname"><em>policy</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>setter of the autoScalePolicy property. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">GLAutoScalePolicy.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae84cd733ef040b8b2ca59da3fb3e1a35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae84cd733ef040b8b2ca59da3fb3e1a35">&#9670;&nbsp;</a></span>setFitWindow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GLChartView::setFitWindow </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>fit</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>setter of the fitWindow property. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bool.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1285,6 +1564,30 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Property Documentation</h2>
+<a id="a0a411d628a5dbc249fc571581d2fcc53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a411d628a5dbc249fc571581d2fcc53">&#9670;&nbsp;</a></span>autoScalePolicy</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="GLEnums_8h.html#afa2f3ba9dea3b7606773d2e1a69017bd">GLAutoScalePolicy</a> GLChartView::autoScalePolicy</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">read</span><span class="mlabel">write</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Auto Scaling Policy with Minimum and maximum vertex in the chart. </p>
+
+</div>
+</div>
 <a id="a697a6e8748a87a50b0c6fb77ae00ffdd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a697a6e8748a87a50b0c6fb77ae00ffdd">&#9670;&nbsp;</a></span>axisRange</h2>
 
@@ -1330,6 +1633,30 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The FBO Background style such as color and opacity. </p>
+
+</div>
+</div>
+<a id="a65d586e2be94abd3c61cb5d8ede3426f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65d586e2be94abd3c61cb5d8ede3426f">&#9670;&nbsp;</a></span>fitWindow</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GLChartView::fitWindow</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">read</span><span class="mlabel">write</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A boolean to activate windows fit (autoScale) or not. </p>
 
 </div>
 </div>

@@ -83,6 +83,7 @@ void set_struct_field(QVector<Struct> &dest, const QVector<T> &src, size_t offse
 }
 
 
+/// @brief Checking the Enumeration with current enum value.
 template<typename T>
 bool hasFlag(T flag, T value) {
     return (value & flag) == flag;

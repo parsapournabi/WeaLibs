@@ -735,6 +735,7 @@ Window {
                     color: "cyan"
                     lineStyle: GL.DotLine
                     lineWidth: 2
+                    fixItem: false
                 }
                 GLChartVerticalLineItem {
                     id: lineItem1

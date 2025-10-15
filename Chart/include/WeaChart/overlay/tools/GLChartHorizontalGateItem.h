@@ -3,6 +3,7 @@
 
 #include "WeaChart/overlay/tools/GLChartGateItem.h"
 
+/// @brief Same as GLChartGateItem but the different is the vertical property, is equal false by default.
 class GLChartHorizontalGateItem : public GLChartGateItem
 {
     Q_OBJECT

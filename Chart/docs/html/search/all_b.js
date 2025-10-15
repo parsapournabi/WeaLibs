@@ -5,5 +5,6 @@ var searchData=
   ['normalize_5fto_5ffloat',['normalize_to_float',['../namespaceGLutils.html#a3402831d9efdfce82c41fcda0f598f2e',1,'GLutils']]],
   ['normalize_5fto_5fuint8',['normalize_to_uint8',['../namespaceGLutils.html#aa726359edc210e9c652ad264404183a9',1,'GLutils']]],
   ['normxtoworld',['normXtoWorld',['../classGLChartView.html#a6070b22ed53443214e7bb6bce65c8342',1,'GLChartView']]],
-  ['normytoworld',['normYtoWorld',['../classGLChartView.html#a161e5bdca8e579c68b85bbeeea940379',1,'GLChartView']]]
+  ['normytoworld',['normYtoWorld',['../classGLChartView.html#a161e5bdca8e579c68b85bbeeea940379',1,'GLChartView']]],
+  ['nostyle',['NoStyle',['../classGLMetaEnums.html#a9525955133bdbb86c9ebf644dce2b83ea9de37b0f12e7350058106d919142b436',1,'GLMetaEnums::NoStyle()'],['../GLEnums_8h.html#a4c5907e9c0ef786d6e7f3add289038c8a6415d51870fd8b36593722337923c0be',1,'NoStyle():&#160;GLEnums.h']]]
 ];

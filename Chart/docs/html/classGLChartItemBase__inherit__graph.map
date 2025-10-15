@@ -1,0 +1,9 @@
+<map id="GLChartItemBase" name="GLChartItemBase">
+<area shape="rect" id="node4" href="$classGLChartGateItem.html" title="An AbstractChartGateItem inherits from GLChartItemBase and with more gate options. " alt="" coords="456,56,583,83"/>
+<area shape="rect" id="node7" href="$classGLChartLineItem.html" title="An AbstractChartLineItem inherits from GLChartItemBase and with more line options. " alt="" coords="458,107,581,133"/>
+<area shape="rect" id="node2" href="$classIProperties.html" title="Abstract QML/C++ Property class. " alt="" coords="145,81,232,108"/>
+<area shape="rect" id="node5" href="$classGLChartHorizontalGateItem.html" title="Same as GLChartGateItem but the different is the vertical property, is equal false by default..." alt="" coords="631,5,816,32"/>
+<area shape="rect" id="node6" href="$classGLChartVerticalGateItem.html" title="Same as GLChartGateItem but the different is the vertical property is equal true by default..." alt="" coords="638,56,809,83"/>
+<area shape="rect" id="node8" href="$classGLChartHorizontalLineItem.html" title="Same as GLChartLineItem but the different is the vertical property, is equal false by default..." alt="" coords="633,107,814,133"/>
+<area shape="rect" id="node9" href="$classGLChartVerticalLineItem.html" title="Same as GLChartLineItem but the different is the vertical property, is equal true by default..." alt="" coords="640,157,807,184"/>
+</map>

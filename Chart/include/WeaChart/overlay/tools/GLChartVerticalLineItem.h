@@ -1,8 +1,9 @@
 #ifndef GLCHARTVERTICALLINEITEM_H
 #define GLCHARTVERTICALLINEITEM_H
 
-#include "GLChartLineItem.h"
+#include "WeaChart/overlay/tools/GLChartLineItem.h"
 
+/// @brief Same as GLChartLineItem but the different is the vertical property, is equal true by default.
 class GLChartVerticalLineItem : public GLChartLineItem
 {
     Q_OBJECT

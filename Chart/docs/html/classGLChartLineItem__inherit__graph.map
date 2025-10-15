@@ -1,0 +1,6 @@
+<map id="GLChartLineItem" name="GLChartLineItem">
+<area shape="rect" id="node5" href="$classGLChartHorizontalLineItem.html" title="Same as GLChartLineItem but the different is the vertical property, is equal false by default..." alt="" coords="5,304,187,331"/>
+<area shape="rect" id="node6" href="$classGLChartVerticalLineItem.html" title="Same as GLChartLineItem but the different is the vertical property, is equal true by default..." alt="" coords="211,304,378,331"/>
+<area shape="rect" id="node2" href="$classGLChartItemBase.html" title="AbstractChartItem based on QQuickItem contains base properties and methods. " alt="" coords="131,155,259,181"/>
+<area shape="rect" id="node3" href="$classIProperties.html" title="Abstract QML/C++ Property class. " alt="" coords="151,80,238,107"/>
+</map>

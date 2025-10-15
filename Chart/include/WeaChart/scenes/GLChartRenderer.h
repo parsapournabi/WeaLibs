@@ -47,7 +47,9 @@ public:
     /// @brief Writing the new dataset into the whole of the Vertex Buffer object.
     void updatePosVbo();
 
+    /// @brief Allocating ChartItems Vertex Buffer.
     void allocateItemsVbo();
+    /// @brief Writing each ChartItem properties into the ChartItem Vertex Buffer.
     void writeItemsVbo(int offset, const QVector2D *data, int count);
 
 protected:

@@ -64,8 +64,9 @@ class WEACHART_API GLChartView : public QQuickFramebufferObject
     /// @default default: Qt::MiddleButton.
     Q_PROPERTY(Qt::MouseButton panMouseButton MEMBER panMouseButton)
     Q_ENUM(Qt::MouseButton)
-
+    /// @brief Auto Scaling Policy with Minimum and maximum vertex in the chart.
     Q_PROPERTY(GLAutoScalePolicy autoScalePolicy READ autoScalePolicy WRITE setAutoScalePolicy NOTIFY autoScalePolicyChanged)
+    /// @brief A boolean to activate windows fit (autoScale) or not.
     Q_PROPERTY(bool fitWindow READ fitWindow WRITE setFitWindow NOTIFY fitWindowChanged)
 
 public:
@@ -109,10 +110,18 @@ public:
     /// @details legendItems provides GLLegend properties, which are used in GLItemLegend Repeater model.
     QVariantList legendItems() const;
 
+    /// @brief getter of the autoScalePolicy property.
+    /// @return GLAutoScalePolicy.
     GLAutoScalePolicy autoScalePolicy() const noexcept;
+    /// @brief setter of the autoScalePolicy property.
+    /// @param GLAutoScalePolicy.
     void setAutoScalePolicy(GLAutoScalePolicy policy) noexcept;
 
+    /// @brief getter of the fitWindow property.
+    /// @return bool.
     bool fitWindow() const noexcept;
+    /// @brief setter of the fitWindow property.
+    /// @param bool.
     void setFitWindow(bool fit) noexcept;
 
     // Configuration & Process
@@ -121,10 +130,14 @@ public:
     /// @return Created handler with type of the GLSeriesHandle
     GLSeriesHandle *addSeries(QSharedPointer<GLAbstractSeries> storage);
     GLSeriesHandle *addSeriesPtr(GLAbstractSeries *series);
+    /// @return All GLSeriesHandle (also GLAbstractSeries) which contains in GLChartFrame
     const QVector<GLSeriesHandle*> &handles() const;
 
+    /// @brief Adding GLChartItemBase base class to FBO.
     bool addItem(GLChartItemBase *item);
+    /// @brief removing GLChartItemBase from FBO.
     bool removeItem(GLChartItemBase *item);
+    /// @return All GLChartItemBase which contains in GLChartFrame
     const QVector<GLChartItemBase *> &chartItems() const;
 
 

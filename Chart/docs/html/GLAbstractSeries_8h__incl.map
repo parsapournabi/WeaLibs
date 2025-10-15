@@ -1,8 +1,8 @@
 <map id="include/WeaChart/series/GLAbstractSeries.h" name="include/WeaChart/series/GLAbstractSeries.h">
-<area shape="rect" id="node4" href="$GLStructures_8h.html" title="WeaChart/utils/GLStructures.h" alt="" coords="305,102,507,129"/>
-<area shape="rect" id="node13" href="$PropertySeries_8h.html" title="WeaChart/properties\l/PropertySeries.h" alt="" coords="553,95,696,136"/>
-<area shape="rect" id="node5" href="$GLMathUtils_8h.html" title="GLMathUtils.h" alt="" coords="227,184,334,211"/>
-<area shape="rect" id="node7" href="$GLEnums_8h.html" title="WeaChart/series/GLEnums.h" alt="" coords="540,184,733,211"/>
-<area shape="rect" id="node8" href="$WeaChart__export_8h.html" title="WeaChart/WeaChart_export.h" alt="" coords="537,259,736,285"/>
-<area shape="rect" id="node14" href="$IProperties_8h.html" title="IProperties.h" alt="" coords="757,184,855,211"/>
+<area shape="rect" id="node4" href="$GLStructures_8h.html" title="WeaChart/utils/GLStructures.h" alt="" coords="465,102,667,129"/>
+<area shape="rect" id="node14" href="$PropertySeries_8h.html" title="WeaChart/properties\l/PropertySeries.h" alt="" coords="716,95,859,136"/>
+<area shape="rect" id="node5" href="$GLMathUtils_8h.html" title="GLMathUtils.h" alt="" coords="338,184,445,211"/>
+<area shape="rect" id="node7" href="$GLEnums_8h.html" title="WeaChart/series/GLEnums.h" alt="" coords="469,184,663,211"/>
+<area shape="rect" id="node8" href="$WeaChart__export_8h.html" title="WeaChart/WeaChart_export.h" alt="" coords="549,259,748,285"/>
+<area shape="rect" id="node15" href="$IProperties_8h.html" title="IProperties.h" alt="" coords="868,184,965,211"/>
 </map>

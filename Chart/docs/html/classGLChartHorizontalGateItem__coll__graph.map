@@ -1,0 +1,5 @@
+<map id="GLChartHorizontalGateItem" name="GLChartHorizontalGateItem">
+<area shape="rect" id="node2" href="$classGLChartGateItem.html" title="An AbstractChartGateItem inherits from GLChartItemBase and with more gate options. " alt="" coords="35,229,161,256"/>
+<area shape="rect" id="node3" href="$classGLChartItemBase.html" title="AbstractChartItem based on QQuickItem contains base properties and methods. " alt="" coords="34,155,162,181"/>
+<area shape="rect" id="node4" href="$classIProperties.html" title="Abstract QML/C++ Property class. " alt="" coords="55,80,141,107"/>
+</map>
