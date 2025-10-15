@@ -42,7 +42,7 @@ var searchData=
   ['glmarkershape',['GLMarkerShape',['../classGLMetaEnums.html#a95b26e333d62e03d6d8d74f191e6c893',1,'GLMetaEnums::GLMarkerShape()'],['../GLEnums_8h.html#aa4765618c9be3565e45cb0c387386eef',1,'GLMarkerShape():&#160;GLEnums.h']]],
   ['glmathutils_2eh',['GLMathUtils.h',['../GLMathUtils_8h.html',1,'']]],
   ['glmetaenums',['GLMetaEnums',['../classGLMetaEnums.html',1,'']]],
-  ['glserieshandle',['GLSeriesHandle',['../classGLSeriesHandle.html',1,'GLSeriesHandle'],['../classGLSeriesHandle.html#af52951e9a93a10701e2e93e37bdff4fc',1,'GLSeriesHandle::GLSeriesHandle()']]],
+  ['glserieshandle',['GLSeriesHandle',['../classGLSeriesHandle.html',1,'GLSeriesHandle'],['../classGLSeriesHandle.html#a4bda22eb6ed7d0fe25566dcd86fd863f',1,'GLSeriesHandle::GLSeriesHandle()']]],
   ['glserieshandle_2eh',['GLSeriesHandle.h',['../GLSeriesHandle_8h.html',1,'']]],
   ['glseriesitem',['GLSeriesItem',['../classGLSeriesItem.html',1,'GLSeriesItem'],['../classGLSeriesItem.html#ae01eae74b07d1d21acab25ea024bc8d6',1,'GLSeriesItem::GLSeriesItem()']]],
   ['glseriesitem_2eh',['GLSeriesItem.h',['../GLSeriesItem_8h.html',1,'']]],

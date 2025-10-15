@@ -1,9 +1,6 @@
 #include "WeaChart/scenes/GLChartview.h"
 
 #include <QRandomGenerator>
-#include <omp.h>
-#include <malloc.h>
-#include <QDateTime>
 #include <QThread>
 #include <QTimer>
 

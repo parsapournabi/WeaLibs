@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">WeaChart
-   &#160;<span id="projectnumber">1.3</span>
+   &#160;<span id="projectnumber">1.4</span>
    </div>
   </td>
  </tr>
@@ -123,17 +123,16 @@ $(function() {
 <blockquote class="doxtable">
 <p>[!INFO] You can pass custom <code>CMAKE_INSTALL_PREFIX</code> like below. </p>
 </blockquote>
-<div class="fragment"><div class="line">...</div><div class="line">cmake .. -DBUILD_EXAMPLE=OFF -G &quot;MinGW Makefiles&quot; -DCMAKE_INSTALL_PREFIX=&quot;C:/My/Custom/Path/WeaChart&quot;</div><div class="line">...</div></div><!-- fragment --><p>&lt;/details&gt;</p>
+<div class="fragment"><div class="line">...</div><div class="line">cmake .. -DBUILD_EXAMPLE=OFF -G &quot;MinGW Makefiles&quot; -DCMAKE_INSTALL_PREFIX=&quot;C:/My/Custom/Path/WeaChart&quot;</div><div class="line">...</div></div><!-- fragment --><p> &lt;/details&gt;</p>
 <p>&lt;details&gt;</p>
 <h4>Using the source code </h4>
 <p>To avoid installing the library and using it via source code follow these steps:</p><ol type="1">
 <li>Create directory named <code>libs/WeaChart</code> in your <b>PROJECT_SOURCE_ROOT</b>.</li>
 <li>Copy the <code>include</code>, <code>qml</code>, <code>shaders</code>, <code>src</code> and <code>resources.qrc</code> to your <b>PROJECT_SOURCE_ROOT/libs/WeaChart</b></li>
 <li>Add <code>libs/WeaChart</code> directory using <b>Add Existing Directory</b>.</li>
-<li>Add <code>libs/WeaChart/include</code> to your project <b>INCLUDEPATH</b>. <h2>5. Use <b>import "qml/"</b> into the each .qml files that you want to use <b>WeaChart Qml Components</b>. </h2>
-</li>
+<li>Add <code>libs/WeaChart/include</code> to your project <b>INCLUDEPATH</b>.</li>
+<li>Use <b>import "qml/"</b> into the each .qml files that you want to use <b>WeaChart Qml Components</b>. &lt;/details&gt;</li>
 </ol>
-<p>&lt;/details&gt;</p>
 <h2>Usage and Importing</h2>
 <p>After installing the library follow these sequence:</p><ul>
 <li>Add <b>Quick</b>, <b>Qml</b>, <b>OpenGL</b> components.</li>
@@ -161,8 +160,8 @@ $(function() {
 <li><b>Multi-selection</b> using <code>Ctrl</code> key.</li>
 <li>Configurable <b>MajorGridX/Y, MinorGrid, Background color</b> and other color stuff...</li>
 <li>Adjustable <b>Pan friction</b> (<b>velocityCoefficient</b>).</li>
-<li>Configurable <b>Mouse buttons</b> for Pan/Zoom/Select. <h2>- Optimized performance with memory control. </h2>
-</li>
+<li>Configurable <b>Mouse buttons</b> for Pan/Zoom/Select.</li>
+<li>Optimized performance with memory control.</li>
 </ul>
 <h2>Series Types</h2>
 <h3>Scatter Series</h3>
@@ -176,90 +175,92 @@ $(function() {
 <li>Connect points in order, supports colors and thickness. <h3>Area Series</h3>
 </li>
 </ul>
-<h2>- Fill area under line with configurable color. </h2>
+<ul>
+<li>Fill area under line with configurable color.</li>
+</ul>
 <h2>Custom Data Struct</h2>
 <p>Series are implemented as <b>templates</b>: </p><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="keyword">class </span><a class="code" href="classGLSeriesStorage.html">GLSeriesStorage</a> {...};</div></div><!-- fragment --><ul>
 <li>T must inherit from <code><a class="el" href="structPointXYBase.html" title="Base chart&#39;s point struct. ">PointXYBase</a></code>.</li>
 <li><code><a class="el" href="structPointXYBase.html" title="Base chart&#39;s point struct. ">PointXYBase</a></code> contains:<ul>
 <li><code>QVector2D</code> position.</li>
-<li><a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/utils/GLStructures.h#L40-L46">ChartColor</a> color(rgba).</li>
+<li><a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/utils/GLStructures.h#L41-L47">ChartColor</a> color(rgba).</li>
 </ul>
 </li>
 </ul>
 <p>This design allows storing <b>custom data per point</b>, which can be emitted via signals upon <b>selection</b>.</p>
 <p><b>Note for users:</b></p><ul>
 <li>Make sure your custom struct/class is <b>Q_DECLARE_METATYPE</b> compatible for <code>QVector&lt;T&gt;</code> usage.</li>
-<li>Example: <div class="fragment"><div class="line"><span class="keyword">struct </span>MyPoint : <span class="keyword">public</span> <a class="code" href="structPointXYBase.html">PointXYBase</a> {</div><div class="line">    <span class="keyword">using</span> <a class="code" href="structPointXYBase.html#a60702ff78ceed0a5053597d39a7baa8b">PointXYBase::PointXYBase</a>;</div><div class="line">    <span class="keywordtype">int</span> someField;</div><div class="line">    QString <a class="code" href="structPointXYBase.html#aaf6fe3fa478431906dde8b3f1d55cea8">name</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;MyPoint&quot;</span>; }</div><div class="line">};</div><div class="line">Q_DECLARE_METATYPE(MyPoint) <span class="comment">// REQUIRED</span></div><div class="line">Q_DECLARE_METATYPE(QVector&lt;MyPoint&gt;) <span class="comment">// REQUIRED</span></div></div><!-- fragment --><hr/>
-</li>
+<li>Example: <div class="fragment"><div class="line"><span class="keyword">struct </span>MyPoint : <span class="keyword">public</span> <a class="code" href="structPointXYBase.html">PointXYBase</a> {</div><div class="line">    <span class="keyword">using</span> <a class="code" href="structPointXYBase.html#a60702ff78ceed0a5053597d39a7baa8b">PointXYBase::PointXYBase</a>;</div><div class="line">    <span class="keywordtype">int</span> someField;</div><div class="line">    QString <a class="code" href="structPointXYBase.html#aaf6fe3fa478431906dde8b3f1d55cea8">name</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;MyPoint&quot;</span>; }</div><div class="line">};</div><div class="line">Q_DECLARE_METATYPE(MyPoint) <span class="comment">// REQUIRED</span></div><div class="line">Q_DECLARE_METATYPE(QVector&lt;MyPoint&gt;) <span class="comment">// REQUIRED</span></div></div><!-- fragment --></li>
 </ul>
 <h2>Color Options</h2>
 <p>Each series supports three color modes:</p><ol type="1">
 <li>Mix of <b>point color</b> and <b>base color</b>.</li>
-<li>Only <b>base color</b>. <h2>3. Only <b>point color</b>. </h2>
-</li>
+<li>Only <b>base color</b>.</li>
+<li>Only <b>point color</b>.</li>
 </ol>
 <blockquote class="doxtable">
 <p>[!INFO] see <a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/series/GLEnums.h">GLEnums.h</a> for more details about types. </p>
 </blockquote>
 <h2>Interaction</h2>
 <ul>
-<li>Pan (optional), set <code>limitView</code>: <b>true</b> property on <a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L43">GLChartFrame.qml</a>.</li>
+<li>Pan (optional), set <code>limitView</code>: <b>true</b> property on <a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L49">GLChartFrame.qml</a>.</li>
 <li>Zoom in/out.</li>
 <li>RubberBand selection.</li>
-<li>Multi-selection with <code>Ctrl</code>. <h2>- Configurable <b>mouse buttons</b> for actions. </h2>
-</li>
+<li>Multi-selection with <code>Ctrl</code>.</li>
+<li>Configurable <b>mouse buttons</b> for actions.</li>
 </ul>
 <h2>Grid and Background</h2>
 <ul>
-<li>MajorGridXY and MinorGrid customizable: count, color, visiblity <h2>- Background color configurable. </h2>
-</li>
+<li>MajorGridXY and MinorGrid customizable: count, color, visiblity</li>
+<li>Background color configurable.</li>
 </ul>
 <h2>Memory and Performance</h2>
 <ul>
-<li>Minimum chart memory: 12 * 6MB = 72MB <a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/scenes/GLChartview.h#L21">see MAX_CHART_TOTAL_POINTS</a></li>
+<li>Minimum chart memory: 12 * 6MB = 72MB <a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/scenes/GLChartview.h#L24">see MAX_CHART_TOTAL_POINTS</a></li>
 <li>Configurable via internal variable.</li>
 <li>Performance depends on:<ul>
 <li>Number of points per series.</li>
 <li>Number of series.</li>
-<li>Size of point struct <h2>- Continous property updates (type, color, name) via timers <b>may degrade performance</b>. </h2>
-</li>
+<li>Size of point struct</li>
 </ul>
 </li>
+<li>Continous property updates (type, color, name) via timers <b>may degrade performance</b>.</li>
 </ul>
 <h2>Configuration</h2>
 <ul>
-<li><b>Pan friction</b> adjustable. <a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L44">velocityCoefficient</a></li>
+<li><b>Pan friction</b> adjustable. <a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L50">velocityCoefficient</a></li>
 <li><b>Mouse buttons</b> for Pan/Zoom/Select configurable.</li>
-<li><b>Marker size</b> adjustable per series. <h2>- <b>Series color</b> mode adjustable per series. </h2>
-</li>
+<li><b>Marker size</b> adjustable per series.</li>
+<li><b>Series color</b> mode adjustable per series.</li>
 </ul>
 <h2>Warnings and Best Practices</h2>
 <ol type="1">
 <li><b>Texture markers</b> must have <code>imageIconUrl</code> defined.</li>
 <li>Avoid <b>frequent timer-based property updates.</b></li>
-<li>Custom structs must inherit from <code><a class="el" href="structPointXYBase.html" title="Base chart&#39;s point struct. ">PointXYBase</a></code> and be <b>Q_DECLARE_METATYPE</b>. <h2>4. Performance decreases with <b>large point structs</b>, may series, or many points. </h2>
-</li>
+<li>Custom structs must inherit from <code><a class="el" href="structPointXYBase.html" title="Base chart&#39;s point struct. ">PointXYBase</a></code> and be <b>Q_DECLARE_METATYPE</b>.</li>
+<li>Performance decreases with <b>large point structs</b>, may series, or many points.</li>
 </ol>
 <h2>Example</h2>
 <p>Import all files and directories instead <b>example</b> directory to your project. </p><h3>Quick Start</h3>
 <p>Drawing a simple filled triangle:</p>
 <p>&lt;details&gt;</p>
 <p>main.cpp </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;QGuiApplication&gt;</span></div><div class="line"><span class="preprocessor">#include &lt;QQmlApplicationEngine&gt;</span></div><div class="line"><span class="preprocessor">#include &lt;QSurfaceFormat&gt;</span></div><div class="line"><span class="preprocessor">#include &lt;QQmlContext&gt;</span></div><div class="line"><span class="preprocessor">#include &lt;QDebug&gt;</span></div><div class="line"><span class="preprocessor">#include &lt;QThread&gt;</span></div><div class="line"></div><div class="line"><span class="comment">// Importing WeaChart Lib</span></div><div class="line"><span class="preprocessor">#include &lt;WeaChart/GLChart&gt;</span></div><div class="line"></div><div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div><div class="line">{</div><div class="line"></div><div class="line">    <span class="comment">// SurfaceFormat configuring to OpenGL 4.6 core</span></div><div class="line">    QSurfaceFormat fmt;</div><div class="line">    fmt.setMajorVersion(4);</div><div class="line">    fmt.setMinorVersion(6);</div><div class="line">    fmt.setDepthBufferSize(24);</div><div class="line">    fmt.setSwapInterval(1);</div><div class="line">    fmt.setProfile(QSurfaceFormat::CoreProfile);</div><div class="line">    fmt.setRenderableType(QSurfaceFormat::OpenGL);</div><div class="line">    fmt.setSwapBehavior(QSurfaceFormat::DoubleBuffer);</div><div class="line"></div><div class="line">    QSurfaceFormat::setDefaultFormat(fmt);</div><div class="line">    QSurfaceFormat curFmt = QSurfaceFormat::defaultFormat();</div><div class="line"></div><div class="line"><span class="preprocessor">    #if QT_VERSION &lt; QT_VERSION_CHECK(6, 0, 0)</span></div><div class="line">        QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);</div><div class="line"><span class="preprocessor">    #endif</span></div><div class="line"></div><div class="line">    QGuiApplication app(argc, argv);</div><div class="line"></div><div class="line">    <span class="comment">// Activating QDebug</span></div><div class="line">    qputenv(<span class="stringliteral">&quot;QT_ASSUME_STDERR_HAS_CONSOLE&quot;</span>, <span class="stringliteral">&quot;1&quot;</span>);</div><div class="line"></div><div class="line">    QQmlApplicationEngine engine;</div><div class="line">    <span class="keyword">const</span> QUrl url(QStringLiteral(<span class="stringliteral">&quot;qrc:/main.qml&quot;</span>));</div><div class="line">    QObject::connect(&amp;engine, &amp;QQmlApplicationEngine::objectCreated,</div><div class="line">        &amp;app, [url](QObject *obj, <span class="keyword">const</span> QUrl &amp;objUrl) {</div><div class="line">            <span class="keywordflow">if</span> (!obj &amp;&amp; url == objUrl)</div><div class="line">                QCoreApplication::exit(-1);</div><div class="line">        }, Qt::QueuedConnection);</div><div class="line"></div><div class="line">    qDebug() &lt;&lt; <span class="stringliteral">&quot;WeaChart_QML_IMPORT_PATH: &quot;</span> &lt;&lt; <a class="code" href="config_8h.html#a700eedce62f5c242511e62fb3b3f82c8">WeaChart_QML_IMPORT_PATH</a>;</div><div class="line"></div><div class="line">    <span class="comment">// Register MetaTypes of chart</span></div><div class="line">    <a class="code" href="classGLChartView.html#a55b90c2fecb33541460bf561ae8f4365">GLChartView::registerMetaTypes</a>(&amp;engine);</div><div class="line"></div><div class="line">    <span class="comment">// Creating series</span></div><div class="line">    <a class="code" href="classGLSeriesStorage.html">GLSeriesStorage&lt;PointXYBase&gt;</a> mySeries;</div><div class="line"></div><div class="line">    <span class="comment">// Drawing a simple triangle with different point color</span></div><div class="line">    mySeries.<a class="code" href="classGLSeriesStorage.html#a4625d415d6e1c152323b7c908adbec7d">append</a>(<a class="code" href="structPointXYBase.html">PointXYBase</a>{50.0f, 50.0f, 255, 0, 0, 1.0});</div><div class="line">    mySeries.<a class="code" href="classGLSeriesStorage.html#a4625d415d6e1c152323b7c908adbec7d">append</a>(<a class="code" href="structPointXYBase.html">PointXYBase</a>{40.0f, 25.0f, 0, 255, 0, 1.0});</div><div class="line">    mySeries.<a class="code" href="classGLSeriesStorage.html#a4625d415d6e1c152323b7c908adbec7d">append</a>(<a class="code" href="structPointXYBase.html">PointXYBase</a>{60.0f, 25.0f, 0, 0, 255, 1.0});</div><div class="line">    mySeries.<a class="code" href="classGLSeriesStorage.html#a4625d415d6e1c152323b7c908adbec7d">append</a>(<a class="code" href="structPointXYBase.html">PointXYBase</a>{50.0f, 50.0f, 255, 0, 0, 1.0});</div><div class="line"></div><div class="line">    engine.rootContext()-&gt;setContextProperty(<span class="stringliteral">&quot;mySeriesPtr&quot;</span>, &amp;mySeries);</div><div class="line"></div><div class="line">    engine.load(url);</div><div class="line">    <span class="keywordflow">return</span> app.exec();</div><div class="line"></div><div class="line">}</div></div><!-- fragment --><p> &lt;/details&gt;</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;QGuiApplication&gt;</span></div><div class="line"><span class="preprocessor">#include &lt;QQmlApplicationEngine&gt;</span></div><div class="line"><span class="preprocessor">#include &lt;QSurfaceFormat&gt;</span></div><div class="line"><span class="preprocessor">#include &lt;QQmlContext&gt;</span></div><div class="line"><span class="preprocessor">#include &lt;QDebug&gt;</span></div><div class="line"><span class="preprocessor">#include &lt;QThread&gt;</span></div><div class="line"></div><div class="line"><span class="comment">// Importing WeaChart Lib</span></div><div class="line"><span class="preprocessor">#include &lt;WeaChart/GLChart&gt;</span></div><div class="line"></div><div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div><div class="line">{</div><div class="line"></div><div class="line">    <span class="comment">// SurfaceFormat configuring to OpenGL 4.6 core</span></div><div class="line"><span class="comment"></span>    QSurfaceFormat fmt;</div><div class="line">    fmt.setMajorVersion(4);</div><div class="line">    fmt.setMinorVersion(6);</div><div class="line">    fmt.setDepthBufferSize(24);</div><div class="line">    fmt.setSwapInterval(1);</div><div class="line">    fmt.setProfile(QSurfaceFormat::CoreProfile);</div><div class="line">    fmt.setRenderableType(QSurfaceFormat::OpenGL);</div><div class="line">    fmt.setSwapBehavior(QSurfaceFormat::DoubleBuffer);</div><div class="line"></div><div class="line">    QSurfaceFormat::setDefaultFormat(fmt);</div><div class="line">    QSurfaceFormat curFmt = QSurfaceFormat::defaultFormat();</div><div class="line"><span class="preprocessor">#if QT_VERSION &lt; QT_VERSION_CHECK(6, 0, 0)</span></div><div class="line">    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    QGuiApplication app(argc, argv);</div><div class="line"></div><div class="line">    <span class="comment">// Activating QDebug</span></div><div class="line">    qputenv(<span class="stringliteral">&quot;QT_ASSUME_STDERR_HAS_CONSOLE&quot;</span>, <span class="stringliteral">&quot;1&quot;</span>);</div><div class="line"></div><div class="line">    QQmlApplicationEngine engine;</div><div class="line">    <span class="keyword">const</span> QUrl url(QStringLiteral(<span class="stringliteral">&quot;qrc:/main.qml&quot;</span>));</div><div class="line">    QObject::connect(&amp;engine, &amp;QQmlApplicationEngine::objectCreated,</div><div class="line">        &amp;app, [url](QObject *obj, <span class="keyword">const</span> QUrl &amp;objUrl) {</div><div class="line">            <span class="keywordflow">if</span> (!obj &amp;&amp; url == objUrl)</div><div class="line">                QCoreApplication::exit(-1);</div><div class="line">        }, Qt::QueuedConnection);</div><div class="line"></div><div class="line">    qDebug() &lt;&lt; <span class="stringliteral">&quot;WeaChart_QML_IMPORT_PATH: &quot;</span> &lt;&lt; <a class="code" href="config_8h.html#a700eedce62f5c242511e62fb3b3f82c8">WeaChart_QML_IMPORT_PATH</a>;</div><div class="line"></div><div class="line">    <span class="comment">// Register MetaTypes of chart</span></div><div class="line">    <a class="code" href="classGLChartView.html#a55b90c2fecb33541460bf561ae8f4365">GLChartView::registerMetaTypes</a>(&amp;engine);</div><div class="line"></div><div class="line">    <span class="comment">// Creating series</span></div><div class="line">    <a class="code" href="classGLSeriesStorage.html">GLSeriesStorage&lt;PointXYBase&gt;</a> mySeries;</div><div class="line"></div><div class="line">    <span class="comment">// Drawing a simple triangle with different point color</span></div><div class="line">    mySeries.<a class="code" href="classGLSeriesStorage.html#a4625d415d6e1c152323b7c908adbec7d">append</a>(<a class="code" href="structPointXYBase.html">PointXYBase</a>{50.0f, 50.0f, 255, 0, 0, 1.0});</div><div class="line">    mySeries.<a class="code" href="classGLSeriesStorage.html#a4625d415d6e1c152323b7c908adbec7d">append</a>(<a class="code" href="structPointXYBase.html">PointXYBase</a>{40.0f, 25.0f, 0, 255, 0, 1.0});</div><div class="line">    mySeries.<a class="code" href="classGLSeriesStorage.html#a4625d415d6e1c152323b7c908adbec7d">append</a>(<a class="code" href="structPointXYBase.html">PointXYBase</a>{60.0f, 25.0f, 0, 0, 255, 1.0});</div><div class="line">    mySeries.<a class="code" href="classGLSeriesStorage.html#a4625d415d6e1c152323b7c908adbec7d">append</a>(<a class="code" href="structPointXYBase.html">PointXYBase</a>{50.0f, 50.0f, 255, 0, 0, 1.0});</div><div class="line"></div><div class="line">    engine.rootContext()-&gt;setContextProperty(<span class="stringliteral">&quot;mySeriesPtr&quot;</span>, &amp;mySeries);</div><div class="line"></div><div class="line">    engine.load(url);</div><div class="line">    <span class="keywordflow">return</span> app.exec();</div><div class="line"></div><div class="line">}</div></div><!-- fragment --><p> &lt;/details&gt;</p>
 <p>&lt;details&gt;</p>
 <p>main.qml </p>
-<div class="fragment"><div class="line">import QtQuick.Controls 2.15</div><div class="line">import QtQuick.Window 2.15</div><div class="line">import QtQuick.Layouts 1.15</div><div class="line">import QtQuick 2.15</div><div class="line">import QtQuick.Dialogs 1.3</div><div class="line"></div><div class="line">import com.wearily.WeaChart 1.0 // Importing qml files.</div><div class="line"></div><div class="line">Window {</div><div class="line">    id: root</div><div class="line">    title: &quot;Chart Window&quot;</div><div class="line">    width: 500</div><div class="line">    height: 500</div><div class="line">    visible: true</div><div class="line">    GLChartFrame {</div><div class="line">        anchors.fill: parent</div><div class="line">        anchors.margins: 10</div><div class="line">        leftMargin: 80</div><div class="line">        minX: 0.0</div><div class="line">        maxX: 100.0</div><div class="line">        minY: 0.0</div><div class="line">        maxY: 100.0</div><div class="line">        GLSeriesItem {</div><div class="line">            id: mySeries</div><div class="line">            series: mySeriesPtr</div><div class="line">            type: GL.SeriesTypeArea</div><div class="line"></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --><p> &lt;/details&gt;</p>
+<div class="fragment"><div class="line">import QtQuick.Controls 2.12</div><div class="line">import QtQuick.Window 2.12</div><div class="line">import QtQuick 2.12</div><div class="line">import com.wearily.WeaChart 1.0 // Importing qml files.</div><div class="line"></div><div class="line">Window {</div><div class="line">    id: root</div><div class="line">    title: &quot;Hello WeaChart&quot;</div><div class="line">    width: 500</div><div class="line">    height: 500</div><div class="line">    visible: true</div><div class="line"></div><div class="line">    GLChartFrame {</div><div class="line">        anchors.fill: parent</div><div class="line">        anchors.margins: 10</div><div class="line">        leftMargin: 90</div><div class="line">        majorXCount: 5</div><div class="line">        majorYCount: 5</div><div class="line">        minorPerMajor: 10</div><div class="line">        minX: 0.0</div><div class="line">        maxX: 100.0</div><div class="line">        minY: 0.0</div><div class="line">        maxY: 100.0</div><div class="line">        velocityCoefficient: 0.85</div><div class="line">        yTitlePosX: -10</div><div class="line">        xTitle: &quot;Azimuth&quot;</div><div class="line">        yTitle: &quot;Freq Channel&quot;</div><div class="line">        yLabelSuffix: &quot;#&quot;</div><div class="line">        xLabelSuffix: &quot; deg&quot;</div><div class="line">        xLabelDecimalPlaces: 0</div><div class="line">        toolTipEnable: false</div><div class="line"></div><div class="line">        GLSeriesItem {</div><div class="line">            id: mySeries</div><div class="line">            series: mySeriesPtr</div><div class="line">            name: &quot;Triangle Serie&quot;</div><div class="line">            type: GL.SeriesTypeArea</div><div class="line">            markerSize: 10</div><div class="line">            markerShape: GL.ShapeCircle</div><div class="line">        }</div><div class="line">        GLChartVerticalLineItem {</div><div class="line">            color: &quot;red&quot;</div><div class="line">            position: 20</div><div class="line">            lineStyle: Qt.DashDotDotLine</div><div class="line">            visible: true</div><div class="line">        }</div><div class="line">        GLChartHorizontalGateItem {</div><div class="line">            color: &quot;orange&quot;</div><div class="line">            fixItem: false</div><div class="line">            from: 0.85</div><div class="line">            to: 0.8</div><div class="line">            visible: true</div><div class="line">        }</div><div class="line">        GLLegend {</div><div class="line">            anchors.topMargin: -5</div><div class="line">            chart: parent.chart</div><div class="line">            alignment: Qt.AlignHCenter | Qt.AlignTop</div><div class="line">            flow: Flow.LeftToRight // Flow.TopToBottom</div><div class="line"></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --><p> &lt;/details&gt;</p>
 <h3>Best Practice</h3>
 <p><a href="http://172.16.50.13/parsa/qcustommodels/-/tree/main/Chart/example">See example usage</a></p>
 <h2>Additional Notes</h2>
 <ul>
 <li>Highly <b>customizable</b> and flexible charting system.</li>
-<li>Supports <b>real-time updates</b>, but excessive property changes reduce performance. <h2>- Designed for <b>professional applications</b> requiring high-performance rendering. </h2>
-</li>
+<li>Supports <b>real-time updates</b>, but excessive property changes reduce performance.</li>
+<li>Designed for <b>professional applications</b> requiring high-performance rendering.</li>
 </ul>
 <h2>Information</h2>
 <p>If you want to learn more about the <b>WeaChart</b> library and view the full documentation, refer to the following sections:</p>
 <ul>
+<li><a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L7-L65">See GLChartFrame all properties</a></li>
 <li><a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/docs/html/index.html">See the complete documentation</a></li>
 <li>http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/docs/README.md "See the source code description"</li>
 </ul>
@@ -267,6 +268,7 @@ $(function() {
 <ul>
 <li>[ ] Complete <a class="el" href="classGLChartItemBase.html" title="AbstractChartItem based on QQuickItem contains base properties and methods. ">GLChartItemBase</a> <code>Gradient</code> and <code>lineWidth</code> property.</li>
 <li>[ ] Creating a Gallery example for each series type and options.</li>
+<li>[ ] Add more <code>ScatterShape</code> using binary picture (Diamond, X shape, triangle, filled, unfilled).</li>
 <li>[ ] Make the library as <code>PIMPL</code>.</li>
 <li>[ ] Making the WeaChart available for Qt6. </li>
 </ul>

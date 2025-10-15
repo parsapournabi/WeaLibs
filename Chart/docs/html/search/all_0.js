@@ -3,7 +3,7 @@ var searchData=
   ['a',['a',['../unionChartColor.html#a951ba1ac29976229ab9fddf1c394a846',1,'ChartColor']]],
   ['addinstance',['addInstance',['../classGLChartView.html#a0592f983a183194d15777b13d234389a',1,'GLChartView']]],
   ['additem',['addItem',['../classGLChartView.html#aa8a06fbc8b85087f31cea65cd969b496',1,'GLChartView']]],
-  ['addseries',['addSeries',['../classGLChartView.html#a9aab53eaa50d9ed564a2aaa36218f9c7',1,'GLChartView']]],
+  ['addseries',['addSeries',['../classGLChartView.html#a127b7d41da9047f3a9db9c31f00bf043',1,'GLChartView']]],
   ['addseriesptr',['addSeriesPtr',['../classGLChartView.html#a80b60b00f4a66feb2a9072eecbf47221',1,'GLChartView']]],
   ['adjustview',['adjustView',['../classGLChartView.html#a6ff1f650d11f8c5eeb4b089e47196b3a',1,'GLChartView']]],
   ['allocateitemsvbo',['allocateItemsVbo',['../classGLChartRenderer.html#a254ff884bd1761d06f8f469a9cd01323',1,'GLChartRenderer']]],

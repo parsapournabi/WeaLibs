@@ -11,7 +11,7 @@ var searchData=
   ['glchartverticalgateitem',['GLChartVerticalGateItem',['../classGLChartVerticalGateItem.html#a717e786914332e8e84c0306197f44299',1,'GLChartVerticalGateItem']]],
   ['glchartverticallineitem',['GLChartVerticalLineItem',['../classGLChartVerticalLineItem.html#a72297246153d3444458bcb04bb94ff11',1,'GLChartVerticalLineItem']]],
   ['glchartview',['GLChartView',['../classGLChartView.html#a44810f4b8039c471961c9d5ae3416dff',1,'GLChartView']]],
-  ['glserieshandle',['GLSeriesHandle',['../classGLSeriesHandle.html#af52951e9a93a10701e2e93e37bdff4fc',1,'GLSeriesHandle']]],
+  ['glserieshandle',['GLSeriesHandle',['../classGLSeriesHandle.html#a4bda22eb6ed7d0fe25566dcd86fd863f',1,'GLSeriesHandle']]],
   ['glseriesitem',['GLSeriesItem',['../classGLSeriesItem.html#ae01eae74b07d1d21acab25ea024bc8d6',1,'GLSeriesItem']]],
   ['gradient',['gradient',['../classGLChartItemBase.html#af62034ff0462148a8b93518393175e07',1,'GLChartItemBase']]],
   ['gradientasvec4d',['gradientAsVec4D',['../classGLChartItemBase.html#ae6e60dfe8c9c67de1ab45f15dd91ce98',1,'GLChartItemBase']]],
