@@ -20,7 +20,19 @@ set(WeaChart_QML_IMPORT_PATH "${CMAKE_INSTALL_PREFIX}/share/qml")
 
 
 add_library(WeaChart SHARED
+    tree.txt
+    install.sh
+    uninstall.sh
+    README.md
+    docs/README.md
+    WeaChart.qdocconf
+    cmake/WeaChartConfig.cmake.in
+    cmake/WeaChartUninstall.cmake.in
+    cmake/config.h.in
+    docs/document.html
+
     resources.qrc
+
     include/WeaChart/GLChart
     include/WeaChart/scenes/GLChartview.h src/scenes/GLChartview.cpp
     include/WeaChart/scenes/GLChartRenderer.h src/scenes/GLChartRenderer.cpp
@@ -36,17 +48,13 @@ add_library(WeaChart SHARED
     include/WeaChart/properties/PropertyBackground.h
     include/WeaChart/properties/PropertySeries.h
     include/WeaChart/WeaChart_export.h
-
-    tree.txt
-    install.sh
-    uninstall.sh
-    README.md
-    docs/README.md
-    WeaChart.qdocconf
-    cmake/WeaChartConfig.cmake.in
-    cmake/WeaChartUninstall.cmake.in
-    cmake/config.h.in
-    docs/document.html
+    include/WeaChart/overlay/tools/GLChartItemBase.h include/WeaChart/overlay/tools/GLChartItemBase.cpp
+    include/WeaChart/overlay/tools/GLChartLineItem.h include/WeaChart/overlay/tools/GLChartLineItem.cpp
+    include/WeaChart/overlay/tools/GLChartGateItem.h include/WeaChart/overlay/tools/GLChartGateItem.cpp
+    include/WeaChart/overlay/tools/GLChartVerticalLineItem.h include/WeaChart/overlay/tools/GLChartVerticalLineItem.cpp
+    include/WeaChart/overlay/tools/GLChartHorizontalLineItem.h include/WeaChart/overlay/tools/GLChartHorizontalLineItem.cpp
+    include/WeaChart/overlay/tools/GLChartVerticalGateItem.h include/WeaChart/overlay/tools/GLChartVerticalGateItem.cpp
+    include/WeaChart/overlay/tools/GLChartHorizontalGateItem.h include/WeaChart/overlay/tools/GLChartHorizontalGateItem.cpp
 )
 
 # Referer include/WeaChart/WeaChart_export.h

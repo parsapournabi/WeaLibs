@@ -12,12 +12,18 @@
 #include "WeaChart/utils/GLStructures.h"
 #include "WeaChart/series/GLSeriesHandle.h"
 #include "WeaChart/series/GLSeriesItem.h"
+#include "WeaChart/overlay/tools/GLChartVerticalLineItem.h"
+#include "WeaChart/overlay/tools/GLChartHorizontalLineItem.h"
+#include "WeaChart/overlay/tools/GLChartVerticalGateItem.h"
+#include "WeaChart/overlay/tools/GLChartHorizontalGateItem.h"
 #include "WeaChart/config.h"
 
 /// @details Maximum number of points in all series.
 /// @default default: 6'000'000
 /// @note it allocate at GLChartView constructure -> MAX_CHART_TOTAL_POINTS * sizeof(PointXYBase).
 constexpr int MAX_CHART_TOTAL_POINTS = 6'000'000;
+/// @details Maximum VerticesCount in GLChartItemBase and its children classes.
+constexpr int MAX_CHART_ITEM_VERTICES_COUNT = 4;
 
 Q_DECLARE_METATYPE(Qt::MouseButton)
 
@@ -58,6 +64,10 @@ class WEACHART_API GLChartView : public QQuickFramebufferObject
     /// @default default: Qt::MiddleButton.
     Q_PROPERTY(Qt::MouseButton panMouseButton MEMBER panMouseButton)
     Q_ENUM(Qt::MouseButton)
+
+    Q_PROPERTY(GLAutoScalePolicy autoScalePolicy READ autoScalePolicy WRITE setAutoScalePolicy NOTIFY autoScalePolicyChanged)
+    Q_PROPERTY(bool fitWindow READ fitWindow WRITE setFitWindow NOTIFY fitWindowChanged)
+
 public:
     GLChartView(QQuickItem *parent = nullptr);
     ~GLChartView();
@@ -76,15 +86,7 @@ public:
     /// }
     /// In this situation, process will find 2 children of type `GLSeriesItem`, and then pass each of them to the
     /// addSeriesPtr method.
-    void getSeriesFromQml();
-    /// @brief Converting X pixels to the World x position(refers to the projection).
-    /// @param pX -> The value of the pixel.
-    /// @return The converted X value.
-    const float normXtoWorld(const float &pX) const;
-    /// @brief Converting Y pixels to the World y position(refers to the projection).
-    /// @param pY -> The value of the pixel.
-    /// @return The converted Y value.
-    const float normYtoWorld(const float &pY) const;
+    void readQmlComponents();
 
     // Properties
     /// @brief getter of the background property.
@@ -107,13 +109,24 @@ public:
     /// @details legendItems provides GLLegend properties, which are used in GLItemLegend Repeater model.
     QVariantList legendItems() const;
 
+    GLAutoScalePolicy autoScalePolicy() const noexcept;
+    void setAutoScalePolicy(GLAutoScalePolicy policy) noexcept;
+
+    bool fitWindow() const noexcept;
+    void setFitWindow(bool fit) noexcept;
+
     // Configuration & Process
     /// @brief Adding a GLSeriesHandle using storage param, then the handler will add into the m_view member.
     /// @param storage -> series with type of GLSeriesStorage<T>.
     /// @return Created handler with type of the GLSeriesHandle
     GLSeriesHandle *addSeries(QSharedPointer<GLAbstractSeries> storage);
     GLSeriesHandle *addSeriesPtr(GLAbstractSeries *series);
-    Q_INVOKABLE const QVector<GLSeriesHandle*> &handles() const;
+    const QVector<GLSeriesHandle*> &handles() const;
+
+    bool addItem(GLChartItemBase *item);
+    bool removeItem(GLChartItemBase *item);
+    const QVector<GLChartItemBase *> &chartItems() const;
+
 
     // STATIC
     /// @details Registering all dataTypes for C++ and QML.
@@ -130,6 +143,12 @@ public:
         qmlRegisterType<GLChartView>("com.wearily.WeaChart", 1, 0, "GLChartView");
         qmlRegisterType<PropertyBackground>("com.wearily.WeaChart", 1, 0, "GLBackgroundProperty");
         qmlRegisterType<PropertyAxisRange>("com.wearily.WeaChart", 1, 0, "GLAxisRangeProperty");
+
+        // ChartItems
+        qmlRegisterType<GLChartVerticalLineItem>("com.wearily.WeaChart", 1, 0, "GLChartVerticalLineItem");
+        qmlRegisterType<GLChartHorizontalLineItem>("com.wearily.WeaChart", 1, 0, "GLChartHorizontalLineItem");
+        qmlRegisterType<GLChartVerticalGateItem>("com.wearily.WeaChart", 1, 0, "GLChartVerticalGateItem");
+        qmlRegisterType<GLChartHorizontalGateItem>("com.wearily.WeaChart", 1, 0, "GLChartHorizontalGateItem");
 #ifndef WeaChart_QML_IMPORT_PATH
         static_assert(false,
                       "[ERROR]: Undefined WeaChart_QML_IMPORT_PATH. undefined WeaChart *.qml files.");
@@ -175,7 +194,19 @@ signals:
 
     void limitViewChanged();
 
+    void autoScalePolicyChanged();
+
+    void fitWindowChanged();
+
 public slots:
+    /// @brief Converting X pixels to the World x position(refers to the projection).
+    /// @param pX -> The value of the pixel.
+    /// @return The converted X value.
+    Q_INVOKABLE const float normXtoWorld(const float &pX) const;
+    /// @brief Converting Y pixels to the World y position(refers to the projection).
+    /// @param pY -> The value of the pixel.
+    /// @return The converted Y value.
+    Q_INVOKABLE const float normYtoWorld(const float &pY) const;
 
     /// @details updating all series data.
     Q_INVOKABLE void updateSeries();
@@ -238,6 +269,10 @@ private:
     /// Projection moves until m_panVelocity is less than 0.03.
     void panAcceleration();
 
+    void resetProjection();
+    void autoScaleUpdateAxis();
+    void autoScaleUpdateAxis(const GLAbstractSeries &serie);
+
     // Base variables
     mutable bool m_initSeries = false;
 
@@ -259,6 +294,9 @@ private:
     qint8 m_selectRangeIdx = 0;
 
     QVector<GLSeriesHandle *> m_series;
+    QVector<GLChartItemBase *> m_items;
+    bool m_hasNewItem = false;
+    bool m_hasItemsChanged = false;
 
     // Properties
     PropertyBackground *m_bg = nullptr; // Referer QML
@@ -266,6 +304,9 @@ private:
     bool m_limitView = false; // Referer QML
     qreal velocityCoefficient = 0.91; // Referer QML
     Qt::MouseButton panMouseButton = Qt::MiddleButton; // Referer QML
+    GLAutoScalePolicy m_autoScalePolicy = GLAutoScalePolicy::PolicyNone;
+    bool m_pvtAutoScale = true; // Internal Enabling autoScale
+    bool m_fitWindow = false;
 
     friend class GLChartRenderer;
 };

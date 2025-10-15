@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Quick)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick)
-find_package(WeaNet REQUIRED)
+#find_package(WeaNet REQUIRED)
 
 add_library(libQCustomModels STATIC README.md .gitignore tree.txt)
 
@@ -21,7 +21,7 @@ add_subdirectory(Chart)
 
 target_link_libraries(libQCustomModels
   PUBLIC Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick
-  PUBLIC WeaNet::WeaNet
+#  PUBLIC WeaNet::WeaNet
   PUBLIC libTools)
 
 
@@ -29,7 +29,7 @@ target_link_libraries(libQCustomModels
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
 if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appRadar)
+  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.libQCustomModels)
 endif()
 set_target_properties(libQCustomModels PROPERTIES
     ${BUNDLE_ID_OPTION}
@@ -46,6 +46,6 @@ install(TARGETS libQCustomModels
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_import_qml_plugins(appRadar)
-    qt_finalize_executable(appRadar)
+#    qt_import_qml_plugins(appRadar)
+#    qt_finalize_executable(appRadar)
 endif()

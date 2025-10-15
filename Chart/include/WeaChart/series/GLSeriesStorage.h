@@ -12,7 +12,7 @@
 ///
 /// @note T must inherit from `PointXYBase`; otherwise, you will get a compile-time-error.
 template<typename T>
-class WEACHART_API GLSeriesStorage final : public GLAbstractSeries {
+class GLSeriesStorage final : public GLAbstractSeries {
     static_assert(std::is_base_of_v<PointXYBase, T>,
                   "ERROR At GLSeriesStorage class: T must inherit from 'PointXYBase' struct!");
 public:
@@ -106,6 +106,12 @@ protected:
 
     }
 
+    void scaleProjection(GLAutoScalePolicy policy, Projection &proj) const override {
+        if (m_points.empty()) return;
+        if (isXSorted()) applyScaleWindow(proj, m_points.constFirst(), m_points.constLast(), policy);
+        else for (const T &point : m_points) applyScaleWindow(proj, point, point, policy);
+    }
+
     /// @details Converting T to QVariant because a template type cannot be passed through a signal argument.
     QVariant makeSelectVariant(const QVector<int> &indices) const override {
         QVector<T>  sel;
@@ -120,6 +126,28 @@ protected:
     int vectorMetaTypeId() const override { return qMetaTypeId<QVector<T>>(); }
 
 private:
+    void applyScaleWindow(Projection &proj,
+                          const T &fpoint,
+                          const T &lpoint,
+                          GLAutoScalePolicy policy) const
+    {
+        /** These condition will also check PolicyHCenter & ... automatically **/
+        if (GLutils::hasFlag(GLAutoScalePolicy::PolicyLeft, policy)) {
+            proj.left = qIsInf(proj.left) ? (qreal) fpoint.x() : qMin(proj.left, (qreal) fpoint.x());
+        }
+        if (GLutils::hasFlag(GLAutoScalePolicy::PolicyRight, policy)) {
+            proj.right = qIsNaN(proj.right) ? (qreal) lpoint.x() : qMax(proj.right, (qreal) lpoint.x());
+        }
+        if (GLutils::hasFlag(GLAutoScalePolicy::PolicyBottom, policy)) {
+            proj.bottom = qIsInf(proj.bottom) ? (qreal) fpoint.y() : qMin(proj.bottom, (qreal) fpoint.y());
+        }
+        if (GLutils::hasFlag(GLAutoScalePolicy::PolicyTop, policy)) {
+            proj.top = qIsNaN(proj.top) ? (qreal) lpoint.y() : qMax(proj.top, (qreal) lpoint.y());
+        }
+
+    }
+
+
     QVector<T> m_points;
 
 };

@@ -1,7 +1,8 @@
-import QtQuick.Controls 2.15
-import QtQuick.Window 2.15
-import QtQuick.Layouts 1.15
-import QtQuick 2.15
+import QtQuick.Controls 2.12
+import QtQuick.Window 2.12
+import QtQuick.Layouts 1.12
+import QtQuick 2.12
+import QtGraphicalEffects 1.12
 import QtQuick.Dialogs 1.3
 
 import CustomItems 1.0
@@ -66,6 +67,13 @@ Window {
                                         checked: true
 
                                     }
+                                    CheckBox {
+                                        id: cbToolTip
+                                        text: "Use ToolTip" + qsTr(state)
+                                        font.pointSize: 9
+                                        checked: false
+
+                                    }
                                     Button {
                                         id: btnColorMajorGrid
                                         text: "Major Grid Color"
@@ -79,7 +87,7 @@ Window {
                                             modality: Qt.WindowModal
                                             showAlphaChannel: true
                                             currentColor: "#179998"
-        //                                    currentAlpha: 3
+                                            //                                    currentAlpha: 3
                                         }
                                     }
                                     Button {
@@ -95,7 +103,7 @@ Window {
                                             modality: Qt.WindowModal
                                             showAlphaChannel: true
                                             currentColor: "#023c32"
-        //                                    currentAlpha: 0.3
+                                            //                                    currentAlpha: 0.3
                                         }
                                     }
 
@@ -381,8 +389,56 @@ Window {
                                     }
                                 }
 
-                              }
-                          }
+                                RowLayout {
+                                    Layout.fillWidth: true
+                                    spacing: 3
+                                    ComboBox {
+                                        property int autoScalePolicy: GL.PolicyNone
+                                        id: cboxAutoScale
+                                        model: ["PolicyNone",
+                                            "PolicyTop",
+                                            "PolicyBottom",
+                                            "PolicyLeft",
+                                            "PolicyRight",
+                                            "PolicyHCenter",
+                                            "PolicyVCenter",
+                                            "PolicyCenter"
+                                        ]
+                                        onCurrentValueChanged: {
+                                            if (currentValue === "PolicyNone") {
+                                                autoScalePolicy = GL.PolicyNone
+                                            }
+                                            else if (currentValue === "PolicyTop") {
+                                                autoScalePolicy = GL.PolicyTop
+                                            }
+                                            else if (currentValue === "PolicyBottom") {
+                                                autoScalePolicy = GL.PolicyBottom
+                                            }
+                                            else if (currentValue === "PolicyLeft") {
+                                                autoScalePolicy = GL.PolicyLeft
+                                            }
+                                            else if (currentValue === "PolicyRight") {
+                                                autoScalePolicy = GL.PolicyRight
+                                            }
+                                            else if (currentValue === "PolicyHCenter") {
+                                                autoScalePolicy = GL.PolicyHCenter
+                                            }
+                                            else if (currentValue === "PolicyVCenter") {
+                                                autoScalePolicy = GL.PolicyVCenter
+                                            }
+                                            else if (currentValue === "PolicyCenter") {
+                                                autoScalePolicy = GL.PolicyCenter
+                                            }
+                                        }
+                                    }
+                                    CheckBox {
+                                        id: cboxFitWindow
+                                        checked: true
+                                        text: "Fit Window with Points"
+                                    }
+                                }
+                            }
+                        }
 
                         GroupBox {
                             id: gbSeries
@@ -428,6 +484,12 @@ Window {
                                             font.bold: true
                                         }
                                     }
+                                    CheckBox {
+                                        id: cbSeriesSorted
+                                        checked: true
+                                        text: "Series Data Sorted: "
+                                    }
+
                                     Button {
                                         text: "Series Color"
                                         font.pointSize: 9
@@ -493,6 +555,8 @@ Window {
                                 series.color = colorDialogSeries.currentColor
                                 series.markerSize = spSeriesMarkerSize.value
                                 series.markerShape = cboxSeriesMarkerShape.currentIndex
+                                series.seriesXSorted = cbSeriesSorted.checked
+                                series.seriesYSorted = cbSeriesSorted.checked
                                 if (cboxSeriesIcon.currentValue === "IconTargetPressed")
                                     series.markerIconUrl = ":/images/targetPressed.png"
                                 else if (cboxSeriesIcon.currentValue === "IconUpHovered")
@@ -545,8 +609,8 @@ Window {
             Layout.margins: 5
             Layout.fillHeight: true
             width: 800
-//            border.color: "gray"
-//            color: "cyan"
+            //            border.color: "gray"
+            //            color: "cyan"
             GLChartFrame {
                 // All properties bellow are optional, see GLChartFrame all properties & default values.
                 id: glChartFrame
@@ -556,9 +620,12 @@ Window {
                 leftMargin: 100
                 topMargin: 80
 
+                // General Properties
                 useGrid: cbUseGrid.checked
-                yLabelDecimalPlaces: 0
-                xLabelDecimalPlaces: 0
+                yLabelDecimalPlaces: 2
+                xLabelDecimalPlaces: 3
+                xLabelSuffix: "%"
+                yLabelSuffix: "$"
                 majorXCount: spinGridHMajor.value
                 majorYCount: spinGridVMajor.value
                 minorPerMajor: spinGridHMinor.value
@@ -568,12 +635,14 @@ Window {
                 backgroundOpacity: colorDialog.currentAlpha
                 xTitle: "This is X Axis"
                 yTitle: "Frequency Channel"
-//                xTitlePosY: glChartFrame.height - 30
-//                yTitlePosX: -10
+                xTitlePosY: glChartFrame.height + 10
+                yTitlePosX: -15
 
+                // Mouse Properties
                 selectViewMouseButton: Qt.RightButton
-                selectPointsMouseButton: Qt.LeftButton
+                selectPointsMouseButton: Qt.LeftButton // Disable Select by passing the "Qt.NoButton"
 
+                // FBO Properties (ChartScene)
                 minX: spinMinX.value
                 minY: spinMinY.value
                 maxX: spinMaxX.value
@@ -581,6 +650,19 @@ Window {
                 velocityCoefficient: 0.91
                 limitView: false
                 panMouseButton: Qt.MiddleButton
+                autoScalePolicy: cboxAutoScale.autoScalePolicy
+                fitWindow: cboxFitWindow.checked
+
+                // ToolTip Properties
+                toolTipEnable: cbToolTip.checked
+                toolTipAxisColor: "grey"
+                toolTipCenterDotColor: "orange"
+                toolTipBoxColor: "white"
+                toolTipBoxBorderColor: "blue"
+                toolTipBoxRadius: 4
+                toolTipTextColor: "black"
+                toolTipTextSplitter: "\n"
+                toolTipFont: Qt.font({pixelSize: 12, bold: true})
 
                 GLSeriesItem {
                     id: series0
@@ -591,9 +673,11 @@ Window {
                     colorType: GL.MixBasePointColor
                     name: "Series 0"
                     color: "red"
-                    markerSize: 50
+                    markerSize: 7
                     markerShape: GL.ShapeSquare
                     markerIconUrl: ":/images/targetPressed.png"
+                    seriesXSorted: true
+                    seriesYSorted: true
                 }
                 GLSeriesItem {
                     id: series1
@@ -604,9 +688,11 @@ Window {
                     colorType: GL.OnlyBaseColor
                     name: "Series 1"
                     color: "green"
-                    markerSize: 50
+                    markerSize: 7
                     markerShape: GL.ShapeCircle
                     markerIconUrl: ""
+                    seriesXSorted: true
+                    seriesYSorted: true
 
                 }
                 GLSeriesItem {
@@ -618,19 +704,112 @@ Window {
                     colorType: GL.OnlyPointColor
                     name: "Series 2"
                     color: "blue"
-                    markerSize: 50
+                    markerSize: 7
                     markerShape: GL.ShapeSquare
                     markerIconUrl: ""
+                    seriesXSorted: true
+                    seriesYSorted: true
                 }
                 GLLegend {
                     id: legend
                     chart: glChartFrame.chart
                     visible: true
+                    flow: Flow.LeftToRight
+                    spacing: 20
+//                    anchors.topMargin: 20
                     alignment: Qt.AlignHCenter | Qt.AlignTop
+                }
+                GLChartVerticalLineItem {
+                    position: 350
+                    color: "yellow"
+                    lineStyle: Qt.DashDotDotLine
+//                    lineWidth: 2.0
+                }
+                GLChartVerticalLineItem {
+                    position: 300
+                    color: "purple"
+                    lineStyle: GL.DashLine
+                }
+                GLChartVerticalLineItem {
+                    position: 200
+                    color: "cyan"
+                    lineStyle: GL.DotLine
+                    lineWidth: 2
+                }
+                GLChartVerticalLineItem {
+                    id: lineItem1
+                    position: 100
+                    color: "pink"
+                    lineStyle: GL.DashDotLine
+                }
+                GLChartHorizontalLineItem {
+                    id: lineItem
+                    position: 10
+                    color: "orange"
+                    lineStyle: GL.DashDotDotLine
+                    lineWidth: 5
+                }
+                GLChartVerticalGateItem {
+                    id: gateItem1
+                    from: 40
+                    to: 80
+                    color: "purple"
+                    image: "qrc:/images/upHovered.png"
+                    useImage: true
+//                    gradient:   LinearGradient {
+//                        anchors.fill: parent
+//                        start: Qt.point(0, 0)
+//                        end: Qt.point(0, 300)
+//                        gradient: Gradient {
+//                            GradientStop { position: 0.0; color: "white" }
+//                            GradientStop { position: 1.0; color: "black" }
+//                        }
+//                    }
+
+                    z: -0.001
+                }
+                GLChartHorizontalGateItem {
+                    id: gateItem
+                    from: 40
+                    to: 80
+                    color: "red"
+                    lineStyle: GL.DotLine
+                    //                    z: 0.001
                 }
 
             }
         }
+
+    }
+    PropertyAnimation {
+        target: gateItem
+        property: "color"
+        from: "red"
+        to: "green"
+        duration: 1000
+        running: true
+        loops: Animation.Infinite
+
+    }
+    PropertyAnimation {
+        id: propAnim
+        target: lineItem
+        property: "lineWidth"
+        from: 1
+        to: 10
+        duration: 1000
+        running: true
+        loops: Animation.Infinite
+
+    }
+    PropertyAnimation {
+        target: lineItem1
+        property: "position"
+        from: glChartFrame.minX
+        to: glChartFrame.maxX
+        duration: 1000
+        running: true
+        loops: Animation.Infinite
 
     }
 

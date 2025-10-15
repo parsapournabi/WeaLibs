@@ -28,6 +28,7 @@ public:
     PointXYBase baseAt(int i) const override {}
     PointXYBase *basePoints() const override {}
     void basePoints(PointXYBase *dst, size_t start) const override {}
+    void scaleProjection(GLAutoScalePolicy policy, Projection &proj) const override {}
 
     QVariant makeSelectVariant(const QVector<int> &indices) const override {}
     int vectorMetaTypeId() const override {}

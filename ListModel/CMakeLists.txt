@@ -33,5 +33,5 @@ add_executable(appListModel
 target_include_directories(appListModel PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(appListModel
-                                          PUBLIC WeaNet::WeaNet
+#                                          PUBLIC WeaNet::WeaNet
                                           PUBLIC libTools)

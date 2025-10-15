@@ -14,6 +14,7 @@
 struct Projection;
 struct SeriesProps;
 struct PointXYBase;
+class GLChartItemBase;
 
 /// @brief Chart renderer based on QQuickFramebufferObject::Renderer
 /// @details GLChartView FBO renderer, uses OpenGL 4.6 core. contains a glProgram.
@@ -40,8 +41,14 @@ public:
     /// @note The rendering process will not start until the m_initialized is set to true.
     void render() override;
 
+    void drawMainProgram();
+    void drawItemsProgram();
+
     /// @brief Writing the new dataset into the whole of the Vertex Buffer object.
     void updatePosVbo();
+
+    void allocateItemsVbo();
+    void writeItemsVbo(int offset, const QVector2D *data, int count);
 
 protected:
     /// @return-> first = width.
@@ -57,14 +64,16 @@ private:
     /// @details After the method done the m_initBuffer will set to the true.
     void initBuffers();
 
+    void linkProgram(QOpenGLShaderProgram *prog,
+                     const QString &fileVertex, const QString &fileFragment);
 
     // Renderer Attributes
     /// @brief shader program.
-    QOpenGLShaderProgram *m_program = nullptr;
+    QOpenGLShaderProgram *m_program = nullptr, *m_programItems = nullptr;
     /// @brief Vertex Array Object (Stores VBO & SSBO and all other buffers).
-    QOpenGLVertexArrayObject m_vao;
+    QOpenGLVertexArrayObject m_vao, m_vaoItems;
     /// @brief Vertex buffer Object Stores an array of point position + point color.
-    QOpenGLBuffer m_vboPoints;
+    QOpenGLBuffer m_vboPoints, m_vboItems;
     /// @brief Shader storage buffer object, stores all series information refers points.
     GLuint m_ssboSeriesProps;
     bool m_initBuffers = false;
@@ -78,8 +87,10 @@ private:
     QVector<SeriesProps> *m_fboSeriesProps = nullptr;
     QVector<QSharedPointer<QOpenGLTexture>> *m_fboSeriesTexs = nullptr;
     QVector<QVector4D> *m_fboSelectRange = nullptr; // Selected Area
+    QVector<GLChartItemBase *> *m_fboItems = nullptr;
     QColor m_fboBgColor;
     float m_fboOpacity;
+
 };
 
 #endif // GLCHARTRENDERER_H

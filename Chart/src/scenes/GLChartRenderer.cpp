@@ -7,7 +7,7 @@
 #include "WeaChart/scenes/GLChartview.h"
 #include "WeaChart/utils/GLStructures.h"
 
-WEACHART_API void APIENTRY callBackOutput(GLenum source,
+void APIENTRY callBackOutput(GLenum source,
                              GLenum type,
                              GLuint id,
                              GLenum severity,
@@ -58,7 +58,8 @@ WEACHART_API void APIENTRY callBackOutput(GLenum source,
 }
 
 GLChartRenderer::GLChartRenderer() :
-    m_program(new QOpenGLShaderProgram())
+    m_program(new QOpenGLShaderProgram()),
+    m_programItems(new QOpenGLShaderProgram())
 {
     initGL();
     initShaders();
@@ -79,7 +80,18 @@ GLChartRenderer::~GLChartRenderer()
     m_program->release();
     m_program->removeAllShaders();
 
+
+    m_vaoItems.release();
+    m_vaoItems.destroy();
+
+    m_vboItems.release();
+    m_vboItems.destroy();
+
+    m_programItems->release();
+    m_programItems->removeAllShaders();
+
     delete m_program;
+    delete m_programItems;
 }
 
 QOpenGLFramebufferObject *GLChartRenderer::createFramebufferObject(const QSize &size)
@@ -108,9 +120,18 @@ void GLChartRenderer::synchronize(QQuickFramebufferObject *item)
         m_fboOpacity = (float)propBg->opacity();
         propBg->setDataRead(); // Clearing the Data Read
     }
+    if (chartItem->m_hasNewItem) {
+        m_fboItems = &chartItem->m_items;
+        chartItem->m_hasNewItem = false;
+    }
 
     if (m_initBuffers) {
         updatePosVbo();
+        if (m_fboItems && chartItem->m_hasItemsChanged) {
+            allocateItemsVbo();
+            chartItem->m_hasItemsChanged = false;
+        }
+
     }
 
     if (!m_initialized) m_initialized = true; // Now Render Can be run after first synchronization.
@@ -126,6 +147,12 @@ void GLChartRenderer::render()
     glClearColor(m_fboBgColor.redF(), m_fboBgColor.greenF(), m_fboBgColor.blueF(), m_fboOpacity);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    drawMainProgram();
+    drawItemsProgram();
+}
+
+void GLChartRenderer::drawMainProgram()
+{
     QMatrix4x4 projection;
     projection.setToIdentity();
     projection.ortho(m_fboProj->left, m_fboProj->right, m_fboProj->bottom, m_fboProj->top, -1, 1);
@@ -177,9 +204,66 @@ void GLChartRenderer::render()
 
         idx++;
     }
-//    qDebug() << '\n';
-
     m_program->release();
+
+}
+
+void GLChartRenderer::drawItemsProgram()
+{
+    m_programItems->bind();
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    for (int i(0); i < m_fboItems->size(); ++i) {
+        const GLChartItemBase * item = m_fboItems->at(i);
+        if (!item->isVisible()) continue;
+        const QVector<QVector2D> &vertices = item->vertices();
+
+        // Projection
+        QMatrix4x4 mvp;
+        mvp.setToIdentity();
+        if (!item->fixItem())
+            mvp.ortho(0.0, 1.0, 0.0, 1.0, -1, 1);
+        else if (item->isVertical())
+            mvp.ortho(m_fboProj->left, m_fboProj->right, 0.0, 1.0, -1, 1);
+        else
+            mvp.ortho(0.0, 1.0, m_fboProj->bottom, m_fboProj->top, -1, 1);
+
+        // Updating the uniforms
+        m_programItems->setUniformValue("mvp", mvp);
+        m_programItems->setUniformValue("u_z", (float) item->z());
+        m_programItems->setUniformValue("u_texture", 0);
+        m_programItems->setUniformValue("u_color", item->colorAsVec4D());
+        m_programItems->setUniformValue("u_useImage", item->useImage());
+        m_programItems->setUniformValue("u_useGradient", item->useImage());
+        m_programItems->setUniformValue("u_isVertical", item->isVertical());
+        m_programItems->setUniformValue("u_gradient", item->gradientAsVec4D());
+        m_programItems->setUniformValue("u_lineStyle", (int) item->lineStyle());
+
+        // Updating the VBO
+        writeItemsVbo(vertices.size() * i * sizeof(QVector2D),
+                      vertices.constData(),
+                      vertices.size() * sizeof(QVector2D));
+
+        // Binding Texture if need and available
+        QOpenGLTexture *texture = nullptr;
+        if (item->useImage() && !item->imageData().isNull()) {
+            texture = new QOpenGLTexture(item->imageData());
+            texture->bind(0);
+        }
+
+        // Drawing
+        m_vaoItems.bind();
+        glDrawArrays(item->drawType(), vertices.size() * i, vertices.size());
+        m_vaoItems.release();
+
+        // Releasing Texture
+        if (item->useImage() && !item->imageData().isNull() && texture != nullptr) {
+            texture->release(0);
+            delete texture;
+        }
+    }
+    m_programItems->release();
 }
 
 void GLChartRenderer::updatePosVbo()
@@ -194,6 +278,21 @@ void GLChartRenderer::updatePosVbo()
     //    glGetBufferParameteriv(GL_SHADER_STORAGE_BUFFER, GL_BUFFER_SIZE, &size);
     //    glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, m_fboSeriesProps->size() * sizeof(SeriesProps), m_fboSeriesProps->constData());
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+}
+
+void GLChartRenderer::allocateItemsVbo()
+{
+//    qDebug() << "on AlloCated: " << m_fboItems->size() << m_fboItems->size() * MAX_CHART_ITEM_VERTICES_COUNT;
+    m_vboItems.bind();
+    m_vboItems.allocate(sizeof(QVector2D) * m_fboItems->size() * MAX_CHART_ITEM_VERTICES_COUNT);
+    m_vboItems.release();
+}
+
+void GLChartRenderer::writeItemsVbo(int offset, const QVector2D *data, int count)
+{
+    m_vboItems.bind();
+    m_vboItems.write(offset, data, count);
+    m_vboItems.release();
 }
 
 const QPair<int, int> GLChartRenderer::fboSize() const
@@ -215,39 +314,25 @@ void GLChartRenderer::initGL()
 
 void GLChartRenderer::initShaders()
 {
-    // Vertex + Fragment
-    m_program->create();
-    bool vert_result = m_program->addShaderFromSourceFile(QOpenGLShader::Vertex,
-                                                          ":/shadersChart/shaders/chart.vert");
-    if(!vert_result)
-        qCritical() << "Cannot open chart.vert!" << vert_result;
-
-    bool frag_result = m_program->addShaderFromSourceFile(QOpenGLShader::Fragment,
-                                                          ":/shadersChart/shaders/chart.frag");
-    if(!frag_result)
-        qCritical() << "Cannot open chart.frag!" << frag_result;
-
-    if (!frag_result || !vert_result)
-        exit(EXIT_FAILURE);
-
-    if (!m_program->link()) {
-        qCritical() << "Failed to link Chart Shaders files!";
-        exit(EXIT_FAILURE);
-    }
+    linkProgram(m_program,
+                ":/shadersChart/shaders/chart.vert", ":/shadersChart/shaders/chart.frag");
+    linkProgram(m_programItems,
+                ":/shadersChart/shaders/chartItem.vert", ":/shadersChart/shaders/chartItem.frag");
 }
 
 void GLChartRenderer::initBuffers()
 {
     if (m_initBuffers) return;
 
+    /** Main Program START **/
     m_vao.create();
     m_vboPoints.create();
+    m_vboPoints.setUsagePattern(QOpenGLBuffer::DynamicDraw);
 
     m_vao.bind();
 
     m_vboPoints.bind();
     m_vboPoints.allocate(sizeof(PointXYBase) *  m_fboPointsSize);
-//    m_vboPoints.allocate(m_fboPoints->size() * sizeof(PointXYBase));
 
     glEnableVertexAttribArray(0); // position layout = 0
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE,
@@ -268,7 +353,45 @@ void GLChartRenderer::initBuffers()
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 
     m_vao.release();
+    /** Main Program END **/
+
+    /** Items Program START **/
+    m_vaoItems.create();
+    m_vboItems.create();
+    m_vboItems.setUsagePattern(QOpenGLBuffer::DynamicDraw);
+
+    m_vaoItems.bind();
+    m_vboItems.bind();
+    m_vboItems.allocate(m_fboItems->size() * sizeof(QVector2D) * MAX_CHART_ITEM_VERTICES_COUNT);
+
+    glEnableVertexAttribArray(0); // position layout = 0
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(QVector2D), nullptr);
+
+    m_vboItems.release();
+    m_vaoItems.release();
 
     m_initBuffers = true;
 
+}
+
+void GLChartRenderer::linkProgram(QOpenGLShaderProgram *prog,
+                                  const QString &fileVertex, const QString &fileFragment)
+{
+    // Vertex + Fragment
+    prog->create();
+    bool vert_result = prog->addShaderFromSourceFile(QOpenGLShader::Vertex, fileVertex);
+    if(!vert_result)
+        qCritical() << "Cannot open " << fileVertex << vert_result;
+
+    bool frag_result = prog->addShaderFromSourceFile(QOpenGLShader::Fragment,fileFragment);
+    if(!frag_result)
+        qCritical() << "Cannot open " << fileFragment << frag_result;
+
+    if (!frag_result || !vert_result)
+        exit(EXIT_FAILURE);
+
+    if (!prog->link()) {
+        qCritical() << "Failed to link Chart Shaders files!";
+        exit(EXIT_FAILURE);
+    }
 }

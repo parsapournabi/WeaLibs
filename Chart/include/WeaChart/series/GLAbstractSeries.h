@@ -45,6 +45,8 @@ public:
     /// @param start: The Start index of the dst param.
     virtual void basePoints(PointXYBase *dst, size_t start) const = 0;
 
+    virtual void scaleProjection(GLAutoScalePolicy policy, Projection &proj) const = 0;
+
     /// @brief Locating the selected series points.
     /// @param The indices of selected points.
     /// @return casted QVector<T> to the QVariant.

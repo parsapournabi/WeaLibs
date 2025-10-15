@@ -59,9 +59,9 @@ void DataSource::generateData()
 {
     if (m_generated) return;
     constexpr int ROW = 5;
-    constexpr int SERIES0_TOTAL_COUNT = 1'000'000;
-    constexpr int SERIES1_TOTAL_COUNT = 1'000'000;
-    constexpr int SERIES2_TOTAL_COUNT = 1'000'000;
+    constexpr int SERIES0_TOTAL_COUNT = 200'000;
+    constexpr int SERIES1_TOTAL_COUNT = 200'000;
+    constexpr int SERIES2_TOTAL_COUNT = 200'000;
     constexpr int SERIES0_Y_OFFSET = 0;
     constexpr int SERIES1_Y_OFFSET = 10;
     constexpr int SERIES2_Y_OFFSET = 20;

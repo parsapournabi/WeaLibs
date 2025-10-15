@@ -1,5 +1,5 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 import com.wearily.WeaChart 1.0
 
 Item {
@@ -48,6 +48,20 @@ Item {
     property bool limitView: false // Limiting view with MinX & MaxX and ...
     property real velocityCoefficient: 0.91
     property int panMouseButton: Qt.MiddleButton
+    property int autoScalePolicy: GL.PolicyNone
+    property bool fitWindow: false
+
+
+    // Crosshair ToolTip
+    property bool toolTipEnable: true
+    property color toolTipAxisColor: "white"
+    property color toolTipCenterDotColor: "red"
+    property color toolTipBoxColor: "black"
+    property color toolTipBoxBorderColor: "white"
+    property int toolTipBoxRadius: 4
+    property color toolTipTextColor: "white"
+    property string toolTipTextSplitter: "\n" // Splitter means the character of between "X:" and "Y:"
+    property font toolTipFont: Qt.font({pixelSize: 12})
 
     width: 300
     height: 400
@@ -71,10 +85,40 @@ Item {
             Qt.exit(1)
         }
     }
+    function pixelToWorld(pixel, is_x = true, is_glparent = false) {
+        // No need to scaling pixel to glChartView XY.
+        if (is_glparent) {
+            if (is_x) return glChartView.normXtoWorld(pixel)
+            else return glChartView.normYtoWorld(pixel)
+        }
+        // Scaling to glChartView XY
+        else {
+            if (is_x) {
+                // Normelized
+                pixel = (pixel - root.leftMargin) / ((canvas.width - root.rightMargin) - root.leftMargin)
+                // Scaled
+                pixel = pixel * glChartView.width
+                return glChartView.normXtoWorld(pixel)
+            }
+            else {
+                // Normelized
+                pixel = (pixel - root.topMargin) / ((canvas.height - root.bottomMargin) - root.topMargin)
+                // Scaled
+                pixel = pixel * glChartView.height
+                return glChartView.normYtoWorld(pixel)
+            }
+        }
+    }
 
     Canvas {
+
+        property real mouseX: -1
+        property real mouseY: -1
+        property bool mouseInside: false
+
         id: canvas
         anchors.fill: parent
+        focus: true
         onPaint: {
             var ctx = getContext("2d");
             ctx.clearRect(0, 0, width, height);
@@ -150,6 +194,34 @@ Item {
             ctx.moveTo(plotX, plotY + plotH);
             ctx.lineTo(plotX + plotW, plotY + plotH);
             ctx.stroke();
+
+            // Drawing Crosshair If ToolTip is enable & cursor pos is range of the glChartView width&height
+            if (root.toolTipEnable && mouseInside)
+            {
+                // Drawing ToolTip Axis
+                ctx.beginPath();
+                ctx.strokeStyle = root.toolTipAxisColor;
+                ctx.lineWidth = 1;
+
+                // Horizontal line
+                ctx.moveTo(root.leftMargin, mouseY + 0.5);
+                ctx.lineTo(width - root.rightMargin, mouseY + 0.5);
+
+                // Vertical line
+                ctx.moveTo(mouseX + 0.5, root.topMargin);
+                ctx.lineTo(mouseX + 0.5, height - root.bottomMargin);
+
+                ctx.stroke();
+                ctx.closePath();
+
+                // Center dot
+                ctx.beginPath();
+                ctx.fillStyle = root.toolTipCenterDotColor;
+                ctx.arc(mouseX, mouseY, 2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.closePath();
+            }
+
         }
         GLChartView {
             id: glChartView
@@ -168,6 +240,8 @@ Item {
             limitView: root.limitView // Custom Prop
             velocityCoefficient: root.velocityCoefficient
             panMouseButton: root.panMouseButton
+            autoScalePolicy: root.autoScalePolicy
+            fitWindow: root.fitWindow
         }
         // Rubber Band rectangle
         Rectangle {
@@ -195,7 +269,7 @@ Item {
             onWheel: (mouse) =>
                      {
                          glChartView.adjustView(glChartView.width / 2, 0, mouse.angleDelta.y, // x, y, angleDelta.y
-                                                         true, false) // zoomX, zoomY
+                                                true, false) // zoomX, zoomY
                      }
         }
         // Single Y Axis Zoom
@@ -207,7 +281,7 @@ Item {
             onWheel: (mouse) =>
                      {
                          glChartView.adjustView(0, glChartView.height / 2, mouse.angleDelta.y, // x, y, angelDelta.y
-                                                         false, true) // zoomX, zoomY
+                                                false, true) // zoomX, zoomY
                      }
         }
 
@@ -254,14 +328,15 @@ Item {
 
         }
 
-        // Selection RubberBand
+        // Crosshair(toolTip) & Selection RubberBand
         MouseArea {
             property point startPos
             property bool selecting: false
             id: mouseItemSelect
             anchors.fill: canvas
             acceptedButtons: root.selectPointsMouseButton
-
+            hoverEnabled: true
+            cursorShape: canvas.mouseInside && root.toolTipEnable ? Qt.CrossCursor : Qt.ArrowCursor
 
             onPressed: (mouse) =>
                        {
@@ -286,7 +361,24 @@ Item {
 
             onPositionChanged: {
                 if (!selecting)
-                    return
+                {
+                    // Check if in range of the GLChartView
+                    if (mouse.x >= root.leftMargin &&
+                            mouse.x <= canvas.width - root.rightMargin &&
+                            mouse.y >= root.topMargin &&
+                            mouse.y <= canvas.height - root.bottomMargin)
+                    {
+                        canvas.mouseInside = true
+                        canvas.mouseX = mouse.x
+                        canvas.mouseY = mouse.y
+                    }
+                    else
+                    {
+                        canvas.mouseInside = false
+                    }
+                    canvas.requestPaint()
+                    return;
+                }
                 rectRubBand.rubberBand(mouse, startPos)
                 glChartView.rangeSelecting(Qt.rect(rectRubBand.x - leftMargin,
                                                    rectRubBand.y - topMargin,
@@ -313,6 +405,43 @@ Item {
                 mouseItemView.enabled = true
             }
         }
+        // Crosshair Coordinations
+        Rectangle {
+            id: coordBox
+            visible: canvas.mouseInside && root.toolTipEnable
+            color: root.toolTipBoxColor
+            radius: root.toolTipBoxRadius
+            border.color: root.toolTipBoxColor
+            border.width: 1
+            Text {
+                id: coordTxt
+                text: "X: " +
+                      pixelToWorld(canvas.mouseX).toFixed(xLabelDecimalPlaces) + xLabelSuffix +
+                      root.toolTipTextSplitter +
+                      "Y: " +
+                      pixelToWorld(canvas.mouseY, false).toFixed(yLabelDecimalPlaces) + yLabelSuffix
+                font: root.toolTipFont
+                color: root.toolTipTextColor
+                padding: 6
+            }
+            x:
+            {
+                var preferred = canvas.mouseX + 12;
+                if (preferred + width > canvas.width - root.rightMargin)
+                    preferred = canvas.mouseX - 12 - width;
+                if (preferred < 2 + root.leftMargin) preferred = 2;
+                return preferred
+            }
+            y:
+            {
+                var preferred = canvas.mouseY - height - 12;
+                if (preferred < 2 + root.topMargin) preferred = canvas.mouseY - height + 12 + height;
+                if (preferred + height > canvas.height - root.bottomMargin) preferred = 2
+                return preferred
+            }
+            implicitWidth: coordTxt.paintedWidth + 12
+            implicitHeight: coordTxt.paintedHeight + 8
+        }
     }
 
     // Labels for major X
@@ -324,7 +453,7 @@ Item {
             color: root.labelColor
             font: root.labelFont
             text: (root.xLabelScaleFactor * (glChartView.projLeft + index * ((glChartView.projRight - glChartView.projLeft)
-                                                   / root.majorXCount))).toFixed(xLabelDecimalPlaces) + root.xLabelSuffix
+                                                                             / root.majorXCount))).toFixed(xLabelDecimalPlaces) + root.xLabelSuffix
         }
     }
     // Labels for major Y
@@ -336,7 +465,7 @@ Item {
             color: root.labelColor
             font: root.labelFont
             text: (root.yLabelScaleFactor * (glChartView.projTop - index * ((glChartView.projTop - glChartView.projBottom)
-                                                  / root.majorYCount))).toFixed(yLabelDecimalPlaces) + root.yLabelSuffix
+                                                                            / root.majorYCount))).toFixed(yLabelDecimalPlaces) + root.yLabelSuffix
         }
     }
 

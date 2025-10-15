@@ -36,20 +36,22 @@ GLChartRenderer *GLChartView::createRenderer() const
 {
     if (!m_initSeries) {
         auto self = const_cast<GLChartView *>(this);
-        self->getSeriesFromQml();
+        QMetaObject::invokeMethod(self, &GLChartView::readQmlComponents);
         m_initSeries = true;
     }
     return new GLChartRenderer();
 }
 
-void GLChartView::getSeriesFromQml()
+void GLChartView::readQmlComponents()
 {
-    // Reading QML GLSeriesItem.
     QList<QQuickItem *> childItems = parentItem()->parentItem()->childItems();
     for (QQuickItem *child : childItems) {
+        // Reading QML GLSeriesItem.
         GLSeriesItem *series = qobject_cast<GLSeriesItem *>(child);
-        if (series == nullptr) continue;
-        addSeriesPtr(series->series());
+        if (series) addSeriesPtr(series->series());
+        // Reading QML GLChartItemBase
+        GLChartItemBase *item = qobject_cast<GLChartItemBase *>(child);
+        if (item) addItem(item);
     }
 
 }
@@ -123,6 +125,32 @@ QVariantList GLChartView::legendItems() const
     return legends;
 }
 
+GLAutoScalePolicy GLChartView::autoScalePolicy() const noexcept
+{
+    return m_autoScalePolicy;
+}
+
+void GLChartView::setAutoScalePolicy(GLAutoScalePolicy policy) noexcept
+{
+    if (policy == m_autoScalePolicy) return;
+    m_autoScalePolicy = policy;
+    emit autoScalePolicyChanged();
+    updateAxisRange();
+}
+
+bool GLChartView::fitWindow() const noexcept
+{
+    return m_fitWindow;
+}
+
+void GLChartView::setFitWindow(bool fit) noexcept
+{
+    if (fit == m_fitWindow) return;
+    m_fitWindow = fit;
+    emit fitWindowChanged();
+    updateAxisRange();
+}
+
 GLSeriesHandle *GLChartView::addSeries(QSharedPointer<GLAbstractSeries> storage)
 {
     auto handle = new GLSeriesHandle(storage, this);
@@ -132,7 +160,7 @@ GLSeriesHandle *GLChartView::addSeries(QSharedPointer<GLAbstractSeries> storage)
     connect(&handle->view(), &GLAbstractSeries::changed, this, &GLChartView::updateLegends);
     connect(&handle->view(), &GLAbstractSeries::changed, this, &GLChartView::updateSeries);
     connect(&handle->view(), &GLAbstractSeries::signalUpdateSeriesData, this, &GLChartView::updateSeries);
-    connect(&handle->view(), &GLAbstractSeries::changed, this, [=] () {qDebug() << "GLAbstractSeries Changed emitted!";});
+//    connect(&handle->view(), &GLAbstractSeries::changed, this, [=] () {qDebug() << "GLAbstractSeries Changed emitted!";});
 
     emit updateLegends();
     emit updateQml();
@@ -158,12 +186,42 @@ const QVector<GLSeriesHandle *> &GLChartView::handles() const
     return m_series;
 }
 
+bool GLChartView::addItem(GLChartItemBase *item)
+{
+    if (item == nullptr || m_items.contains(item)) return false;
+    m_items.append(item);
+    connect(item, &GLChartItemBase::changed, this, [=]() {
+        m_hasItemsChanged = true;
+        update();
+    });
+
+    m_hasItemsChanged = true;
+    m_hasNewItem = true;
+    update();
+
+    return true;
+}
+
+bool GLChartView::removeItem(GLChartItemBase *item)
+{
+    if (item == nullptr) return false;
+    for (int i(0); i < m_items.size(); ++i) {
+        if (m_items[i] != item) continue;
+        delete m_items[i];
+        m_items.removeAt(i);
+        m_hasNewItem = true;
+        return true;
+    }
+    return false;
+}
+
+const QVector<GLChartItemBase *> &GLChartView::chartItems() const
+{
+    return m_items;
+}
+
 void GLChartView::updateSeries()
 {
-    QElapsedTimer ep;
-    ep.start();
-    //    QVector<PointXYBase> allPoints = new QVector<PointXYBase>(2'000'000);
-    //    QVector<PointXYBase> allPoints;
     QVector<SeriesProps> seriesProps;
     m_seriesTexs.clear();
     int offset = 0;
@@ -174,6 +232,10 @@ void GLChartView::updateSeries()
         if (offset + view.count() > MAX_CHART_TOTAL_POINTS)
             qCritical() << "[ERROR]: at 'GLChartView' class, total series points is bigger that 'MAX_CHART_TOTAL_POINTS'!"
                         << "TotalPoints: " << offset + view.count() << "MAX_CHART_TOTAL_POINTS: " << MAX_CHART_TOTAL_POINTS;
+
+        // Auto Scale Projection update if enable
+        autoScaleUpdateAxis(view);
+
         view.basePoints(m_points, offset);
         //        PointXYBase *points = view.basePoints();
         //        for (int i = offset; i < offset + view.count(); ++i) {
@@ -232,6 +294,11 @@ void GLChartView::updateAxisRange()
     m_proj.right = m_axisRange->maxX();
     m_proj.bottom = m_axisRange->minY();
     m_proj.top = m_axisRange->maxY();
+
+    // Auto Scale if its enable
+    m_pvtAutoScale = true;
+    if (m_fitWindow) resetProjection();
+    autoScaleUpdateAxis();
 
     emit updateQml();
 
@@ -321,6 +388,9 @@ void GLChartView::selectFinished() const
 void GLChartView::adjustView(float mxPixel, float myPixel, float angleDeltaY,
                              bool zoomX, bool zoomY)
 {
+    // Disabling autoScale until updateAxisRange
+    m_pvtAutoScale = false;
+
     constexpr float zoomFactor = 0.15f;
     float factor = (angleDeltaY > 0) ? (1 - zoomFactor) : (1 + zoomFactor);
     float minX = m_proj.left;
@@ -378,6 +448,9 @@ void GLChartView::mousePressEvent(QMouseEvent *event)
 {
     // PAN Process
     if (event->button() == panMouseButton && !m_limitView) {
+        // Disabling autoScale until updateAxisRange
+        m_pvtAutoScale = false;
+
         m_panning = true;
         m_lastMousePos = event->pos();
         m_panVelocity = QPointF(0, 0);
@@ -394,7 +467,6 @@ void GLChartView::mouseDoubleClickEvent(QMouseEvent *event)
     // Reset View to Axis Range
     if (event->button() == panMouseButton) {
         updateAxisRange();
-        return;
     }
 }
 
@@ -465,4 +537,37 @@ void GLChartView::panAcceleration() {
     emit updateQml();
     update();
 
+}
+void GLChartView::resetProjection()
+{
+    /** These condition will also check PolicyHCenter & ... automatically **/
+    if (GLutils::hasFlag(GLAutoScalePolicy::PolicyLeft, m_autoScalePolicy)) {
+        m_proj.left = qInf();
+    }
+    if (GLutils::hasFlag(GLAutoScalePolicy::PolicyRight, m_autoScalePolicy)) {
+        m_proj.right = qQNaN();
+    }
+    if (GLutils::hasFlag(GLAutoScalePolicy::PolicyBottom, m_autoScalePolicy)) {
+        m_proj.bottom = qInf();
+    }
+    if (GLutils::hasFlag(GLAutoScalePolicy::PolicyTop, m_autoScalePolicy)) {
+        m_proj.top = qQNaN();
+    }
+}
+
+void GLChartView::autoScaleUpdateAxis()
+{
+    if (!(m_autoScalePolicy != GLAutoScalePolicy::PolicyNone && m_pvtAutoScale)) return;
+    for (auto &handle : m_series) {
+        const auto &view = handle->view();
+        if (!view.visible()) return;
+        autoScaleUpdateAxis(view);
+    }
+
+}
+
+void GLChartView::autoScaleUpdateAxis(const GLAbstractSeries &serie)
+{
+    if (!(m_autoScalePolicy != GLAutoScalePolicy::PolicyNone && m_pvtAutoScale)) return;
+    serie.scaleProjection(m_autoScalePolicy, m_proj);
 }

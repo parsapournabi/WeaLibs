@@ -9,5 +9,7 @@
     <qresource prefix="/shadersChart">
         <file>shaders/chart.frag</file>
         <file>shaders/chart.vert</file>
+        <file>shaders/chartItem.vert</file>
+        <file>shaders/chartItem.frag</file>
     </qresource>
 </RCC>

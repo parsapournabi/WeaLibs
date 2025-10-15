@@ -88,9 +88,11 @@ A high-performance, flexible charting librarry built with `C++`, `OpenGL`, `QML`
 ---
 
 ## Requirements
-- C++: Minimum C++11
+- C++: Minimum C++11 (Recommended C++17)
 - OpenGL: Required version 4.6
 - Qt: 5.15
+- GCC: 7.5.0 or later
+- CMake: 3.14 or later
 - OS: Cross-platform (Linux, Windows)
 - Dependencies: QtQuick, OpenGL, QCore
 ---
@@ -100,7 +102,7 @@ This project uses **CMake** as its build system and is cross-platform.
 ### 1. Clone the Repository
 ```bash
 git clone http://172.16.50.13/parsa/qcustommodels.git
-cd QCustomModels/Chart
+cd qcustommodels/Chart
 ```
 
 ### 2. Build Instruction
@@ -108,8 +110,8 @@ cd QCustomModels/Chart
 Make sure you have **cmake** and a **C++ compiler (gcc/g++)**
 
 ```bash
-$ ~/QQCustomModels/Chart: chmod x+ install.sh
-$ ~/QQCustomModels/Chart: sudo ./install.sh
+$ ~/qcustommodels/Chart: chmod +x install.sh
+$ ~/qcustommodels/Chart: sudo ./install.sh
 ```
 
 >[!INFO]
@@ -119,7 +121,7 @@ $ ~/QQCustomModels/Chart: sudo ./install.sh
 > You can pass custom `INSTALL_PREFIX` like below.
 
 ```bash
-$ ~/QQCustomModels/Chart: sudo ./install.sh /my/custom/path
+$ ~/qcustommodels/Chart: sudo ./install.sh /my/custom/path
 ```
 
 #### Windows
@@ -127,7 +129,7 @@ Make sure you have **CMake** and **(MinGW or MSVC)**  compiler installed.
 Run `cmd` as Adminstrator, then do like below:
 
 ```bash
-cd QCustoModels/Chart
+cd qcustommodels/Chart
 mkdir BUILD
 cd BUILD
 cmake .. -DBUILD_EXAMPLE=OFF -G "MinGW Makefiles" # or another generator if needed

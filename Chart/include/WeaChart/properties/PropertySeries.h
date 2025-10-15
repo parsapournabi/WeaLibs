@@ -32,6 +32,9 @@ class WEACHART_API PropertySeries : public IProperties {
     Q_PROPERTY(int markerSize READ markerSize WRITE setMarkerSize NOTIFY markerSizeChanged) // only at scatter
     /// @brief When you choose `GLMarkerShape::ShapeTexture`, you must set this property to :/path/of/your/icon.
     Q_PROPERTY(QString markerIconUrl READ markerIconUrl WRITE setMarkerIconUrl NOTIFY markerIconUrlChanged)
+
+    Q_PROPERTY(bool seriesXSorted READ seriesXSorted WRITE setSeriesXSorted NOTIFY seriesXSortedChanged)
+    Q_PROPERTY(bool seriesYSorted READ seriesYSorted WRITE setSeriesYSorted NOTIFY seriesYSortedChanged)
 public:
     explicit PropertySeries(QQuickItem *parent = nullptr) : IProperties{parent} {}
 
@@ -139,6 +142,23 @@ public:
         setMarkerIcon(m_markerIconUrl);
     }
 
+    inline bool isXSorted() const noexcept { return m_seriesXSorted; }
+    inline bool seriesXSorted() const noexcept { return m_seriesXSorted; }
+    inline void setSeriesXSorted(bool sorted) {
+        if (sorted == m_seriesXSorted) return;
+        m_seriesXSorted = sorted;
+        emit seriesXSortedChanged();
+        emit changed();
+    }
+    inline bool isYSorted() const noexcept { return m_seriesYSorted; }
+    inline bool seriesYSorted() const noexcept { return m_seriesYSorted; }
+    inline void setSeriesYSorted(bool sorted) {
+        if (sorted == m_seriesYSorted) return;
+        m_seriesYSorted = sorted;
+        emit seriesYSortedChanged();
+        emit changed();
+    }
+
 signals:
     void nameChanged();
     void colorChanged();
@@ -147,6 +167,8 @@ signals:
     void markerShapeChanged();
     void markerSizeChanged();
     void markerIconUrlChanged();
+    void seriesXSortedChanged();
+    void seriesYSortedChanged();
 
 protected:
     QString m_name = "Unknown series name";
@@ -158,6 +180,8 @@ protected:
     int m_markerSize = 10;
     mutable QImage m_markerIcon;
     QString m_markerIconUrl;
+    bool m_seriesXSorted = false;
+    bool m_seriesYSorted = false;
 };
 
 #endif // PROPERTYSERIES_H

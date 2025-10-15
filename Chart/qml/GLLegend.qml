@@ -1,8 +1,8 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 import com.wearily.WeaChart 1.0
 
-Column {
+Flow {
     id: legendRoot
     property var chart: parent.glChartView
     property int alignment: Qt.AlignTop
