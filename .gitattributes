@@ -1,2 +1,4 @@
-Chart/docs/** linguist-vendored=false
-Chart/docs/** linguist-documentation=false
+# Ignore Chart/docs from GitHub language statistics
+Chart/docs/** linguist-documentation
+Chart/docs/** linguist-vendored
+Chart/docs/** linguist-generated
