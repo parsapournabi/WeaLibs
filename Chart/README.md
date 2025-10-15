@@ -201,7 +201,14 @@ To avoid installing the library and using it via source code follow these steps:
 2. Copy the `include`, `qml`, `shaders`, `src` and `resources.qrc` to your  **PROJECT_SOURCE_ROOT/libs/WeaChart**
 3. Add `libs/WeaChart` directory using **Add Existing Directory**.
 4. Add `libs/WeaChart/include` to your project **INCLUDEPATH**.
-5. Use **import "qml/"** into the each .qml files that you want to use **WeaChart Qml Components**.
+5. To import **WeaChart Qml types & components**, follow like below:
+
+```qml
+// Your .qml file
+import com.wearily.WeaChart 1.0 // Importing registered components
+import "qrc:/qml" // Importing .qml components (referer PROJECT_ROOT/libs/WeaChart/qml/resources.qrc).
+
+```
 </details>
 
 ## Usage and Importing

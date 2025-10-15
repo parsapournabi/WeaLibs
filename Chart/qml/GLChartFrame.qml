@@ -65,10 +65,10 @@ Item {
     property font toolTipFont: Qt.font({pixelSize: 12})
 
     // Select RubberBand & Crop Rectangle Style
-    property color selectBgRectColor: Qt.rgba(215/255, 10/255, 0, 0.05)
-    property color selectBorderRectColor: "#d73800"
-    property color cropBgRectColor: Qt.rgba(0, 120/255, 215/255, 0.3)
-    property color cropBorderRectColor: "#0078d7"
+    property color selectBgRectColor: Qt.rgba(0, 120/255, 215/255, 0.3)
+    property color selectBorderRectColor: "#0078d7"
+    property color cropBgRectColor: Qt.rgba(215/255, 10/255, 0, 0.05)
+    property color cropBorderRectColor: "#d73800"
 
     width: 300
     height: 400
@@ -312,8 +312,8 @@ Item {
                            rectRubBand.height = 0
 
                            // Rect Style
-                           rectRubBand.color = root.selectBgRectColor
-                           rectRubBand.border.color = root.selectBorderRectColor
+                           rectRubBand.color = root.cropBgRectColor
+                           rectRubBand.border.color = root.cropBorderRectColor
                            rectRubBand.border.width = 1
                        }
 
@@ -358,8 +358,8 @@ Item {
                            rectRubBand.height = 0
 
                            // Rect Style
-                           rectRubBand.color = root.cropBgRectColor
-                           rectRubBand.border.color = root.cropBorderRectColor
+                           rectRubBand.color = root.selectBgRectColor
+                           rectRubBand.border.color = root.selectBorderRectColor
                            rectRubBand.border.width = 1
 
                            glChartView.preSelect(!(mouse.modifiers & Qt.ControlModifier))
