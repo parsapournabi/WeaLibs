@@ -50,7 +50,7 @@ public:
     void setUseImage(bool useImg);
 
     bool fixItem() const;
-    void setfixItem(bool useProj);
+    void setfixItem(bool fix);
 
     bool isVertical() const;
     bool vertical() const;

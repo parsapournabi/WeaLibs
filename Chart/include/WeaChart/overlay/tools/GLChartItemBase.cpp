@@ -120,10 +120,10 @@ bool GLChartItemBase::fixItem() const
     return m_fixItem;
 }
 
-void GLChartItemBase::setfixItem(bool useProj)
+void GLChartItemBase::setfixItem(bool fix)
 {
-    if (useProj == m_fixItem) return;
-    m_fixItem = useProj;
+    if (fix == m_fixItem) return;
+    m_fixItem = fix;
     emit fixItemChanged();
     emit changed();
 }

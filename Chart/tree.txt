@@ -5,6 +5,8 @@
 │   └── WeaChartUninstall.cmake.in
 ├── CMakeLists.txt
 ├── docs
+│   ├── document.html
+│   ├── html/
 │   ├── mainpage.h
 │   └── README.md
 ├── example
@@ -21,6 +23,22 @@
 │   └── WeaChart
 │       ├── config.h
 │       ├── GLChart
+│       ├── overlay
+│       │   └── tools
+│       │       ├── GLChartGateItem.cpp
+│       │       ├── GLChartGateItem.h
+│       │       ├── GLChartHorizontalGateItem.cpp
+│       │       ├── GLChartHorizontalGateItem.h
+│       │       ├── GLChartHorizontalLineItem.cpp
+│       │       ├── GLChartHorizontalLineItem.h
+│       │       ├── GLChartItemBase.cpp
+│       │       ├── GLChartItemBase.h
+│       │       ├── GLChartLineItem.cpp
+│       │       ├── GLChartLineItem.h
+│       │       ├── GLChartVerticalGateItem.cpp
+│       │       ├── GLChartVerticalGateItem.h
+│       │       ├── GLChartVerticalLineItem.cpp
+│       │       └── GLChartVerticalLineItem.h
 │       ├── properties
 │       │   ├── IProperties.h
 │       │   ├── PropertyAxisRange.h
@@ -50,6 +68,8 @@
 ├── resources.qrc
 ├── shaders
 │   ├── chart.frag
+│   ├── chartItem.frag
+│   ├── chartItem.vert
 │   └── chart.vert
 ├── src
 │   └── scenes
@@ -58,5 +78,3 @@
 ├── tree.txt
 ├── uninstall.sh
 └── WeaChart.qdocconf
-
-36 directories, 116 files

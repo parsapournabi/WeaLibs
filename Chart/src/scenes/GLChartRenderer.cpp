@@ -222,7 +222,7 @@ void GLChartRenderer::drawItemsProgram()
         // Projection
         QMatrix4x4 mvp;
         mvp.setToIdentity();
-        if (!item->fixItem())
+        if (item->fixItem())
             mvp.ortho(0.0, 1.0, 0.0, 1.0, -1, 1);
         else if (item->isVertical())
             mvp.ortho(m_fboProj->left, m_fboProj->right, 0.0, 1.0, -1, 1);

@@ -4,69 +4,97 @@ A high-performance, flexible charting librarry built with `C++`, `OpenGL`, `QML`
 ---
 
 ## File Tree
-```bash
-.
-├── cmake
-│   ├── config.h.in
-│   ├── WeaChartConfig.cmake.in
-│   └── WeaChartUninstall.cmake.in
-├── CMakeLists.txt
-├── docs
-│   ├── mainpage.h
-│   └── README.md
-├── example
-│   ├── CMakeLists.txt
-│   ├── datasource.cpp
-│   ├── datasource.h
-│   ├── images
-│   │   ├── targetPressed.png
-│   │   └── upHovered.png
-│   ├── main.cpp
-│   ├── main.qml
-│   └── resources.qrc
-├── include
-│   └── WeaChart
-│       ├── config.h
-│       ├── GLChart
-│       ├── properties
-│       │   ├── IProperties.h
-│       │   ├── PropertyAxisRange.h
-│       │   ├── PropertyBackground.h
-│       │   └── PropertySeries.h
-│       ├── scenes
-│       │   ├── GLChartRenderer.h
-│       │   └── GLChartview.h
-│       ├── series
-│       │   ├── GLAbstractSeries.h
-│       │   ├── GLEnums.h
-│       │   ├── GLSeriesHandle.h
-│       │   ├── GLSeriesItem.h
-│       │   └── GLSeriesStorage.h
-│       ├── utils
-│       │   ├── GLMathUtils.h
-│       │   └── GLStructures.h
-│       └── WeaChart_export.h
-├── install.sh
-├── qml
-│   ├── GLChartFrame.qml
-│   ├── GLItemLegend.qml
-│   ├── GLLegend.qml
-│   ├── plugins.qmltypes
-│   └── qmldir
-├── README.md
-├── resources.qrc
-├── shaders
-│   ├── chart.frag
-│   └── chart.vert
-├── src
-│   └── scenes
-│       ├── GLChartRenderer.cpp
-│       └── GLChartview.cpp
-├── tree.txt
-├── uninstall.sh
-└── WeaChart.qdocconf
+<details>
+  <summary>
+  See file tree
+  </summary>
 
-```
+  ```bash 
+  .
+  ├── cmake
+  │   ├── config.h.in
+  │   ├── WeaChartConfig.cmake.in
+  │   └── WeaChartUninstall.cmake.in
+  ├── CMakeLists.txt
+  ├── docs
+  │   ├── document.html
+  │   ├── html/
+  │   ├── mainpage.h
+  │   └── README.md
+  ├── example
+  │   ├── CMakeLists.txt
+  │   ├── datasource.cpp
+  │   ├── datasource.h
+  │   ├── images
+  │   │   ├── targetPressed.png
+  │   │   └── upHovered.png
+  │   ├── main.cpp
+  │   ├── main.qml
+  │   └── resources.qrc
+  ├── include
+  │   └── WeaChart
+  │       ├── config.h
+  │       ├── GLChart
+  │       ├── overlay
+  │       │   └── tools
+  │       │       ├── GLChartGateItem.cpp
+  │       │       ├── GLChartGateItem.h
+  │       │       ├── GLChartHorizontalGateItem.cpp
+  │       │       ├── GLChartHorizontalGateItem.h
+  │       │       ├── GLChartHorizontalLineItem.cpp
+  │       │       ├── GLChartHorizontalLineItem.h
+  │       │       ├── GLChartItemBase.cpp
+  │       │       ├── GLChartItemBase.h
+  │       │       ├── GLChartLineItem.cpp
+  │       │       ├── GLChartLineItem.h
+  │       │       ├── GLChartVerticalGateItem.cpp
+  │       │       ├── GLChartVerticalGateItem.h
+  │       │       ├── GLChartVerticalLineItem.cpp
+  │       │       └── GLChartVerticalLineItem.h
+  │       ├── properties
+  │       │   ├── IProperties.h
+  │       │   ├── PropertyAxisRange.h
+  │       │   ├── PropertyBackground.h
+  │       │   └── PropertySeries.h
+  │       ├── scenes
+  │       │   ├── GLChartRenderer.h
+  │       │   └── GLChartview.h
+  │       ├── series
+  │       │   ├── GLAbstractSeries.h
+  │       │   ├── GLEnums.h
+  │       │   ├── GLSeriesHandle.h
+  │       │   ├── GLSeriesItem.h
+  │       │   └── GLSeriesStorage.h
+  │       ├── utils
+  │       │   ├── GLMathUtils.h
+  │       │   └── GLStructures.h
+  │       └── WeaChart_export.h
+  ├── install.sh
+  ├── qml
+  │   ├── GLChartFrame.qml
+  │   ├── GLItemLegend.qml
+  │   ├── GLLegend.qml
+  │   ├── plugins.qmltypes
+  │   └── qmldir
+  ├── README.md
+  ├── resources.qrc
+  ├── shaders
+  │   ├── chart.frag
+  │   ├── chartItem.frag
+  │   ├── chartItem.vert
+  │   └── chart.vert
+  ├── src
+  │   └── scenes
+  │       ├── GLChartRenderer.cpp
+  │       └── GLChartview.cpp
+  ├── tree.txt
+  ├── uninstall.sh
+  └── WeaChart.qdocconf
+  
+  ```
+  
+</details>
+
 ---
 
 ## Table of Contents
@@ -85,6 +113,7 @@ A high-performance, flexible charting librarry built with `C++`, `OpenGL`, `QML`
 13. [Example](#example)
 14. [Additional Notes](#additional-notes)
 15. [Information](#information)
+16. [TODO](#todo)
 ---
 
 ## Requirements
@@ -114,10 +143,10 @@ $ ~/qcustommodels/Chart: chmod +x install.sh
 $ ~/qcustommodels/Chart: sudo ./install.sh
 ```
 
->[!INFO]
+> [!INFO]
 > Usually the `INSTALL_PREFIX` on linux is: `/usr/local/...`
 
->[!INFO]
+> [!INFO]
 > You can pass custom `INSTALL_PREFIX` like below.
 
 ```bash
@@ -137,10 +166,21 @@ cmake --build . --config Release
 cmake --install .
 ```
 
->[!INFO]
+If you have some issue via building on windows pass these values manually like below.
+
+```bash
+cd qcustommodels/Chart
+mkdir BUILD
+cd BUILD
+cmake .. -DBUILD_EXAMPLE=OFF -G "MinGW Makefiles" -DCMAKE_PREFIX_PATH="/path/to/mingw<VERSION_DIR>" -DCMAKE_MAKE_PROGRAM="mingw32-make.exe" -DCMAKE_CXX_COMPILER="to/path/g++.exe" -DCMAKE_C_COMPILER="to/path/gcc.exe" -DCMAKE_PREFIX_PATH=""
+cmake --build . --config Release
+cmake --install .
+```
+
+> [!INFO]
 > Usually the `CMAKE_INSTALL_PREFIX` on windows is: `C:/Program Files/WeaChart/`
 
->[!INFO]
+> [!INFO]
 > You can pass custom `CMAKE_INSTALL_PREFIX` like below.
 
 ```bash
@@ -148,6 +188,14 @@ cmake --install .
 cmake .. -DBUILD_EXAMPLE=OFF -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX="C:/My/Custom/Path/WeaChart"
 ...
 ```
+
+#### Using Source code
+To avoid installing the library and using it via source code follow these steps:
+1. Create directory named `libs/WeaChart` in your **PROJECT_SOURCE_ROOT**.
+2. Copy the `include`, `qml`, `shaders`, `src` and `resources.qrc` to your  **PROJECT_SOURCE_ROOT/libs/WeaChart**
+3. Add `libs/WeaChart` directory using **Add Existing Directory**.
+4. Add `libs/WeaChart/include` to your project **INCLUDEPATH**.
+5. Use **import "qml/"** into the each .qml files that you want to use **WeaChart Qml Components**.
 ---
 
 ## Usage and Importing
@@ -157,7 +205,7 @@ After installing the library follow these sequence:
 - Assign **QML_IMPORT_PATH** with [WeaChart_QML_IMPORT_PATH](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/config.h#L3) (it's optional, this will help **IDE** to shows Component properties and completetion.)
 - Implement **WeaChart** lib and includes.
 
->[!INFO]
+> [!INFO]
 > If after assigning **QML_IMPORT_PATH** Components were still **Unknown**, restart Qt Creator application and then it works :)
 
 ### qmake
@@ -273,7 +321,7 @@ Each series supports three color modes:
 3. Only **point color**.
 ---
 
->[!INFO]
+> [!INFO]
 > see [GLEnums.h](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/series/GLEnums.h) for more details about types.
 
 ## Interaction
@@ -439,3 +487,9 @@ documentation, refer to the following sections:
 
 - [See the complete documentation](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/docs/html/index.html)
 - [See the source code description](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/docs/README.md)
+
+## TODO
+- [ ] Complete GLChartItemBase `Gradient` property.
+- [ ] Creating a Gallery example for each series type and options.
+- [ ] Make the library as `PIMPL`.
+- [ ] Making the WeaChart available for Qt6.
