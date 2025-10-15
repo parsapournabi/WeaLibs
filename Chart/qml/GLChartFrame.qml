@@ -64,6 +64,12 @@ Item {
     property string toolTipTextSplitter: "\n" // Splitter means the character of between "X:" and "Y:"
     property font toolTipFont: Qt.font({pixelSize: 12})
 
+    // Select RubberBand & Crop Rectangle Style
+    property color selectBgRectColor: Qt.rgba(215/255, 10/255, 0, 0.05)
+    property color selectBorderRectColor: "#d73800"
+    property color cropBgRectColor: Qt.rgba(0, 120/255, 215/255, 0.3)
+    property color cropBorderRectColor: "#0078d7"
+
     width: 300
     height: 400
 
@@ -306,8 +312,8 @@ Item {
                            rectRubBand.height = 0
 
                            // Rect Style
-                           rectRubBand.color = Qt.rgba(215/255, 10/255, 0, 0.05)
-                           rectRubBand.border.color = "#d73800"
+                           rectRubBand.color = root.selectBgRectColor
+                           rectRubBand.border.color = root.selectBorderRectColor
                            rectRubBand.border.width = 1
                        }
 
@@ -352,8 +358,8 @@ Item {
                            rectRubBand.height = 0
 
                            // Rect Style
-                           rectRubBand.color = Qt.rgba(0, 120/255, 215/255, 0.3)
-                           rectRubBand.border.color = "#0078d7"
+                           rectRubBand.color = root.cropBgRectColor
+                           rectRubBand.border.color = root.cropBorderRectColor
                            rectRubBand.border.width = 1
 
                            glChartView.preSelect(!(mouse.modifiers & Qt.ControlModifier))
