@@ -44,9 +44,10 @@ public:
     /// @param dst: The destinition of the casted series points vector.
     /// @param start: The Start index of the dst param.
     virtual void basePoints(PointXYBase *dst, size_t start) const = 0;
-
+    /// @brief Modifying GLChartView projection if the fitWindow & autoScalePolicy properties are enable.
+    /// @param GLAtuoScalePolicy: policy (scaling type).
+    /// @param Projection: proj, a reference that comes from GLChartView::m_proj
     virtual void scaleProjection(GLAutoScalePolicy policy, Projection &proj) const = 0;
-
     /// @brief Locating the selected series points.
     /// @param The indices of selected points.
     /// @return casted QVector<T> to the QVariant.

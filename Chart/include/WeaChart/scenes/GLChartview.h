@@ -65,8 +65,10 @@ class WEACHART_API GLChartView : public QQuickFramebufferObject
     Q_PROPERTY(Qt::MouseButton panMouseButton MEMBER panMouseButton)
     Q_ENUM(Qt::MouseButton)
     /// @brief Auto Scaling Policy with Minimum and maximum vertex in the chart.
+    /// @note Enabling Auto Scale & fitWindow will decrease performance.
     Q_PROPERTY(GLAutoScalePolicy autoScalePolicy READ autoScalePolicy WRITE setAutoScalePolicy NOTIFY autoScalePolicyChanged)
     /// @brief A boolean to activate windows fit (autoScale) or not.
+    /// @note Enabling Auto Scale & fitWindow will decrease performance.
     Q_PROPERTY(bool fitWindow READ fitWindow WRITE setFitWindow NOTIFY fitWindowChanged)
 
 public:

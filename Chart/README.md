@@ -136,7 +136,8 @@ cd qcustommodels/Chart
 
 ### 2. Build Instruction
 
-<details><summary><h4> Linux </h4></summary>
+<details><summary><h4> Linux </h4></summary> 
+
 Make sure you have **cmake** and a **C++ compiler (gcc/g++)**
 
 ```bash
@@ -156,6 +157,7 @@ $ ~/qcustommodels/Chart: sudo ./install.sh /my/custom/path
 </details>
 
 <details><summary><h4> Windows </h4></summary>
+
 Make sure you have **CMake** and **(MinGW or MSVC)**  compiler installed.
 Run `cmd` as Adminstrator, then do like below:
 
@@ -190,17 +192,16 @@ cmake --install .
 cmake .. -DBUILD_EXAMPLE=OFF -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX="C:/My/Custom/Path/WeaChart"
 ...
 ```
-
 </details>
 
 <details><summary><h4> Using the source code </h4></summary>
+
 To avoid installing the library and using it via source code follow these steps:
 1. Create directory named `libs/WeaChart` in your **PROJECT_SOURCE_ROOT**.
 2. Copy the `include`, `qml`, `shaders`, `src` and `resources.qrc` to your  **PROJECT_SOURCE_ROOT/libs/WeaChart**
 3. Add `libs/WeaChart` directory using **Add Existing Directory**.
 4. Add `libs/WeaChart/include` to your project **INCLUDEPATH**.
 5. Use **import "qml/"** into the each .qml files that you want to use **WeaChart Qml Components**.
----
 </details>
 
 ## Usage and Importing
@@ -214,6 +215,7 @@ After installing the library follow these sequence:
 > If after assigning **QML_IMPORT_PATH** Components were still **Unknown**, restart Qt Creator application and then it works :)
 
 <details><summary><h3> qmake </h3></summary>
+
 Here is an example of usage **WeaChart** on **.pro** application:
 
 ```qmake
@@ -234,6 +236,7 @@ unix:!macx: INCLUDEPATH += /usr/local/include # Change it with your installation
 </details>
 
 <details><summary><h3> CMake </h3></summary>
+
 Here is an example of usage **WeaChart** on **CMakeLists.txt**.
 
 ```CMake
@@ -279,7 +282,6 @@ Scatter, Line, Area.
 - Adjustable **Pan friction** (**velocityCoefficient**).
 - Configurable **Mouse buttons** for Pan/Zoom/Select.
 - Optimized performance with memory control.
----
 
 ## Series Types
 ### Scatter Series
@@ -290,7 +292,6 @@ Scatter, Line, Area.
 - Connect points in order, supports colors and thickness.
 ### Area Series
 - Fill area under line with configurable color.
----
 
 ## Custom Data Struct
 
@@ -302,7 +303,7 @@ class GLSeriesStorage {...};
 - T must inherit from `PointXYBase`.
 - `PointXYBase` contains:
   - `QVector2D` position.
-  - [ChartColor](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/utils/GLStructures.h#L40-L46) color(rgba).
+  - [ChartColor](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/utils/GLStructures.h#L41-L47) color(rgba).
 
 This design allows storing **custom data per point**, which can be emitted via signals upon **selection**.
 
@@ -318,54 +319,48 @@ struct MyPoint : public PointXYBase {
 Q_DECLARE_METATYPE(MyPoint) // REQUIRED
 Q_DECLARE_METATYPE(QVector<MyPoint>) // REQUIRED
 ```
----
 
 ## Color Options
 Each series supports three color modes:
 1. Mix of **point color** and **base color**.
 2. Only **base color**.
 3. Only **point color**.
----
 
 > [!INFO]
 > see [GLEnums.h](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/series/GLEnums.h) for more details about types.
 
 ## Interaction
-- Pan (optional), set `limitView`: **true** property on [GLChartFrame.qml](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L43).
+- Pan (optional), set `limitView`: **true** property on [GLChartFrame.qml](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L49).
 - Zoom in/out.
 - RubberBand selection.
 - Multi-selection with `Ctrl`.
 - Configurable **mouse buttons** for actions.
----
 
 ## Grid and Background
 - MajorGridXY and MinorGrid customizable: count, color, visiblity
 - Background color configurable.
----
+
 
 ## Memory and Performance
-- Minimum chart memory: 12 * 6MB = 72MB  [see MAX_CHART_TOTAL_POINTS](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/scenes/GLChartview.h#L21)
+- Minimum chart memory: 12 * 6MB = 72MB  [see MAX_CHART_TOTAL_POINTS](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/scenes/GLChartview.h#L24)
 - Configurable via internal variable.
 - Performance depends on: 
         - Number of points per series.
         - Number of series.
         - Size of point struct
 - Continous property updates (type, color, name) via timers **may degrade performance**.
----
 
 ## Configuration
-- **Pan friction** adjustable. [velocityCoefficient](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L44)
+- **Pan friction** adjustable. [velocityCoefficient](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L50)
 - **Mouse buttons** for Pan/Zoom/Select configurable.
 - **Marker size** adjustable per series.
 - **Series color** mode adjustable per series.
----
 
 ## Warnings and Best Practices
 1. **Texture markers** must have `imageIconUrl` defined.
 2. Avoid **frequent timer-based property updates.**
 3. Custom structs must inherit from `PointXYBase` and be **Q_DECLARE_METATYPE**.
 4. Performance decreases with **large point structs**, may series, or many points.
----
 
 ## Example
 Import all files and directories instead **example** directory to your project.
@@ -389,6 +384,7 @@ int main(int argc, char *argv[])
 {
 
     // SurfaceFormat configuring to OpenGL 4.6 core
+    /** Optional Configuration START**/
     QSurfaceFormat fmt;
     fmt.setMajorVersion(4);
     fmt.setMinorVersion(6);
@@ -400,13 +396,14 @@ int main(int argc, char *argv[])
 
     QSurfaceFormat::setDefaultFormat(fmt);
     QSurfaceFormat curFmt = QSurfaceFormat::defaultFormat();
+    /** Optional Configuration END**/
 
-    #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-        QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    #endif
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#endif
 
     QGuiApplication app(argc, argv);
-    
+
     // Activating QDebug
     qputenv("QT_ASSUME_STDERR_HAS_CONSOLE", "1");
 
@@ -418,8 +415,8 @@ int main(int argc, char *argv[])
                 QCoreApplication::exit(-1);
         }, Qt::QueuedConnection);
 
-    /** 
-        Printing WeaChart_QML_IMPORT_PATH, 
+    /**
+        Printing WeaChart_QML_IMPORT_PATH,
         Assigning this string to QML_IMPORT_PATH (on CMakeLists.txt or .pro)
         helps IDE to read .qml files properties and options.
     **/
@@ -448,37 +445,71 @@ int main(int argc, char *argv[])
 </details>
 
 <details><summary> main.qml </summary>
-```qml
-import QtQuick.Controls 2.15
-import QtQuick.Window 2.15
-import QtQuick.Layouts 1.15
-import QtQuick 2.15
-import QtQuick.Dialogs 1.3
 
+```qml
+import QtQuick.Controls 2.12
+import QtQuick.Window 2.12
+import QtQuick 2.12
 import com.wearily.WeaChart 1.0 // Importing qml files.
 
 Window {
     id: root
-    title: "Chart Window"
+    title: "Hello WeaChart"
     width: 500
     height: 500
     visible: true
+
     GLChartFrame {
         anchors.fill: parent
         anchors.margins: 10
-        leftMargin: 80
+        leftMargin: 90
+        majorXCount: 5
+        majorYCount: 5
+        minorPerMajor: 10
         minX: 0.0
         maxX: 100.0
         minY: 0.0
         maxY: 100.0
+        velocityCoefficient: 0.85
+        yTitlePosX: -10
+        xTitle: "Azimuth"
+        yTitle: "Freq Channel"
+        yLabelSuffix: "#"
+        xLabelSuffix: " deg"
+        xLabelDecimalPlaces: 0
+        toolTipEnable: false
+
         GLSeriesItem {
             id: mySeries
             series: mySeriesPtr
+            name: "Triangle Serie"
             type: GL.SeriesTypeArea
+            markerSize: 10
+            markerShape: GL.ShapeCircle
+        }
+        GLChartVerticalLineItem {
+            color: "red"
+            position: 20
+            lineStyle: Qt.DashDotDotLine
+            visible: true
+        }
+        GLChartHorizontalGateItem {
+            color: "orange"
+            fixItem: false
+            from: 0.85
+            to: 0.8
+            visible: true
+        }
+        GLLegend {
+            anchors.topMargin: -5
+            chart: parent.chart
+            alignment: Qt.AlignHCenter | Qt.AlignTop
+            flow: Flow.LeftToRight // Flow.TopToBottom
 
         }
     }
 }
+
 ```
 </details>
 
@@ -489,18 +520,19 @@ Window {
 - Highly **customizable** and flexible charting system.
 - Supports **real-time updates**, but excessive property changes reduce performance.
 - Designed for **professional applications** requiring high-performance rendering.
----
 
 ## Information
 
 If you want to learn more about the **WeaChart** library and view the full
 documentation, refer to the following sections:
 
+- [See GLChartFrame all properties](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L7-L65)
 - [See the complete documentation](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/docs/html/index.html)
 - [See the source code description](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/docs/README.md)
 
 ## TODO
 - [ ] Complete GLChartItemBase `Gradient` and `lineWidth` property.
 - [ ] Creating a Gallery example for each series type and options.
+- [ ] Add more `ScatterShape` using binary picture (Diamond, X shape, triangle, filled, unfilled).
 - [ ] Make the library as `PIMPL`.
 - [ ] Making the WeaChart available for Qt6.

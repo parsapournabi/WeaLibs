@@ -32,8 +32,9 @@ class WEACHART_API PropertySeries : public IProperties {
     Q_PROPERTY(int markerSize READ markerSize WRITE setMarkerSize NOTIFY markerSizeChanged) // only at scatter
     /// @brief When you choose `GLMarkerShape::ShapeTexture`, you must set this property to :/path/of/your/icon.
     Q_PROPERTY(QString markerIconUrl READ markerIconUrl WRITE setMarkerIconUrl NOTIFY markerIconUrlChanged)
-
+    /// @brief Make this property true if the buffer X axis is sorted.
     Q_PROPERTY(bool seriesXSorted READ seriesXSorted WRITE setSeriesXSorted NOTIFY seriesXSortedChanged)
+    /// @brief Make this property true if the buffer Y axis is sorted.
     Q_PROPERTY(bool seriesYSorted READ seriesYSorted WRITE setSeriesYSorted NOTIFY seriesYSortedChanged)
 public:
     explicit PropertySeries(QQuickItem *parent = nullptr) : IProperties{parent} {}
@@ -142,16 +143,22 @@ public:
         setMarkerIcon(m_markerIconUrl);
     }
 
+    /// @brief sync with seriesXSorted property.
     inline bool isXSorted() const noexcept { return m_seriesXSorted; }
+    /// @brief getter of the seriesXSorted property.
     inline bool seriesXSorted() const noexcept { return m_seriesXSorted; }
+    /// @brief setter of the seriesXSorted property.
     inline void setSeriesXSorted(bool sorted) {
         if (sorted == m_seriesXSorted) return;
         m_seriesXSorted = sorted;
         emit seriesXSortedChanged();
         emit changed();
     }
+    /// @brief sync with seriesYSorted property.
     inline bool isYSorted() const noexcept { return m_seriesYSorted; }
+    /// @brief getter of the seriesYSorted property.
     inline bool seriesYSorted() const noexcept { return m_seriesYSorted; }
+    /// @brief setter of the seriesYSorted property.
     inline void setSeriesYSorted(bool sorted) {
         if (sorted == m_seriesYSorted) return;
         m_seriesYSorted = sorted;
