@@ -1,2 +1,3 @@
-Chart/docs/** linguist-documentation=true
-Chart/docs/** linguist-generated=true
+Chart/docs/** linguist-documentation
+Chart/docs/** linguist-detectable
+Chart/docs/** linguist-vendored
