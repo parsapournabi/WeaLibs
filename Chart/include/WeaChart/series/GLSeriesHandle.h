@@ -14,9 +14,9 @@
 class WEACHART_API GLSeriesHandle : public QObject {
     Q_OBJECT
 public:
-    explicit GLSeriesHandle(QSharedPointer<GLAbstractSeries> view, QObject *parent = nullptr) :
+    explicit GLSeriesHandle(GLAbstractSeries *view, QObject *parent = nullptr) :
         QObject{parent},
-        m_view(std::move(view)) {}
+        m_view(view) {}
 
     /// @return series which added on constructure.
     GLAbstractSeries &view() { return *m_view; }
@@ -33,7 +33,7 @@ public:
     }
 
 private:
-    QSharedPointer<GLAbstractSeries> m_view;
+    GLAbstractSeries *m_view = nullptr;
 
 };
 

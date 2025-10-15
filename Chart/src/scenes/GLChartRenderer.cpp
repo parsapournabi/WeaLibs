@@ -120,7 +120,7 @@ void GLChartRenderer::synchronize(QQuickFramebufferObject *item)
         m_fboOpacity = (float)propBg->opacity();
         propBg->setDataRead(); // Clearing the Data Read
     }
-    if (chartItem->m_hasNewItem) {
+    if (chartItem->m_hasNewItem || m_fboItems == nullptr) {
         m_fboItems = &chartItem->m_items;
         chartItem->m_hasNewItem = false;
     }

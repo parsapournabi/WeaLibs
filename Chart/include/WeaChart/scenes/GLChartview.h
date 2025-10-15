@@ -130,7 +130,7 @@ public:
     /// @brief Adding a GLSeriesHandle using storage param, then the handler will add into the m_view member.
     /// @param storage -> series with type of GLSeriesStorage<T>.
     /// @return Created handler with type of the GLSeriesHandle
-    GLSeriesHandle *addSeries(QSharedPointer<GLAbstractSeries> storage);
+    GLSeriesHandle *addSeries(GLAbstractSeries *storage);
     GLSeriesHandle *addSeriesPtr(GLAbstractSeries *series);
     /// @return All GLSeriesHandle (also GLAbstractSeries) which contains in GLChartFrame
     const QVector<GLSeriesHandle*> &handles() const;
@@ -217,11 +217,11 @@ public slots:
     /// @brief Converting X pixels to the World x position(refers to the projection).
     /// @param pX -> The value of the pixel.
     /// @return The converted X value.
-    Q_INVOKABLE const float normXtoWorld(const float &pX) const;
+    Q_INVOKABLE float normXtoWorld(const float &pX) const;
     /// @brief Converting Y pixels to the World y position(refers to the projection).
     /// @param pY -> The value of the pixel.
     /// @return The converted Y value.
-    Q_INVOKABLE const float normYtoWorld(const float &pY) const;
+    Q_INVOKABLE float normYtoWorld(const float &pY) const;
 
     /// @details updating all series data.
     Q_INVOKABLE void updateSeries();

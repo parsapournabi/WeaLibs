@@ -56,12 +56,12 @@ void GLChartView::readQmlComponents()
 
 }
 
-const float GLChartView::normXtoWorld(const float &pX) const
+float GLChartView::normXtoWorld(const float &pX) const
 {
     return ((pX - 0) / (width() - 0)) * (m_proj.right - m_proj.left) + m_proj.left;
 }
 
-const float GLChartView::normYtoWorld(const float &pY) const
+float GLChartView::normYtoWorld(const float &pY) const
 {
     return ((height() - (pY - 0)) / (height() - 0)) * (m_proj.top - m_proj.bottom) + m_proj.bottom;
 }
@@ -151,7 +151,7 @@ void GLChartView::setFitWindow(bool fit) noexcept
     updateAxisRange();
 }
 
-GLSeriesHandle *GLChartView::addSeries(QSharedPointer<GLAbstractSeries> storage)
+GLSeriesHandle *GLChartView::addSeries(GLAbstractSeries *storage)
 {
     auto handle = new GLSeriesHandle(storage, this);
     m_series.append(handle);
@@ -177,8 +177,8 @@ GLSeriesHandle *GLChartView::addSeriesPtr(GLAbstractSeries *series)
                     << "Make sure you the series property at 'GLSeriesItem' (QML) isn't nullptr.";
         exit(EXIT_FAILURE);
     }
-    QSharedPointer<GLAbstractSeries> shared(series);
-    return addSeries(shared);
+//    QSharedPointer<GLAbstractSeries> shared(series);
+    return addSeries(series);
 }
 
 const QVector<GLSeriesHandle *> &GLChartView::handles() const
@@ -245,6 +245,7 @@ void GLChartView::updateSeries()
         QSharedPointer<QOpenGLTexture> texPtr = nullptr;
         if (view.markerIconUrl().length())
             texPtr = QSharedPointer<QOpenGLTexture>::create(*view.markerIconPtr());
+//        qDebug() << "TEXTURE: " << texPtr;
         if (view.type() == GLSeriesType::SeriesTypeScatter) { // Because in glDrawArrays must be startswith(GL_POINTS).
             seriesProps.insert(0,
                                {
