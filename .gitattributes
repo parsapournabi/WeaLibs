@@ -1,2 +1,2 @@
-Chart/docs/** linguist-documentation
-
+Chart/docs/** linguist-vendored=false
+Chart/docs/** linguist-documentation=false
