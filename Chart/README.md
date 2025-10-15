@@ -541,5 +541,8 @@ documentation, refer to the following sections:
 - [ ] Complete GLChartItemBase `Gradient` and `lineWidth` property.
 - [ ] Creating a Gallery example for each series type and options.
 - [ ] Add more `ScatterShape` using binary picture (Diamond, X shape, triangle, filled, unfilled).
+- [ ] Add more tools like **Distance and Area measurement**.
+- [ ] Add **ToolBar**.
 - [ ] Make the library as `PIMPL`.
+- [ ] Improving performance.
 - [ ] Making the WeaChart available for Qt6.
