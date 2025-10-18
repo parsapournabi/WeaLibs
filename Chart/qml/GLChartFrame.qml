@@ -117,6 +117,9 @@ Item {
             }
         }
     }
+    function clamp(value, min, max) {
+        return Math.min(Math.max(value, min), max)
+    }
 
     Canvas {
 
@@ -277,7 +280,9 @@ Item {
             anchors.topMargin: glChartView.height + root.topMargin
             onWheel: (mouse) =>
                      {
-                         glChartView.adjustView(glChartView.width / 2, 0, mouse.angleDelta.y, // x, y, angleDelta.y
+                         let mxPixel = clamp(mouse.x + root.rightMargin - root.leftMargin,
+                                             0.0, glChartView.width)
+                         glChartView.adjustView(mxPixel, 0, mouse.angleDelta.y, // x, y, angleDelta.y
                                                 true, false) // zoomX, zoomY
                      }
         }
@@ -289,7 +294,9 @@ Item {
             anchors.bottomMargin: root.bottomMargin
             onWheel: (mouse) =>
                      {
-                         glChartView.adjustView(0, glChartView.height / 2, mouse.angleDelta.y, // x, y, angelDelta.y
+                         let myPixel = clamp(mouse.y + root.bottomMargin - root.topMargin,
+                                             0.0, glChartView.height)
+                         glChartView.adjustView(0, myPixel, mouse.angleDelta.y, // x, y, angelDelta.y
                                                 false, true) // zoomX, zoomY
                      }
         }

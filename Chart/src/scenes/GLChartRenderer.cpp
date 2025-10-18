@@ -200,7 +200,7 @@ void GLChartRenderer::drawMainProgram()
         }
         m_vao.bind();
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, m_ssboSeriesProps);
-        glDrawArrays(GL_COLOR_BUFFER_BIT, prop.startIndex, prop.endIndex - prop.startIndex);
+        glDrawArrays(mode, prop.startIndex, prop.endIndex - prop.startIndex);
         m_vao.release();
         if (prop.markerShape == GLMarkerShape::ShapeTexture &&
             prop.type == GLSeriesType::SeriesTypeScatter)
