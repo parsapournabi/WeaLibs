@@ -4,7 +4,7 @@
 #include "WeaChart/overlay/tools/GLChartGateItem.h"
 
 /// @brief Same as GLChartGateItem but the different is the vertical property is equal true by default.
-class GLChartVerticalGateItem : public GLChartGateItem
+class WEACHART_API GLChartVerticalGateItem : public GLChartGateItem
 {
     Q_OBJECT
 public:

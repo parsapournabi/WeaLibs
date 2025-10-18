@@ -4,7 +4,7 @@
 #include "GLChartItemBase.h"
 
 /// @brief An AbstractChartGateItem inherits from GLChartItemBase and with more gate options.
-class GLChartGateItem : public GLChartItemBase
+class WEACHART_API GLChartGateItem : public GLChartItemBase
 {
     Q_OBJECT
     /// @brief the first point position. (If the vertical is true it reference with "x", else its reference is "y" axes).

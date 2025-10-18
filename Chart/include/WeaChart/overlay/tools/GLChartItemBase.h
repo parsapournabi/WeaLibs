@@ -13,7 +13,7 @@
 
 /// @brief AbstractChartItem based on QQuickItem contains base properties and methods.
 /// @details The class has 3 virtual method that should be implemented on the children classes.
-class GLChartItemBase : public IProperties
+class WEACHART_API GLChartItemBase : public IProperties
 {
     Q_OBJECT
     /// @brief color of the ChartItem

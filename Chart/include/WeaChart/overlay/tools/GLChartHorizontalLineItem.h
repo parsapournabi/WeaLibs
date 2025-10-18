@@ -4,7 +4,7 @@
 #include "WeaChart/overlay/tools/GLChartLineItem.h"
 
 /// @brief Same as GLChartLineItem but the different is the vertical property, is equal false by default.
-class GLChartHorizontalLineItem : public GLChartLineItem
+class WEACHART_API GLChartHorizontalLineItem : public GLChartLineItem
 {
     Q_OBJECT
 public:

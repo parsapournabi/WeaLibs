@@ -4,7 +4,7 @@
 #include "WeaChart/overlay/tools/GLChartItemBase.h"
 
 /// @brief An AbstractChartLineItem inherits from GLChartItemBase and with more line options.
-class GLChartLineItem : public GLChartItemBase
+class WEACHART_API GLChartLineItem : public GLChartItemBase
 {
     Q_OBJECT
     /// @brief number of the lineWidth ChartItem.

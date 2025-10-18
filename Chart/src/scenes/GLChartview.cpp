@@ -436,8 +436,8 @@ void GLChartView::makeConnections() const
 
 void GLChartView::wheelEvent(QWheelEvent *event)
 {
-    adjustView(event->position().x(),
-               event->position().y(),
+    adjustView(event->pos().x(),
+               event->pos().y(),
                event->angleDelta().y(),
                true, true);
 }
