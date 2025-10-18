@@ -533,7 +533,7 @@ Window {
 If you want to learn more about the **WeaChart** library and view the full
 documentation, refer to the following sections:
 
-- [See GLChartFrame all properties](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L7-L71)
+- [See GLChartFrame all properties](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L7-L72)
 - [See the complete documentation](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/docs/html/index.html)
 - [See the source code description](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/docs/README.md)
 

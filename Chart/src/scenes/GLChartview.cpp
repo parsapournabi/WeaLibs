@@ -148,6 +148,16 @@ void GLChartView::setFitWindow(bool fit) noexcept
     updateAxisRange();
 }
 
+bool GLChartView::debug() const
+{
+    return m_debug;
+}
+
+void GLChartView::setDebug(bool active)
+{
+    m_debug = active;
+}
+
 GLSeriesHandle *GLChartView::addSeries(GLAbstractSeries *storage)
 {
     auto handle = new GLSeriesHandle(storage, this);

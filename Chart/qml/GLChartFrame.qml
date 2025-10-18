@@ -51,6 +51,7 @@ Item {
     property int panMouseButton: Qt.MiddleButton
     property int autoScalePolicy: GL.PolicyNone
     property bool fitWindow: false
+    property bool debug: false
 
 
     // Crosshair ToolTip
@@ -249,6 +250,7 @@ Item {
             panMouseButton: root.panMouseButton
             autoScalePolicy: root.autoScalePolicy
             fitWindow: root.fitWindow
+            debug: root.debug
         }
         // Rubber Band rectangle
         Rectangle {

@@ -2,11 +2,13 @@
 
 #include <QOpenGLFramebufferObjectFormat>
 #include <QOpenGLFunctions>
-#include <QSet>
+#include <QOpenGLDebugLogger>
+#include <QOpenGLContext>
 
 #include "WeaChart/scenes/GLChartview.h"
 #include "WeaChart/utils/GLStructures.h"
 
+#ifndef Q_OPENGL_DEBUG_LOGGER
 void APIENTRY callBackOutput(GLenum source,
                              GLenum type,
                              GLuint id,
@@ -56,6 +58,7 @@ void APIENTRY callBackOutput(GLenum source,
     }
     qCritical() << "--------------------------";
 }
+#endif
 
 GLChartRenderer::GLChartRenderer() :
     m_program(new QOpenGLShaderProgram()),
@@ -124,6 +127,7 @@ void GLChartRenderer::synchronize(QQuickFramebufferObject *item)
         m_fboItems = &chartItem->m_items;
         chartItem->m_hasNewItem = false;
     }
+    if (chartItem->m_debug) initDebug();
 
     if (m_initBuffers) {
         updatePosVbo();
@@ -196,7 +200,7 @@ void GLChartRenderer::drawMainProgram()
         }
         m_vao.bind();
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, m_ssboSeriesProps);
-        glDrawArrays(mode, prop.startIndex, prop.endIndex - prop.startIndex);
+        glDrawArrays(GL_COLOR_BUFFER_BIT, prop.startIndex, prop.endIndex - prop.startIndex);
         m_vao.release();
         if (prop.markerShape == GLMarkerShape::ShapeTexture &&
             prop.type == GLSeriesType::SeriesTypeScatter)
@@ -305,11 +309,37 @@ void GLChartRenderer::initGL()
 {
     initializeOpenGLFunctions();
     glEnable(GL_PROGRAM_POINT_SIZE);
+
+}
+
+void GLChartRenderer::initDebug()
+{
+    if (m_debugActivate) return;
+#ifdef Q_OPENGL_DEBUG_LOGGER
+#else
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
     glDebugMessageCallback(callBackOutput, nullptr);
     glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+#endif
+    QOpenGLContext *ctx = QOpenGLContext::currentContext();
+    ctx->hasExtension(QByteArrayLiteral("GL_KHR_debug"));
 
+    QOpenGLDebugLogger *logger = new QOpenGLDebugLogger();
+    logger->initialize();
+    QObject::connect(logger, &QOpenGLDebugLogger::messageLogged,
+                     logger, [=](const QOpenGLDebugMessage &debugMsg) { handleLoggedMessage(debugMsg); });
+    logger->startLogging();
+
+    m_debugActivate = true;
+}
+
+void GLChartRenderer::handleLoggedMessage(const QOpenGLDebugMessage &debugMsg)
+{
+    qCritical() << "--------------------------";
+    qCritical() << "OpenGL: " << __FILE__ << "at line: " << __LINE__;
+    qCritical() << "Debug message (" << debugMsg.id() << "): " << debugMsg.message();
+    qCritical() << "--------------------------";
 }
 
 void GLChartRenderer::initShaders()

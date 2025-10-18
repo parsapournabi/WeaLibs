@@ -71,6 +71,9 @@ class WEACHART_API GLChartView : public QQuickFramebufferObject
     /// @note Enabling Auto Scale & fitWindow will decrease performance.
     Q_PROPERTY(bool fitWindow READ fitWindow WRITE setFitWindow NOTIFY fitWindowChanged)
 
+    /// @brief A boolean to activate OpenGL GLChartRenderer debugmode
+    Q_PROPERTY(bool debug READ debug WRITE setDebug CONSTANT)
+
 public:
     GLChartView(QQuickItem *parent = nullptr);
     ~GLChartView();
@@ -125,6 +128,13 @@ public:
     /// @brief setter of the fitWindow property.
     /// @param bool.
     void setFitWindow(bool fit) noexcept;
+
+    /// @brief getter of the debug property.
+    /// @return bool.
+    bool debug() const;
+    /// @brief setter of the debug property.
+    /// @param bool.
+    void setDebug(bool active);
 
     // Configuration & Process
     /// @brief Adding a GLSeriesHandle using storage param, then the handler will add into the m_view member.
@@ -322,6 +332,7 @@ private:
     GLAutoScalePolicy m_autoScalePolicy = GLAutoScalePolicy::PolicyNone;
     bool m_pvtAutoScale = true; // Internal Enabling autoScale
     bool m_fitWindow = false;
+    bool m_debug = false;
 
     friend class GLChartRenderer;
 };

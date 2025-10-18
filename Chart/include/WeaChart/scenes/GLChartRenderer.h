@@ -8,8 +8,12 @@
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLTexture>
 #include <QOpenGLBuffer>
+#include <QOpenGLDebugLogger>
+#include <QOpenGLDebugMessage>
 #include <QPair>
 #include "WeaChart/WeaChart_export.h"
+
+#define Q_OPENGL_DEBUG_LOGGER
 
 struct Projection;
 struct SeriesProps;
@@ -60,6 +64,10 @@ protected:
 private:
     /// @brief Initializing OpenGL functions, debug mode and flags.
     void initGL();
+    /// @brief Initializing OpenGL Debug Logger handler.
+    void initDebug();
+    /// @brief Debug Message handler
+    void handleLoggedMessage(const QOpenGLDebugMessage &debugMsg);
     /// @brief Creating a OpenGL shader program and linking the Shader files with it.
     void initShaders();
     /// @brief The VertexArrayObject, Shader Storage buffer and The Vertex Buffer creation & allocation.
@@ -80,6 +88,7 @@ private:
     GLuint m_ssboSeriesProps;
     bool m_initBuffers = false;
     bool m_initialized = false;
+    bool m_debugActivate = false;
 
     // FramebufferObject Attributes (Scene)
     Projection *m_fboProj = nullptr;

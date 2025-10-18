@@ -652,6 +652,7 @@ Window {
                 panMouseButton: Qt.MiddleButton
                 autoScalePolicy: cboxAutoScale.autoScalePolicy
                 fitWindow: cboxFitWindow.checked
+                debug: true
 
                 // ToolTip Properties
                 toolTipEnable: cbToolTip.checked
