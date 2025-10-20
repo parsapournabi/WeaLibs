@@ -5,7 +5,7 @@ import com.wearily.WeaChart 1.0
 Item {
     id: root
     property bool useGrid: true
-    property bool moveMentGrid: false
+    property bool movableGrid: false
     property int majorXCount: 7 // Number of X major Grid
     property int majorYCount: 7 // Number of Y major Grid
     property int minorPerMajor: 4 // Number of sub grids per each majorGrid.
@@ -20,7 +20,7 @@ Item {
     property int yTitlePosX: 0
     property font titleFont: Qt.font({ pixelSize: 13, bold: true})
     property color titleColor: "black"
-    property font labelFont: Qt.font({ pixelSize: 14, bold: true})
+    property font labelFont: Qt.font({ pixelSize: 11})
     property color labelColor: "black"
     property string xLabelSuffix: "" // For example xLabelSuffix: "$", then value from 100.0 goes to 100.0$
     property string yLabelSuffix: "" // Same as xLabelSuffix
@@ -291,7 +291,7 @@ Item {
             if (useGrid) {
                 ctx.strokeStyle = root.majorColor;
                 // Moving Grids
-                if (moveMentGrid) drawMovingGrids(ctx, viewWidth, viewHeight)
+                if (movableGrid) drawMovingGrids(ctx, viewWidth, viewHeight)
                 // Fixed Grids
                 else drawFixedGrids(ctx, viewWidth, viewHeight)
             }
@@ -355,8 +355,9 @@ Item {
             autoScalePolicy: root.autoScalePolicy
             fitWindow: root.fitWindow
             debug: root.debug
-            onProjLeftChanged: canvas.requestPaint()
-            onProjBottomChanged: canvas.requestPaint()
+            onUpdateQml: {
+                if (root.useGrid && root.movableGrid) canvas.requestPaint()
+            }
         }
         // Rubber Band rectangle
         Rectangle {
@@ -481,6 +482,7 @@ Item {
             onPositionChanged: {
                 if (!selecting)
                 {
+                    if (!root.toolTipEnable) return;
                     // Check if in range of the GLChartView
                     if (mouse.x >= root.leftMargin &&
                             mouse.x <= canvas.width - root.rightMargin &&
@@ -572,10 +574,10 @@ Item {
     // Labels for major X
     Repeater {
         //        model: majorXCount + 1
-        model: useGrid && moveMentGrid ? modelMajorX : majorXCount + 1
+        model: useGrid && movableGrid ? modelMajorX : majorXCount + 1
         delegate: Text {
             function getX() {
-                return useGrid && moveMentGrid ?
+                return useGrid && movableGrid ?
                             modelData :
                             root.leftMargin + index *
                             ((root.width - root.leftMargin - root.rightMargin) /
@@ -591,10 +593,10 @@ Item {
     }
     // Labels for major Y
     Repeater {
-        model: useGrid && moveMentGrid ? modelMajorY : majorYCount + 1
+        model: useGrid && movableGrid ? modelMajorY : majorYCount + 1
         delegate: Text {
             function getY() {
-                return useGrid && moveMentGrid ?
+                return useGrid && movableGrid ?
                             modelData :
                             root.topMargin + index *
                             ((root.height - root.topMargin - root.bottomMargin) /

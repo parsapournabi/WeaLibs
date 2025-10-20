@@ -622,7 +622,7 @@ Window {
 
                 // General Properties
                 useGrid: cbUseGrid.checked
-                moveMentGrid: true
+                movableGrid: true
                 yLabelDecimalPlaces: 2
                 xLabelDecimalPlaces: 3
                 xLabelSuffix: "%"
