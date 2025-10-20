@@ -5,6 +5,7 @@ import com.wearily.WeaChart 1.0
 Item {
     id: root
     property bool useGrid: true
+    property bool moveMentGrid: false
     property int majorXCount: 7 // Number of X major Grid
     property int majorYCount: 7 // Number of Y major Grid
     property int minorPerMajor: 4 // Number of sub grids per each majorGrid.
@@ -19,7 +20,7 @@ Item {
     property int yTitlePosX: 0
     property font titleFont: Qt.font({ pixelSize: 13, bold: true})
     property color titleColor: "black"
-    property font labelFont: Qt.font({ pixelSize: 11})
+    property font labelFont: Qt.font({ pixelSize: 14, bold: true})
     property color labelColor: "black"
     property string xLabelSuffix: "" // For example xLabelSuffix: "$", then value from 100.0 goes to 100.0$
     property string yLabelSuffix: "" // Same as xLabelSuffix
@@ -120,6 +121,22 @@ Item {
     function clamp(value, min, max) {
         return Math.min(Math.max(value, min), max)
     }
+    function niceNumber(x) {
+        var exp = Math.floor(Math.log10(x))
+        var f = x / Math.pow(10, exp)
+        var niceF
+
+        if (f < 1.5)
+            niceF = 1
+        else if (f < 3)
+            niceF = 2
+        else if (f < 7)
+            niceF = 5
+        else
+            niceF = 10
+        return niceF * Math.pow(10, exp)
+
+    }
 
     Canvas {
 
@@ -127,74 +144,158 @@ Item {
         property real mouseY: -1
         property bool mouseInside: false
 
+        property real plotX: root.leftMargin
+        property real plotY: root.topMargin
+        property real plotW: width - root.leftMargin - root.rightMargin
+        property real plotH: height - root.topMargin - root.bottomMargin
+
         id: canvas
         anchors.fill: parent
         focus: true
+
+        function drawMovingGrids(ctx, viewWidth, viewHeight) {
+            // X grids
+            modelMajorX.clear();
+            if (root.majorXCount > 0)
+            {
+                // Calculating spacing & first/end point
+                let spacingX = niceNumber(viewWidth / root.majorXCount);
+                let startX = Math.floor(glChartView.projLeft / spacingX) * spacingX;
+                let endX = Math.ceil(glChartView.projRight / spacingX) * spacingX;
+                // Draw X Major
+                for (let x = startX; x <= endX; x += spacingX) {
+                    let screenX = (x - glChartView.projLeft) / (glChartView.projRight - glChartView.projLeft) * (plotW) + plotX;
+                    screenX = clamp(screenX, plotX, plotX + plotW);
+                    ctx.beginPath();
+                    ctx.moveTo(screenX, plotY);
+                    ctx.lineTo(screenX, plotY + plotH);
+                    ctx.stroke();
+
+                    // Set Style to MinorColor
+                    ctx.strokeStyle = root.minorColor;
+                    // Draw X Minor
+                    for (let m = 1; m < root.minorPerMajor; ++m) {
+                        let xMinor = screenX + m * (plotW / root.majorXCount / root.minorPerMajor);
+                        xMinor = clamp(xMinor, plotX, plotX + plotW);
+                        ctx.beginPath();
+                        ctx.moveTo(xMinor, plotY);
+                        ctx.lineTo(xMinor, plotY + plotH);
+                        ctx.stroke();
+                    }
+                    // Reset Style to MajorColor
+                    ctx.strokeStyle = root.majorColor;
+
+                    // Adding to the ListModel for labels
+                    if (x == startX || x == endX) continue;
+                    modelMajorX.append({ screenX });
+                }
+            }
+            // Y grids
+            modelMajorY.clear();
+            if (root.majorYCount > 0)
+            {
+                // Calculating spacing & first/end point
+                let spacingY = niceNumber(viewHeight / root.majorYCount);
+                let startY = Math.floor(glChartView.projBottom / spacingY) * spacingY;
+                let endY = Math.ceil(glChartView.projTop / spacingY) * spacingY;
+                // Draw Y Major
+                for (let y = startY; y <= endY; y += spacingY) {
+                    let screenY = plotH - (y - glChartView.projBottom) / (glChartView.projTop - glChartView.projBottom) * (plotH) + plotY;
+                    screenY = clamp(screenY, plotY, plotY + plotH);
+                    ctx.beginPath();
+                    ctx.moveTo(plotX, screenY);
+                    ctx.lineTo(plotX + plotW, screenY);
+                    ctx.stroke();
+
+                    // Set Style to MinorColor
+                    ctx.strokeStyle = root.minorColor;
+                    // Draw Y Minor
+                    for (let n = 1; n < root.minorPerMajor; ++n) {
+                        let yMinor = screenY + n * (plotH / root.majorYCount / root.minorPerMajor);
+                        yMinor = clamp(yMinor, plotY, plotY + plotH);
+                        ctx.beginPath();
+                        ctx.moveTo(plotX, yMinor);
+                        ctx.lineTo(plotX + plotW, yMinor);
+                        ctx.stroke();
+                    }
+                    // Reset Style to MajorColor
+                    ctx.strokeStyle = root.majorColor;
+
+                    if (y == startY || y == endY) continue;
+                    modelMajorY.append({ screenY });
+                }
+            }
+        }
+        function drawFixedGrids(ctx, viewWidth, viewHeight) {
+            // X Grids
+            for (let i = 0; i <= root.majorXCount; ++i) {
+                let x_px = plotX + i * (plotW / root.majorXCount);
+                ctx.beginPath();
+                ctx.moveTo(x_px, plotY);
+                ctx.lineTo(x_px, plotY + plotH);
+                ctx.stroke();
+
+                // Drawing X Minor
+                if (i >= root.majorYCount) continue;
+                // Set Style to MinorColor
+                ctx.strokeStyle = root.minorColor;
+                for (let m = 1; m < root.minorPerMajor; ++m) {
+                    let xMinor = x_px + m * (plotW / root.majorXCount / root.minorPerMajor);
+                    ctx.beginPath();
+                    ctx.moveTo(xMinor, plotY);
+                    ctx.lineTo(xMinor, plotY + plotH);
+                    ctx.stroke();
+                }
+                // Reset Style to MajorColor
+                ctx.strokeStyle = root.majorColor;
+            }
+            // Y Grids
+            for (let l = 0; l <= root.majorYCount; ++l) {
+                let y_px = plotY + l * (plotH / root.majorYCount);
+                ctx.beginPath();
+                ctx.moveTo(plotX, y_px);
+                ctx.lineTo(plotX + plotW, y_px);
+                ctx.stroke();
+
+                // Drawing Y Minor
+                if (l >= root.majorYCount) continue;
+                // Set Style to MinorColor
+                ctx.strokeStyle = root.minorColor;
+                for (let n = 1; n < root.minorPerMajor; ++n) {
+                    let yMinor = y_px + n * (plotH / root.majorYCount / root.minorPerMajor);
+                    ctx.beginPath();
+                    ctx.moveTo(plotX, yMinor);
+                    ctx.lineTo(plotX + plotW, yMinor);
+                    ctx.stroke();
+                }
+                // Reset Style to MajorColor
+                ctx.strokeStyle = root.majorColor;
+            }
+        }
+
         onPaint: {
             var ctx = getContext("2d");
             ctx.clearRect(0, 0, width, height);
-
-            let plotX = root.leftMargin;
-            let plotY = root.topMargin;
-            let plotW = width - root.leftMargin - root.rightMargin;
-            let plotH = height - root.topMargin - root.bottomMargin;
-
             ctx.fillStyle = Qt.rgba(backgroundColor.r,
                                     backgroundColor.g,
                                     backgroundColor.b,
                                     backgroundOpacity);
             ctx.fillRect(plotX, plotY, plotW, plotH);
 
-            ctx.strokeStyle = root.minorColor;
             ctx.lineWidth = 1;
 
-            // Minor Grid
-            if (useGrid) {
-                for (let i = 0; i <= root.majorXCount; ++i) {
-                    if (i >= root.majorXCount)
-                        continue;
-                    let xMajor = plotX + i * (plotW / root.majorXCount);
-                    for (let m = 1; m < root.minorPerMajor; ++m) {
-                        let xMinor = xMajor + m * (plotW / root.majorXCount / root.minorPerMajor);
-                        ctx.beginPath();
-                        ctx.moveTo(xMinor, plotY);
-                        ctx.lineTo(xMinor, plotY + plotH);
-                        ctx.stroke();
-                    }
-                }
+            let viewWidth = glChartView.projRight - glChartView.projLeft;
+            let viewHeight= glChartView.projTop - glChartView.projBottom;
 
-                for (let j = 0; j <= root.majorYCount; ++j) {
-                    if (j >= root.majorYCount)
-                        continue;
-                    let yMajor = plotY + j * (plotH / root.majorYCount);
-                    for (let n = 1; n < root.minorPerMajor; ++n) {
-                        let yMinor = yMajor + n * (plotH / root.majorYCount / root.minorPerMajor);
-                        ctx.beginPath();
-                        ctx.moveTo(plotX, yMinor);
-                        ctx.lineTo(plotX + plotW, yMinor);
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            // Major Grid
+            // Drawing Grids
             if (useGrid) {
                 ctx.strokeStyle = root.majorColor;
-                for (let k = 0; k <= root.majorXCount; ++k) {
-                    let x = plotX + k * (plotW / root.majorXCount);
-                    ctx.beginPath();
-                    ctx.moveTo(x, plotY);
-                    ctx.lineTo(x, plotY + plotH);
-                    ctx.stroke();
-                }
-                for (let l = 0; l <= root.majorYCount; ++l) {
-                    let y = plotY + l * (plotH / root.majorYCount);
-                    ctx.beginPath();
-                    ctx.moveTo(plotX, y);
-                    ctx.lineTo(plotX + plotW, y);
-                    ctx.stroke();
-                }
+                // Moving Grids
+                if (moveMentGrid) drawMovingGrids(ctx, viewWidth, viewHeight)
+                // Fixed Grids
+                else drawFixedGrids(ctx, viewWidth, viewHeight)
             }
+
 
             // Axes
             ctx.strokeStyle = root.axisColor;
@@ -254,6 +355,8 @@ Item {
             autoScalePolicy: root.autoScalePolicy
             fitWindow: root.fitWindow
             debug: root.debug
+            onProjLeftChanged: canvas.requestPaint()
+            onProjBottomChanged: canvas.requestPaint()
         }
         // Rubber Band rectangle
         Rectangle {
@@ -459,12 +562,26 @@ Item {
             implicitHeight: coordTxt.paintedHeight + 8
         }
     }
+    ListModel {
+        id: modelMajorX
+    }
+    ListModel {
+        id: modelMajorY
+    }
 
     // Labels for major X
     Repeater {
-        model: majorXCount + 1
+        //        model: majorXCount + 1
+        model: useGrid && moveMentGrid ? modelMajorX : majorXCount + 1
         delegate: Text {
-            x: root.leftMargin + index * ((root.width - root.leftMargin - root.rightMargin) / root.majorXCount)
+            function getX() {
+                return useGrid && moveMentGrid ?
+                            modelData :
+                            root.leftMargin + index *
+                            ((root.width - root.leftMargin - root.rightMargin) /
+                             root.majorXCount);
+            }
+            x: getX()
             y: root.height - root.bottomMargin + 4
             color: root.labelColor
             font: root.labelFont
@@ -474,10 +591,18 @@ Item {
     }
     // Labels for major Y
     Repeater {
-        model: majorYCount + 1
+        model: useGrid && moveMentGrid ? modelMajorY : majorYCount + 1
         delegate: Text {
+            function getY() {
+                return useGrid && moveMentGrid ?
+                            modelData :
+                            root.topMargin + index *
+                            ((root.height - root.topMargin - root.bottomMargin) /
+                             root.majorYCount) - 8;
+            }
+
             x: 0 + (root.leftMargin * 0.55)
-            y: root.topMargin + index * ((root.height - root.topMargin - root.bottomMargin) / root.majorYCount) - 8
+            y: getY()
             color: root.labelColor
             font: root.labelFont
             text: (root.yLabelScaleFactor * (glChartView.projTop - index * ((glChartView.projTop - glChartView.projBottom)

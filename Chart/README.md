@@ -337,7 +337,7 @@ Each series supports three color modes:
 > see [GLEnums.h](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/include/WeaChart/series/GLEnums.h) for more details about types.
 
 ## Interaction
-- Pan (optional), set `limitView`: **true** property on [GLChartFrame.qml](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L49).
+- Pan (optional), set `limitView`: **true** property on [GLChartFrame.qml](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#50).
 - Zoom in/out.
 - RubberBand selection.
 - Multi-selection with `Ctrl`.
@@ -358,7 +358,7 @@ Each series supports three color modes:
 - Continous property updates (type, color, name) via timers **may degrade performance**.
 
 ## Configuration
-- **Pan friction** adjustable. [velocityCoefficient](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L50)
+- **Pan friction** adjustable. [velocityCoefficient](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L51)
 - **Mouse buttons** for Pan/Zoom/Select configurable.
 - **Marker size** adjustable per series.
 - **Series color** mode adjustable per series.
@@ -533,7 +533,7 @@ Window {
 If you want to learn more about the **WeaChart** library and view the full
 documentation, refer to the following sections:
 
-- [See GLChartFrame all properties](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L7-L72)
+- [See GLChartFrame all properties](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L7-L73)
 - [See the complete documentation](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/docs/html/index.html)
 - [See the source code description](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/docs/README.md)
 
