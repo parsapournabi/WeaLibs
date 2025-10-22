@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['usegradient',['useGradient',['../classGLChartItemBase.html#a2b0556a8c629e6e0b1ffa09531680eaa',1,'GLChartItemBase']]],
-  ['useimage',['useImage',['../classGLChartItemBase.html#a1e5bc130c613d24421eb6f5641628af1',1,'GLChartItemBase']]]
+  ['to',['to',['../classGLChartGateItem.html#a339cb6c132409d08ba965442bbd83ca2',1,'GLChartGateItem']]],
+  ['type',['type',['../classPropertySeries.html#a1533f5b3f9d3031760d1cee0d572b556',1,'PropertySeries']]]
 ];

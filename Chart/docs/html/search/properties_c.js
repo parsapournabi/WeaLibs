@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['to',['to',['../classGLChartGateItem.html#a339cb6c132409d08ba965442bbd83ca2',1,'GLChartGateItem']]],
-  ['type',['type',['../classPropertySeries.html#a1533f5b3f9d3031760d1cee0d572b556',1,'PropertySeries']]]
+  ['series',['series',['../classGLSeriesItem.html#a46894bc893488fdedcf8d05cc2eea8b2',1,'GLSeriesItem']]],
+  ['seriesxsorted',['seriesXSorted',['../classPropertySeries.html#a6de7230fa1470e3b0934c9b20becb983',1,'PropertySeries']]],
+  ['seriesysorted',['seriesYSorted',['../classPropertySeries.html#a870529f7a536be8f69c81cc289d5552d',1,'PropertySeries']]]
 ];

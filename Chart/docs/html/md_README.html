@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">WeaChart
-   &#160;<span id="projectnumber">1.4</span>
+   &#160;<span id="projectnumber">1.5</span>
    </div>
   </td>
  </tr>
@@ -131,8 +131,9 @@ $(function() {
 <li>Copy the <code>include</code>, <code>qml</code>, <code>shaders</code>, <code>src</code> and <code>resources.qrc</code> to your <b>PROJECT_SOURCE_ROOT/libs/WeaChart</b></li>
 <li>Add <code>libs/WeaChart</code> directory using <b>Add Existing Directory</b>.</li>
 <li>Add <code>libs/WeaChart/include</code> to your project <b>INCLUDEPATH</b>.</li>
-<li>Use <b>import "qml/"</b> into the each .qml files that you want to use <b>WeaChart Qml Components</b>. &lt;/details&gt;</li>
+<li>To import <b>WeaChart Qml types &amp; components</b>, follow like below:</li>
 </ol>
+<div class="fragment"><div class="line">// Your .qml file</div><div class="line">import com.wearily.WeaChart 1.0 // Importing registered components</div><div class="line">import &quot;qrc:/qml&quot; // Importing .qml components (referer PROJECT_ROOT/libs/WeaChart/qml/resources.qrc).</div></div><!-- fragment --><p> &lt;/details&gt;</p>
 <h2>Usage and Importing</h2>
 <p>After installing the library follow these sequence:</p><ul>
 <li>Add <b>Quick</b>, <b>Qml</b>, <b>OpenGL</b> components.</li>
@@ -203,7 +204,7 @@ $(function() {
 </blockquote>
 <h2>Interaction</h2>
 <ul>
-<li>Pan (optional), set <code>limitView</code>: <b>true</b> property on <a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L49">GLChartFrame.qml</a>.</li>
+<li>Pan (optional), set <code>limitView</code>: <b>true</b> property on <a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#50">GLChartFrame.qml</a>.</li>
 <li>Zoom in/out.</li>
 <li>RubberBand selection.</li>
 <li>Multi-selection with <code>Ctrl</code>.</li>
@@ -228,7 +229,7 @@ $(function() {
 </ul>
 <h2>Configuration</h2>
 <ul>
-<li><b>Pan friction</b> adjustable. <a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L50">velocityCoefficient</a></li>
+<li><b>Pan friction</b> adjustable. <a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L51">velocityCoefficient</a></li>
 <li><b>Mouse buttons</b> for Pan/Zoom/Select configurable.</li>
 <li><b>Marker size</b> adjustable per series.</li>
 <li><b>Series color</b> mode adjustable per series.</li>
@@ -260,7 +261,7 @@ $(function() {
 <h2>Information</h2>
 <p>If you want to learn more about the <b>WeaChart</b> library and view the full documentation, refer to the following sections:</p>
 <ul>
-<li><a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L7-L65">See GLChartFrame all properties</a></li>
+<li><a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/qml/GLChartFrame.qml#L7-L73">See GLChartFrame all properties</a></li>
 <li><a href="http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/docs/html/index.html">See the complete documentation</a></li>
 <li>http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/docs/README.md "See the source code description"</li>
 </ul>
@@ -269,7 +270,10 @@ $(function() {
 <li>[ ] Complete <a class="el" href="classGLChartItemBase.html" title="AbstractChartItem based on QQuickItem contains base properties and methods. ">GLChartItemBase</a> <code>Gradient</code> and <code>lineWidth</code> property.</li>
 <li>[ ] Creating a Gallery example for each series type and options.</li>
 <li>[ ] Add more <code>ScatterShape</code> using binary picture (Diamond, X shape, triangle, filled, unfilled).</li>
+<li>[ ] Add more tools like <b>Distance and Area measurement</b>.</li>
+<li>[ ] Add <b>ToolBar</b>.</li>
 <li>[ ] Make the library as <code>PIMPL</code>.</li>
+<li>[ ] Improving performance.</li>
 <li>[ ] Making the WeaChart available for Qt6. </li>
 </ul>
 </div></div><!-- contents -->

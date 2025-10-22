@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['image',['image',['../classGLChartItemBase.html#a1716f81f9e68766b6659642ae4912349',1,'GLChartItemBase']]]
+  ['gradient',['gradient',['../classGLChartItemBase.html#a6f89b60e89a3ffe9dd9146388cfd7f4f',1,'GLChartItemBase']]]
 ];

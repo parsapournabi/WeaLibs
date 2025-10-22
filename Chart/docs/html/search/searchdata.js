@@ -8,9 +8,9 @@ var indexSectionsWithContent =
   5: "abcegilmprst",
   6: "g",
   7: "dglmnops",
-  8: "abcfgilmnopstuv",
+  8: "abcdfgilmnopstuv",
   9: "g",
-  10: "w",
+  10: "qw",
   11: "empqstu",
   12: "as"
 };
