@@ -628,6 +628,9 @@ Window {
                 xLabelSuffix: "%"
                 yLabelSuffix: "$"
                 majorXCount: spinGridHMajor.value
+//                chart.projLeft: 100
+//                chart.projRight: 2000
+//                chart.projTop: 1000
                 majorYCount: spinGridVMajor.value
                 minorPerMajor: spinGridHMinor.value
                 majorColor: colorDialogMajor.currentColor

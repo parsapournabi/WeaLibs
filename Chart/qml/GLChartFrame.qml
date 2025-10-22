@@ -40,7 +40,7 @@ Item {
     property int selectViewMouseButton: Qt.RightButton // See mouseItemView id for more detail
 
     // ReadOnly
-    readonly property var chart: glChartView // Also uses on GLLegend chart property
+    readonly property alias chart: glChartView // Also uses on GLLegend chart property
 
     // Chart Properties
     property real minX: 0
@@ -56,7 +56,7 @@ Item {
 
 
     // Crosshair ToolTip
-    property bool toolTipEnable: true
+    property bool toolTipEnable: false
     property color toolTipAxisColor: "white"
     property color toolTipCenterDotColor: "red"
     property color toolTipBoxColor: "black"
@@ -222,7 +222,7 @@ Item {
                     ctx.strokeStyle = root.majorColor;
 
                     if (y == startY || y == endY) continue;
-                    modelMajorY.append({ screenY });
+                    modelMajorY.insert(0, { screenY });
                 }
             }
         }

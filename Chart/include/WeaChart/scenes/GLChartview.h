@@ -43,16 +43,16 @@ class WEACHART_API GLChartView : public QQuickFramebufferObject
     Q_PROPERTY(bool limitView READ limitView WRITE setLimitView NOTIFY limitViewChanged)
     /// @brief Projection left value.
     /// @details Property used on QML GLChartFrame.
-    Q_PROPERTY(qreal projLeft READ projLeft NOTIFY updateQml)
+    Q_PROPERTY(qreal projLeft READ projLeft WRITE setProjLeft NOTIFY updateQml)
     /// @brief Projection right value.
     /// @details Property used on QML GLChartFrame.
-    Q_PROPERTY(qreal projRight READ projRight NOTIFY updateQml)
+    Q_PROPERTY(qreal projRight READ projRight WRITE setProjRight NOTIFY updateQml)
     /// @brief Projection bottom value.
     /// @details Property used on QML GLChartFrame.
-    Q_PROPERTY(qreal projBottom READ projBottom NOTIFY updateQml)
+    Q_PROPERTY(qreal projBottom READ projBottom WRITE setProjBottom NOTIFY updateQml)
     /// @brief Projection top value.
     /// @details Property used on QML GLChartFrame.
-    Q_PROPERTY(qreal projTop READ projTop NOTIFY updateQml)
+    Q_PROPERTY(qreal projTop READ projTop WRITE setProjTop NOTIFY updateQml)
     /// @brief provides GLAbstractSeries properties as a QVariantList.
     /// @details Property used on QML GLItemLegend
     Q_PROPERTY(QVariantList legendItems READ legendItems NOTIFY updateLegends)
@@ -105,12 +105,20 @@ public:
     void setLimitView(bool doLimit);
     /// @brief getter of the projLeft property.
     const qreal &projLeft() const;
+    /// @brief setter of the projLeft property.
+    void setProjLeft(const qreal &value);
     /// @brief getter of the projRight property.
     const qreal &projRight() const;
+    /// @brief setter of the projRight property.
+    void setProjRight(const qreal &value);
     /// @brief getter of the projBottom property.
     const qreal &projBottom() const;
+    /// @brief setter of the projBottom property.
+    void setProjBottom(const qreal &value);
     /// @brief getter of the projTop property.
     const qreal &projTop() const;
+    /// @brief setter of the projTop property.
+    void setProjTop(const qreal &value);
     /// @brief getter of the legendItems property.
     /// @details legendItems provides GLLegend properties, which are used in GLItemLegend Repeater model.
     QVariantList legendItems() const;

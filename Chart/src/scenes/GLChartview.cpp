@@ -89,9 +89,28 @@ const qreal &GLChartView::projLeft() const
     return m_proj.left;
 }
 
+void GLChartView::setProjLeft(const qreal &value)
+{
+    if (value == m_proj.left) return;
+
+    m_proj.left = value;
+    emit updateQml();
+    update();
+}
+
 const qreal &GLChartView::projRight() const
 {
     return m_proj.right;
+}
+
+void GLChartView::setProjRight(const qreal &value)
+{
+    if (value == m_proj.right) return;
+
+    m_proj.right = value;
+    emit updateQml();
+    update();
+
 }
 
 const qreal &GLChartView::projBottom() const
@@ -99,9 +118,27 @@ const qreal &GLChartView::projBottom() const
     return m_proj.bottom;
 }
 
+void GLChartView::setProjBottom(const qreal &value)
+{
+    if (value == m_proj.bottom) return;
+
+    m_proj.bottom = value;
+    emit updateQml();
+    update();
+}
+
 const qreal &GLChartView::projTop() const
 {
     return m_proj.top;
+}
+
+void GLChartView::setProjTop(const qreal &value)
+{
+    if (value == m_proj.top) return;
+
+    m_proj.top = value;
+    emit updateQml();
+    update();
 }
 
 QVariantList GLChartView::legendItems() const
