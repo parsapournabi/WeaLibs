@@ -4,7 +4,7 @@ import com.wearily.WeaChart 1.0
 
 Flow {
     id: legendRoot
-    property var chart: parent.glChartView
+    property var chart: parent.chart
     property int alignment: Qt.AlignTop
     property font labelFont: Qt.font({family: "Arial", bold: false, pixelSize: 14})
     property color labelColor: "black"

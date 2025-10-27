@@ -538,6 +538,7 @@ documentation, refer to the following sections:
 - [See the source code description](http://172.16.50.13/parsa/qcustommodels/-/blob/main/Chart/docs/README.md)
 
 ## TODO
+- [ ] Converting GLChartFrame properties as `alias` and **ChartTool** Items.
 - [ ] Complete GLChartItemBase `Gradient` and `lineWidth` property.
 - [ ] Creating a Gallery example for each series type and options.
 - [ ] Add more `ScatterShape` using binary picture (Diamond, X shape, triangle, filled, unfilled).
